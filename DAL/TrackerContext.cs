@@ -11,11 +11,10 @@ namespace DAL
         public DbSet<Season> Seasons { get; set; }
         public DbSet<SquadMember> SquadMembers { get; set; }
         public DbSet<Game> Games { get; set; }
-        
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+
+        public TrackerContext(DbContextOptions options) : base(options)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\mssqllocaldb;Initial Catalog=TrackerDB;Integrated Security=true");
-            base.OnConfiguring(optionsBuilder);
+            
         }
     }
 }

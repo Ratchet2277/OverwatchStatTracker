@@ -7,7 +7,7 @@ namespace Initializer
     {
         static void Main(string[] args)
         {
-            TrackerContext context = new TrackerContext();
+            TrackerContext context = new TrackerContext(null);
 
             context.Initialize(true);
         }
