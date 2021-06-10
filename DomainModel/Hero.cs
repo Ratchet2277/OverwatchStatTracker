@@ -9,5 +9,6 @@ namespace DomainModel
         public string Name { get; set; }
         public Role Role { get; set; }
         public virtual Collection<Season> Seasons { get; set; } 
+        public string ImageUrl { get; set; }
     }
 }

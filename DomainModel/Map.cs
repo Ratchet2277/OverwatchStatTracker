@@ -8,7 +8,7 @@ namespace DomainModel
         public int Id { get; set; }
         public string Name { get; set; }
         public MapType Type { get; set; }
-        
         public virtual Collection<Season> Seasons { get; set; }
+        public string ImageUrl { get; set; }
     }
 }
