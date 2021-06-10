@@ -1,5 +1,6 @@
 ﻿using System;
 using DAL;
+using Microsoft.EntityFrameworkCore;
 
 namespace Initializer
 {
@@ -7,7 +8,7 @@ namespace Initializer
     {
         static void Main(string[] args)
         {
-            TrackerContext context = new TrackerContext(null);
+            TrackerContextExtension context = new TrackerContextExtension();
 
             context.Initialize(true);
         }

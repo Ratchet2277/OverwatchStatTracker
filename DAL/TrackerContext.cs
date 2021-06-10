@@ -16,5 +16,10 @@ namespace DAL
         {
             
         }
+
+        public TrackerContext()
+        {
+            
+        }
     }
 }

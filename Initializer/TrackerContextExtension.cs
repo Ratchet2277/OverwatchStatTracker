@@ -3,20 +3,21 @@ using System.Linq;
 using DAL;
 using DomainModel;
 using DomainModel.Types;
+using Microsoft.EntityFrameworkCore;
 
 namespace Initializer
 {
-    public static class TrackerContextExtension
+    public class TrackerContextExtension : TrackerContext
     {
-        public static void Initialize(this TrackerContext context, bool dropAlways = false)
+        public void Initialize(bool dropAlways = false)
         {
             if (dropAlways)
-                context.Database.EnsureDeleted();
+                Database.EnsureDeleted();
 
-            context.Database.EnsureCreated();
+            Database.EnsureCreated();
 
             //if db has been already seeded
-            if (context.Maps.Any() || context.Heroes.Any())
+            if (Maps.Any() || Heroes.Any())
                 return;
 
             #region AddHeroes
@@ -343,16 +344,22 @@ namespace Initializer
 
             #endregion
 
-            context.Heroes.AddRange(heroes);
-            context.Maps.AddRange(maps);
-            context.Users.Add(new User()
+            Heroes.AddRange(heroes);
+            Maps.AddRange(maps);
+            Users.Add(new User()
             {
                 FirstName = "Jérémy",
                 LastName = "Saudemont"
             });
-            context.Seasons.Add(s28);
+            Seasons.Add(s28);
 
-            context.SaveChanges();
+            SaveChanges();
+        }
+        
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\mssqllocaldb;Initial Catalog=TrackerDB;Integrated Security=true");
+            base.OnConfiguring(optionsBuilder);
         }
     }
 }
