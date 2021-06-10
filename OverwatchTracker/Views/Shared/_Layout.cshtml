@@ -3,9 +3,10 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>@ViewData["Title"] - ExercicePairProgamming</title>
+    <title>@ViewData["Title"] - Overwatch Performance Tracker</title>
     <link rel="stylesheet" href="~/lib/materialize/css/materialize.css"/>
     <link rel="stylesheet" href="~/css/site.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 
     @* <script src="~/lib/jquery/dist/jquery.min.js"></script> *@
@@ -17,7 +18,7 @@
 <header>
     <nav>
         <div class="nav-wrapper">
-            @Html.ActionLink("Les Saignants", "Index", "Home", null, new {@class = "brand-logo"})
+            @Html.ActionLink("Overwatch Performance Tracker", "Index", "Home", null, new {@class = "brand-logo"})
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
             </ul>
@@ -31,8 +32,8 @@
 <footer class="page-footer">
     <div class="container">
         <div class="row">
-            &copy; 2021 - ExercicePairProgamming -
-            <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2021 - Overwatch Performance Tracker
+            @* <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> *@
         </div>
     </div>
 </footer>
