@@ -6,23 +6,23 @@ namespace DomainModel
 {
     public class Map
     {
-        private ILazyLoader _lazyLoader;
+        private readonly ILazyLoader _lazyLoader;
+
+        private Collection<Season> _seasons;
 
         public Map()
         {
-            
         }
 
         public Map(ILazyLoader lazyLoader)
         {
             _lazyLoader = lazyLoader;
         }
+
         public int Id { get; set; }
         public string Name { get; set; }
         public MapType Type { get; set; }
         public string ImageUrl { get; set; }
-
-        private Collection<Season> _seasons;
 
         public virtual Collection<Season> Seasons
         {

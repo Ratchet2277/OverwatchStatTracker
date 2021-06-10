@@ -1,6 +1,4 @@
-﻿using DomainModel;
-
-namespace WebApplication.Helpers
+﻿namespace WebApplication.Helpers
 {
     public class SeasonHelper
     {

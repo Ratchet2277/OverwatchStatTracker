@@ -1,14 +1,10 @@
-﻿using System;
-using DAL;
-using Microsoft.EntityFrameworkCore;
-
-namespace Initializer
+﻿namespace Initializer
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main()
         {
-            TrackerContextExtension context = new TrackerContextExtension();
+            var context = new TrackerContextExtension();
 
             context.Initialize(true);
         }

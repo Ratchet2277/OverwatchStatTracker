@@ -224,111 +224,111 @@ namespace Initializer
 
             Collection<Map> maps = new()
             {
-                new Map()
+                new Map
                 {
                     Name = "Blizzard World",
                     Type = MapType.Hybrid
                 },
-                new Map()
+                new Map
                 {
                     Name = "Busan",
                     Type = MapType.Control
                 },
-                new Map()
+                new Map
                 {
                     Name = "Dorado",
                     Type = MapType.Payload
                 },
-                new Map()
+                new Map
                 {
                     Name = "Eichenwalde",
                     Type = MapType.Hybrid
                 },
-                new Map()
+                new Map
                 {
                     Name = "Hanamura",
                     Type = MapType.Assault
                 },
-                new Map()
+                new Map
                 {
                     Name = "Havana",
                     Type = MapType.Payload
                 },
-                new Map()
+                new Map
                 {
                     Name = "Hollywood",
                     Type = MapType.Hybrid
                 },
-                new Map()
+                new Map
                 {
                     Name = "Horizon Lunar Colony",
                     Type = MapType.Assault
                 },
-                new Map()
+                new Map
                 {
                     Name = "Ilios",
                     Type = MapType.Control
                 },
-                new Map()
+                new Map
                 {
                     Name = "Junkertown",
                     Type = MapType.Payload
                 },
-                new Map()
+                new Map
                 {
                     Name = "King's Row",
                     Type = MapType.Hybrid
                 },
-                new Map()
+                new Map
                 {
                     Name = "Lijiang Tower",
                     Type = MapType.Control
                 },
-                new Map()
+                new Map
                 {
                     Name = "Nepal",
                     Type = MapType.Control
                 },
-                new Map()
+                new Map
                 {
                     Name = "Numbani",
                     Type = MapType.Hybrid
                 },
-                new Map()
+                new Map
                 {
                     Name = "Oasis",
                     Type = MapType.Control
                 },
-                new Map()
+                new Map
                 {
                     Name = "Paris",
                     Type = MapType.Assault
                 },
-                new Map()
+                new Map
                 {
                     Name = "Rialto",
                     Type = MapType.Payload
                 },
-                new Map()
+                new Map
                 {
                     Name = "Route 66",
                     Type = MapType.Payload
                 },
-                new Map()
+                new Map
                 {
                     Name = "Temple of Anubis",
                     Type = MapType.Assault
                 },
-                new Map()
+                new Map
                 {
                     Name = "Volskaya Industries",
                     Type = MapType.Assault
                 },
-                new Map()
+                new Map
                 {
                     Name = "Watchpoint: Gibraltar",
                     Type = MapType.Payload
-                },
+                }
             };
 
             #endregion
@@ -346,7 +346,7 @@ namespace Initializer
 
             Heroes.AddRange(heroes);
             Maps.AddRange(maps);
-            Users.Add(new User()
+            Users.Add(new User
             {
                 FirstName = "Jérémy",
                 LastName = "Saudemont"
@@ -355,10 +355,11 @@ namespace Initializer
 
             SaveChanges();
         }
-        
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\mssqllocaldb;Initial Catalog=TrackerDB;Integrated Security=true");
+            optionsBuilder.UseSqlServer(
+                @"Data Source=(localdb)\mssqllocaldb;Initial Catalog=TrackerDB;Integrated Security=true");
             base.OnConfiguring(optionsBuilder);
         }
     }
