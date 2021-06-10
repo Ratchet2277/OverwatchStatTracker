@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             let optionsToActivate:HTMLElement = gameHeroSelect.querySelector(`optgroup[label=${label}]`);
             if (optionsToActivate) {
-                gameHeroSelect.querySelectorAll('optgroup option').forEach(function(element:HTMLOptionElement) {
+                gameHeroSelect.querySelectorAll(`optgroup:not([label=${label}]) option`).forEach(function(element:HTMLOptionElement) {
                     element.disabled = true;
                     element.selected = false;
                 })

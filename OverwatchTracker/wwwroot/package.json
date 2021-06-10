@@ -1,0 +1,29 @@
+{
+  "name": "overwatch-tracker-script",
+  "version": "1.0.0",
+  "description": "Front end Script for Overwatch Tracker",
+  "main": "js/site.ts",
+  "repository": "https://github.com/Ratchet2277/OverwatchStatTracker",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {
+    "css2": "0.0.2",
+    "jquery": "^3.6.0",
+    "jquery-validation": "^1.19.3",
+    "jquery-validation-unobtrusive": "^3.2.12",
+    "materialize-css": "^1.0.0",
+    "select2": "^4.1.0-rc.0",
+    "vue": "^2.6.14"
+  },
+  "devDependencies": {
+    "@types/jquery": "^3.5.5",
+    "@types/materialize-css": "^1.0.10",
+    "@types/select2": "^4.0.53"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
