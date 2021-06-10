@@ -8,8 +8,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Initializer", "Initializer\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{4F6C15B3-A2FC-4187-8315-7968D4E2A4FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{BB18AFFE-F379-4CFD-BA90-F458DEFF328E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,9 +30,5 @@ Global
 		{4F6C15B3-A2FC-4187-8315-7968D4E2A4FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F6C15B3-A2FC-4187-8315-7968D4E2A4FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F6C15B3-A2FC-4187-8315-7968D4E2A4FA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BB18AFFE-F379-4CFD-BA90-F458DEFF328E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BB18AFFE-F379-4CFD-BA90-F458DEFF328E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BB18AFFE-F379-4CFD-BA90-F458DEFF328E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BB18AFFE-F379-4CFD-BA90-F458DEFF328E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
