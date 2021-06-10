@@ -1,0 +1,34 @@
+﻿@model WebApplication.Models.AddGameViewModel
+
+<div class="fixed-action-btn">
+    <a class="btn-floating btn-large waves-effect waves-light modal-trigger" href="#add-game-modal">
+        <i class="material-icons">add</i>
+    </a>
+</div>
+
+<div class="modal" id="add-game-modal">
+
+    @using (Html.BeginForm())
+    {
+        <div class="modal-content row">
+            <h4>Ajouter une game</h4>
+            <div class="input-field col s12 m6">
+                @Html.DropDownListFor(m => m.Game.Map, Model.MapSelectList)
+                @Html.LabelFor(m => m.Game.Map)
+            </div>
+            <div class="input-field col s12 m6">
+                @Html.DropDownListFor(m => m.Game.Type, Model.GameTypes, new {@class = "no-default"})
+                @Html.LabelFor(m => m.Game.Type)
+            </div>
+            <div class="input-field col s12 m12">
+                @Html.DropDownListFor(m => m.Game.Heroes, Model.HeroSelectList, new {multiple = true})
+                @Html.LabelFor(m => m.Game.Heroes)
+            </div>
+            <div class="input-field col s12 m12">
+                @Html.LabelFor(m => m.Game.Sr)
+                @Html.TextBoxFor(m => m.Game.Sr)
+            </div>
+        </div>
+    }
+
+</div>

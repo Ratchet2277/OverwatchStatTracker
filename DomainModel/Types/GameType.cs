@@ -2,9 +2,9 @@
 {
     public enum GameType
     {
-        OpenQueue,
+        Damage,
         Support,
         Tank,
-        Damage
+        OpenQueue
     }
 }

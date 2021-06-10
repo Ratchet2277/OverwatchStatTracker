@@ -531,6 +531,9 @@
       <Content Include="wwwroot\node_modules\select2\src\scss\_dropdown.scss" />
       <Content Include="wwwroot\node_modules\select2\src\scss\_multiple.scss" />
       <Content Include="wwwroot\node_modules\select2\src\scss\_single.scss" />
+      <Content Update="wwwroot\tsconfig.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>
