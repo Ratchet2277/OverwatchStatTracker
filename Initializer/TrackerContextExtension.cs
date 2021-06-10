@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 using DAL;
 using DomainModel;
@@ -19,10 +19,9 @@ namespace Initializer
             if (context.Maps.Any() || context.Heroes.Any())
                 return;
 
-
             #region AddHeroes
 
-            List<Hero> heroes = new()
+            Collection<Hero> heroes = new()
             {
                 new Hero
                 {
@@ -222,7 +221,7 @@ namespace Initializer
 
             #region AddMaps
 
-            List<Map> maps = new()
+            Collection<Map> maps = new()
             {
                 new Map()
                 {
@@ -332,9 +331,27 @@ namespace Initializer
             };
 
             #endregion
-            
+
+            #region CreateSeason
+
+            Season s28 = new()
+            {
+                Number = 28,
+                HeroPool = heroes,
+                MapPool = new Collection<Map>(maps.Where(m => m.Name is not "Paris" or "Horizon Lunar Colony").ToList())
+            };
+
+            #endregion
+
             context.Heroes.AddRange(heroes);
             context.Maps.AddRange(maps);
+            context.Users.Add(new User()
+            {
+                FirstName = "Jérémy",
+                LastName = "Saudemont"
+            });
+            context.Seasons.Add(s28);
+
             context.SaveChanges();
         }
     }
