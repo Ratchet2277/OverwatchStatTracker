@@ -1,0 +1,17 @@
+﻿@import "../lib/materialize/css/components/color-variables";
+@import "../lib/materialize/css/components/variables";
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+.text-error {
+  color: $error-color;
+  
+}
