@@ -17,4 +17,80 @@
       <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\LICENSE.txt" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.7" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.7" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\DAL\DAL.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="node_modules\@types\jquery\dist\jquery.slim.d.ts" />
+      <Content Include="node_modules\@types\jquery\index.d.ts" />
+      <Content Include="node_modules\@types\jquery\JQuery.d.ts" />
+      <Content Include="node_modules\@types\jquery\JQueryStatic.d.ts" />
+      <Content Include="node_modules\@types\jquery\legacy.d.ts" />
+      <Content Include="node_modules\@types\jquery\LICENSE" />
+      <Content Include="node_modules\@types\jquery\misc.d.ts" />
+      <Content Include="node_modules\@types\jquery\package.json" />
+      <Content Include="node_modules\@types\jquery\README.md" />
+      <Content Include="node_modules\@types\materialize-css\autocomplete.d.ts" />
+      <Content Include="node_modules\@types\materialize-css\autoinit.d.ts" />
+      <Content Include="node_modules\@types\materialize-css\carousel.d.ts" />
+      <Content Include="node_modules\@types\materialize-css\character-counter.d.ts" />
+      <Content Include="node_modules\@types\materialize-css\chips.d.ts" />
+      <Content Include="node_modules\@types\materialize-css\collapsible.d.ts" />
+      <Content Include="node_modules\@types\materialize-css\common.d.ts" />
+      <Content Include="node_modules\@types\materialize-css\datepicker.d.ts" />
+      <Content Include="node_modules\@types\materialize-css\dropdown.d.ts" />
+      <Content Include="node_modules\@types\materialize-css\fab.d.ts" />
+      <Content Include="node_modules\@types\materialize-css\formselect.d.ts" />
+      <Content Include="node_modules\@types\materialize-css\index.d.ts" />
+      <Content Include="node_modules\@types\materialize-css\inputfields.d.ts" />
+      <Content Include="node_modules\@types\materialize-css\LICENSE" />
+      <Content Include="node_modules\@types\materialize-css\materialbox.d.ts" />
+      <Content Include="node_modules\@types\materialize-css\modal.d.ts" />
+      <Content Include="node_modules\@types\materialize-css\package.json" />
+      <Content Include="node_modules\@types\materialize-css\parallax.d.ts" />
+      <Content Include="node_modules\@types\materialize-css\pushpin.d.ts" />
+      <Content Include="node_modules\@types\materialize-css\range.d.ts" />
+      <Content Include="node_modules\@types\materialize-css\README.md" />
+      <Content Include="node_modules\@types\materialize-css\scrollspy.d.ts" />
+      <Content Include="node_modules\@types\materialize-css\sidenav.d.ts" />
+      <Content Include="node_modules\@types\materialize-css\slider.d.ts" />
+      <Content Include="node_modules\@types\materialize-css\tabs.d.ts" />
+      <Content Include="node_modules\@types\materialize-css\taptarget.d.ts" />
+      <Content Include="node_modules\@types\materialize-css\timepicker.d.ts" />
+      <Content Include="node_modules\@types\materialize-css\toast.d.ts" />
+      <Content Include="node_modules\@types\materialize-css\tooltip.d.ts" />
+      <Content Include="node_modules\@types\materialize-css\waves.d.ts" />
+      <Content Include="node_modules\@types\select2\index.d.ts" />
+      <Content Include="node_modules\@types\select2\LICENSE" />
+      <Content Include="node_modules\@types\select2\package.json" />
+      <Content Include="node_modules\@types\select2\README.md" />
+      <Content Include="node_modules\@types\sizzle\index.d.ts" />
+      <Content Include="node_modules\@types\sizzle\LICENSE" />
+      <Content Include="node_modules\@types\sizzle\package.json" />
+      <Content Include="node_modules\@types\sizzle\README.md" />
+      <Content Include="node_modules\cash-dom\CHANGELOG.md" />
+      <Content Include="node_modules\cash-dom\dist\cash.d.ts" />
+      <Content Include="node_modules\cash-dom\dist\cash.esm.js" />
+      <Content Include="node_modules\cash-dom\dist\cash.js" />
+      <Content Include="node_modules\cash-dom\dist\cash.min.js" />
+      <Content Include="node_modules\cash-dom\dist\cash.ts" />
+      <Content Include="node_modules\cash-dom\LICENSE.md" />
+      <Content Include="node_modules\cash-dom\package.json" />
+      <Content Include="node_modules\cash-dom\README.md" />
+      <Content Include="wwwroot\lib\select2\.github\CONTRIBUTING.md" />
+      <Content Include="wwwroot\lib\select2\.github\FUNDING.yml" />
+      <Content Include="wwwroot\lib\select2\.github\ISSUE_TEMPLATE.md" />
+      <Content Include="wwwroot\lib\select2\.github\PULL_REQUEST_TEMPLATE.md" />
+      <Content Include="wwwroot\lib\select2\.github\stale.yml" />
+      <Content Include="wwwroot\lib\select2\.github\workflows\docs-deploy.yml" />
+      <Content Include="wwwroot\lib\select2\.github\workflows\main.yml" />
+      <Content Include="wwwroot\lib\select2\.github\workflows\package-deploy.yml" />
+    </ItemGroup>
+
 </Project>
