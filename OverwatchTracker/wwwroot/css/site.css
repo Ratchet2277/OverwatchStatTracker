@@ -8105,4 +8105,12 @@ main {
   color: #F44336;
 }
 
+.fixed-action-btn {
+  bottom: 86px;
+}
+
+#add-game-modal {
+  min-height: 75%;
+}
+
 /*# sourceMappingURL=site.css.map */

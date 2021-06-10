@@ -1,4 +1,4 @@
-﻿@import "../../node_modules/materialize-css/sass/components/color-variables";
+﻿@import "../node_modules/materialize-css/sass/components/color-variables";
 
 $primary-color: color("teal", "lighten-2");
 $primary-color-light: lighten($primary-color, 15%);
@@ -9,7 +9,7 @@ $success-color: color("green", "base");
 $error-color: color("red", "base");
 $link-color: color("light-blue", "darken-1");
 
-@import "../../node_modules/materialize-css/sass/materialize";
+@import "../node_modules/materialize-css/sass/materialize";
 
 
 body {
@@ -24,5 +24,12 @@ main {
 
 .text-error {
   color: $error-color;
-  
+}
+
+.fixed-action-btn {
+  bottom: 86px;
+}
+
+#add-game-modal {
+  min-height: 75%;
 }
