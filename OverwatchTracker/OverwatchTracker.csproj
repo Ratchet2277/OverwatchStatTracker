@@ -6,6 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Folder Include="wwwroot\assets\heroes" />
       <Folder Include="wwwroot\lib" />
     </ItemGroup>
 

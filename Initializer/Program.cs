@@ -9,7 +9,7 @@ namespace Initializer
         {
             TrackerContext context = new TrackerContext();
 
-            context.Database.EnsureCreated();
+            context.Initialize(true);
         }
     }
 }
