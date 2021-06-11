@@ -5,7 +5,8 @@
     "types": [
       "jquery",
       "select2",
-      "materialize-css"
+      "materialize-css",
+      "vue"
     ],
     "lib": [
       "es5",
@@ -13,7 +14,9 @@
       "es7",
       "dom",
     ],
-    "sourceMap": true
+    "strict": true,
+    "sourceMap": true,
+    "moduleResolution": "node"
   },
   "exclude": [
     "node_modules"

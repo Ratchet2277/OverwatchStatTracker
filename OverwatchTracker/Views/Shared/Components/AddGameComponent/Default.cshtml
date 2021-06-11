@@ -10,25 +10,18 @@
 
     @using (Html.BeginForm())
     {
-        <div class="modal-content row">
+        <div class="modal-content row" id="add-game">
             <h4>Ajouter une game</h4>
             <div class="input-field col s12 m6">
-                @Html.DropDownListFor(m => m.Game.Map, Model.MapSelectList)
-                @Html.LabelFor(m => m.Game.Map)
-            </div>
-            <div class="input-field col s12 m6">
-                @Html.DropDownListFor(m => m.Game.Type, Model.GameTypes, new {@class = "no-default"})
-                @Html.LabelFor(m => m.Game.Type)
-            </div>
-            <div class="input-field col s12 m12">
-                @Html.DropDownListFor(m => m.Game.Heroes, Model.HeroSelectList, new {multiple = true})
-                @Html.LabelFor(m => m.Game.Heroes)
-            </div>
-            <div class="input-field col s12 m12">
-                @Html.LabelFor(m => m.Game.Sr)
-                @Html.TextBoxFor(m => m.Game.Sr)
+                <label for="Game_Map">Map</label>
+                <select name="Game.Map" class="select2" id="Game_Map">
+                    <option
+                        v-for="map in maps"
+                        v-bind:value="map.Id">
+                        {{ map.Name }}
+                    </option>
+                </select>
             </div>
         </div>
     }
-
 </div>
