@@ -118,7 +118,7 @@ namespace Initializer
                 {
                     Name = "Moira",
                     Role = Role.Support,
-                    ImageUrl = "/assets/heroes/support.png"
+                    ImageUrl = "/assets/heroes/moira.png"
                 },
                 new Hero
                 {

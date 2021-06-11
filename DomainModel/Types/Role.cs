@@ -2,8 +2,8 @@
 {
     public enum Role
     {
-        Support,
         Damage,
+        Support,
         Tank
     }
 }
