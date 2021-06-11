@@ -1,5 +1,6 @@
-﻿bin
+bin
 obj
 .idea
 .vs
 node_modules
+package-lock.json
