@@ -1,8 +1,5 @@
-﻿using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using DAL;
-using DomainModel;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication.Models;
 

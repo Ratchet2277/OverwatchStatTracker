@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using DomainModel;
 using DomainModel.Types;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,14 +9,13 @@ namespace WebApplication.Models
 {
     public class AddGameViewModel
     {
-        public Game Game { get; set; } = new();
-        public Season CurrentSeason { get; }
-
-
         public AddGameViewModel(Season currentSeason)
         {
             CurrentSeason = currentSeason;
         }
+
+        public Game Game { get; set; } = new();
+        public Season CurrentSeason { get; }
 
         public List<SelectListItem> MapSelectList
         {
@@ -25,17 +23,18 @@ namespace WebApplication.Models
             {
                 List<SelectListItem> listItems = new();
 
-                foreach (IGrouping<MapType, Map> type in CurrentSeason.MapPool.OrderBy(m => m.Type.ToString()).GroupBy(m => m.Type))
+                foreach (var type in CurrentSeason.MapPool.OrderBy(m => m.Type.ToString()).GroupBy(m => m.Type))
                 {
                     SelectListGroup group = new() {Name = type.Key.ToString()};
-                    
+
                     listItems.AddRange(
                         type.OrderBy(m => m.Name)
-                            .Select(m => 
+                            .Select(m =>
                                 new SelectListItem {Text = m.Name, Value = m.Id.ToString(), Group = group}
                             ).ToList()
                     );
                 }
+
                 return listItems;
             }
         }
@@ -46,17 +45,19 @@ namespace WebApplication.Models
             {
                 List<SelectListItem> listItems = new();
 
-                foreach (IGrouping<Role, Hero> type in CurrentSeason.HeroPool.OrderBy(m => m.Role.ToString()).GroupBy(m => m.Role))
+                foreach (var type in CurrentSeason.HeroPool.OrderBy(m => m.Role.ToString()).GroupBy(m => m.Role))
                 {
                     SelectListGroup group = new() {Name = type.Key.ToString(), Disabled = true};
-                    
+
                     listItems.AddRange(
                         type.OrderBy(m => m.Name)
-                            .Select(m => 
-                                new SelectListItem {Text = m.Name, Value = m.Id.ToString(), Group = group, Disabled = true}
+                            .Select(m =>
+                                new SelectListItem
+                                    {Text = m.Name, Value = m.Id.ToString(), Group = group, Disabled = true}
                             ).ToList()
                     );
                 }
+
                 return listItems;
             }
         }
@@ -65,7 +66,7 @@ namespace WebApplication.Models
         {
             get
             {
-                SelectListGroup listGroup = new SelectListGroup()
+                var listGroup = new SelectListGroup
                 {
                     Name = "Chose a role"
                 };
@@ -73,10 +74,9 @@ namespace WebApplication.Models
                 {
                     Text = v.ToString(),
                     Value = ((int) v).ToString(),
-                    Group = listGroup,
+                    Group = listGroup
                 }).ToList();
             }
         }
-            
     }
 }

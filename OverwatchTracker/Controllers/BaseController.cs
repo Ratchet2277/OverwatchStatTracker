@@ -1,13 +1,11 @@
 ﻿using DAL;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace WebApplication.Controllers
 {
     public class BaseController : Controller
     {
-        
         protected readonly TrackerContext Context;
         protected readonly ILogger<BaseController> Logger;
 
@@ -16,7 +14,5 @@ namespace WebApplication.Controllers
             Context = context;
             Logger = logger;
         }
-
-        
     }
 }
