@@ -13,13 +13,49 @@
         <div class="modal-content row" id="add-game">
             <h4>Ajouter une game</h4>
             <div class="input-field col s12 m6">
-                <label for="Game_Map">Map</label>
-                <select name="Game.Map" class="select2" id="Game_Map">
+                <select name="Game.Map" id="Game_Map">
                     <option
                         v-for="map in maps"
-                        v-bind:value="map.Id">
-                        {{ map.Name }}
-                    </option>
+                        v-bind:value="map.id">{{ map.name }}</option>
+                </select>
+                <label for="Game_Map">Map</label>
+            </div>
+
+            <div class="input-field col s12 m6">
+                <select name="Game.Role" id="Game_Role"
+                        v-model="selectedRole"
+                        v-on:change="updateHeroList">
+                    <option
+                        v-for="(role, id) in roles"
+                        v-bind:value="id">{{ role }}</option>
+                </select>
+                <label for="Game_Role">Role</label>
+            </div>
+
+            <div class="input-field col s12 m6">
+                <select name="Game.Heroes" id="Game_Heroes" multiple>
+                    <option
+                        v-for="hero in heroes"
+                        v-bind:value="hero.id"
+                        v-bind:data-icon="hero.imageUrl"
+                        class="right">{{ hero.name }}</option>
+                </select>
+                <label for="Game_Heroes">Hero</label>
+            </div>
+            <div class="input-field col s12 m6">
+                @Html.TextBoxFor(m => m.Game.Sr)
+                @Html.LabelFor(m => m.Game.Sr)
+            </div>
+
+            <div class="input-field col s12">
+                <label for="Game_SquadsMembers">Pré-mate</label>
+                <select name="Game.SquadsMembers" id="Game_SquadsMembers" 
+                        class="select2 browser-default" 
+                        data-tags="true" 
+                        multiple
+                        data-width="100%"
+                        >
+                    
                 </select>
             </div>
         </div>

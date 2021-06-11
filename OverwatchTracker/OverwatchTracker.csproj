@@ -76,9 +76,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Update="wwwroot\package-lock.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
       <Content Include="wwwroot\node_modules\@types\jquery\dist\jquery.slim.d.ts" />
       <Content Include="wwwroot\node_modules\@types\jquery\index.d.ts" />
       <Content Include="wwwroot\node_modules\@types\jquery\JQuery.d.ts" />
