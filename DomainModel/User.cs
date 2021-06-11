@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace DomainModel
@@ -21,6 +22,7 @@ namespace DomainModel
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
+        [JsonIgnore]
         public Collection<Game> Games
         {
             get => _lazyLoader.Load(this, ref _games);

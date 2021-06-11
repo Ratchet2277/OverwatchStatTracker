@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace DomainModel
@@ -23,12 +24,14 @@ namespace DomainModel
         public int Id { get; set; }
         public int Number { get; set; }
 
+        [JsonIgnore]
         public Collection<Hero> HeroPool
         {
             get => _lazyLoader.Load(this, ref _heroPool);
             set => _heroPool = value;
         }
 
+        [JsonIgnore]
         public virtual Collection<Map> MapPool
         {
             get => _lazyLoader.Load(this, ref _mapPool);

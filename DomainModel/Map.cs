@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 using DomainModel.Types;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
@@ -24,6 +25,7 @@ namespace DomainModel
         public MapType Type { get; set; }
         public string ImageUrl { get; set; }
 
+        [JsonIgnore]
         public virtual Collection<Season> Seasons
         {
             get => _lazyLoader.Load(this, ref _seasons);

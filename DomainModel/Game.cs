@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 using DomainModel.Types;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
@@ -36,6 +37,7 @@ namespace DomainModel
             set => _map = value;
         }
 
+        [JsonIgnore]
         public Collection<Hero> Heroes
         {
             get => _lazyLoader.Load(this, ref _heroes);
@@ -46,12 +48,14 @@ namespace DomainModel
         public int EnemyScore { get; set; }
         public GameType Type { get; set; }
 
-        public Collection<SquadMember> SquadsMembers
+        [JsonIgnore]
+        public Collection<SquadMember> SquadMembers
         {
             get => _lazyLoader.Load(this, ref _squadMembers);
             set => _squadMembers = value;
         }
-
+        
+        [JsonIgnore]
         public User User
         {
             get => _lazyLoader.Load(this, ref _user);
