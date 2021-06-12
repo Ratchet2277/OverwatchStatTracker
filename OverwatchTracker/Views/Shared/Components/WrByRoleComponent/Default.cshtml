@@ -1,5 +1,5 @@
-﻿@model WebApplication.Models.WinRate.WrByRole
-@{var culture = System.Globalization.CultureInfo.InvariantCulture}
+﻿@model WebApplication.Models.WinRate.ChartJsData<double>
+@{ var culture = System.Globalization.CultureInfo.InvariantCulture;}
 <div class="card">
     <div class="card-title">
         Win rate by Role
@@ -14,47 +14,7 @@
         let WrByRoleCtx = document.getElementById("wr-by-role")?.getContext("2d");
         let WrByRoleChart = new Chart(WrByRoleCtx, {
             type: 'bar',
-            data: {
-                labels: ['Damage', 'Support', 'Tank', 'Open Queue'],
-                datasets: [
-                    {
-                        label: "%Win",
-                        data: [
-                            @((Model.Damage.Rate*100).ToString(culture)),
-                            @((Model.Support.Rate*100).ToString(culture)),
-                            @((Model.Tank.Rate*100).ToString(culture)),
-                            @((Model.OpenQueue.Rate*100).ToString(culture)),
-                        ],
-                        backgroundColor: [
-                            '#03a9f4',
-                        ]
-                    },
-                    {
-                        label: "%Draw",
-                        data: [
-                            @((Model.Damage.DrawRate*100).ToString(culture)),
-                            @((Model.Support.DrawRate*100).ToString(culture)),
-                            @((Model.Tank.DrawRate*100).ToString(culture)),
-                            @((Model.OpenQueue.DrawRate*100).ToString(culture)),
-                        ],
-                        backgroundColor: [
-                            '#ffeb3b',
-                        ]
-                    },
-                    {
-                        label: "%Lose",
-                        data: [
-                            @(((1 - Model.Damage.Rate - Model.Damage.DrawRate)*100).ToString(culture)),
-                            @(((1 - Model.Support.Rate - Model.Support.DrawRate)*100).ToString(culture)),
-                            @(((1 - Model.Tank.Rate - Model.Tank.DrawRate)*100).ToString(culture)),
-                            @(((1 - Model.OpenQueue.Rate - Model.OpenQueue.DrawRate)*100).ToString(culture)),
-                        ],
-                        backgroundColor: [
-                            '#f44336',
-                        ]
-                    }
-                ]
-            },
+            data: @Json.Serialize(Model),
             options: {
                 responsive: true,
                 scales: {

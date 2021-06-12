@@ -6,7 +6,6 @@ using DomainModel.Types;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WebApplication.Helpers;
-using WebApplication.Models.WinRate;
 
 namespace WebApplication.Controllers
 {

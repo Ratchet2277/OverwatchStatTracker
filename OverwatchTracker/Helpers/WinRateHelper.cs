@@ -3,22 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using DomainModel;
 using DomainModel.Types;
-using WebApplication.Models.WinRate;
 using WebApplication.Struct;
 
 namespace WebApplication.Helpers
 {
     public class WinRateHelper
     {
-        public static WrByRole WrByRole(IEnumerable<Game> games)
+        public static Dictionary<GameType, WinRate> WrByRole(IEnumerable<Game> games)
         {
             var enumerable = games.ToList();
-            return new WrByRole()
+            return new Dictionary<GameType, WinRate>
             {
-                Damage = GetWinRate(enumerable.Where(g => g.Type == GameType.Damage)),
-                Support = GetWinRate(enumerable.Where(g => g.Type == GameType.Support)),
-                Tank = GetWinRate(enumerable.Where(g => g.Type == GameType.Tank)),
-                OpenQueue = GetWinRate(enumerable.Where(g => g.Type == GameType.OpenQueue))
+                {GameType.Damage, GetWinRate(enumerable.Where(g => g.Type == GameType.Damage))},
+                {GameType.Support, GetWinRate(enumerable.Where(g => g.Type == GameType.Support))},
+                {GameType.Tank, GetWinRate(enumerable.Where(g => g.Type == GameType.Tank))},
+                {GameType.OpenQueue, GetWinRate(enumerable.Where(g => g.Type == GameType.OpenQueue))}
             };
         }
 
