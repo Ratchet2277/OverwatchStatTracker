@@ -23,7 +23,7 @@ namespace WebApplication.Models
             {
                 List<SelectListItem> listItems = new();
 
-                foreach (var type in CurrentSeason.MapPool.OrderBy(m => m.Type.ToString()).GroupBy(m => m.Type))
+                foreach (var type in CurrentSeason.MapPool.OrderBy(m => m.Name).GroupBy(m => m.Type))
                 {
                     SelectListGroup group = new() {Name = type.Key.ToString()};
 
