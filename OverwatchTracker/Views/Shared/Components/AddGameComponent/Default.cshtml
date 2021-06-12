@@ -48,6 +48,14 @@
                         data-ajax--url="/SquadMember/Search">
                 </select>
             </div>
+            <div class="input-field col s12 m6">
+                @Html.TextBoxFor(m => m.Game.AllieScore)
+                @Html.LabelFor(m => m.Game.AllieScore)
+            </div>
+            <div class="input-field col s12 m6">
+                @Html.TextBoxFor(m => m.Game.EnemyScore)
+                @Html.LabelFor(m => m.Game.EnemyScore)
+            </div>
             <div class="col s12 center">
                 <button class="btn wave-effect">Enregistrer</button>
             </div>
