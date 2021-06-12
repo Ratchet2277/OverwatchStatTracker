@@ -61,5 +61,14 @@ namespace DomainModel
             get => _lazyLoader.Load(this, ref _user);
             set => _user = value;
         }
+
+        private Season _season;
+        
+        [JsonIgnore]
+        public Season Season
+        {
+            get => _lazyLoader.Load(this, ref _season);
+            set => _season = value;
+        }
     }
 }
