@@ -51,17 +51,17 @@ namespace WebApplication.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<RedirectToActionResult> Create(Game game, string[] newSquadsMembers, int newMap,
+        public async Task<RedirectToActionResult> Create(Game game, string[] newSquadMembers, int newMap,
             int[] newHeroes)
         {
             game.DateTime = DateTime.Now;
             game.Map = await Context.Maps.FindAsync(newMap);
             game.Heroes = new Collection<Hero>(await Context.Heroes.Where(h => newHeroes.Contains(h.Id)).ToListAsync());
 
-            if (newSquadsMembers.Length > 0)
+            if (newSquadMembers.Length > 0)
             {
                 game.SquadMembers = new Collection<SquadMember>();
-                foreach (var squadMember in newSquadsMembers)
+                foreach (var squadMember in newSquadMembers)
                 {
                     if (Context.SquadMembers.Any(s => s.Name == squadMember))
                     {
