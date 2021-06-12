@@ -20,18 +20,18 @@ document.addEventListener('DOMContentLoaded', () => {
             selectedRole: -1,
         },
         async created() {
-            fetch('Game/MapList').then((response) => {
+            fetch('/Game/MapList').then((response) => {
                 response.json().then((data) => {
                     Vue.set(AddGame, "maps", data);
                     this.$nextTick(() => {
                         let select:HTMLSelectElement = <HTMLSelectElement>document.getElementById("Game_Map");
                         M.FormSelect.getInstance(select)?.destroy();
-                        console.log(M.FormSelect.init(select, SELECT_FORMS_OPTIONS));
+                        M.FormSelect.init(select, SELECT_FORMS_OPTIONS);
                     });
                 })
             })
             
-            fetch('Game/RoleList').then((response) => {
+            fetch('/Game/RoleList').then((response) => {
                 response.json().then((data) => {
                     Vue.set(AddGame, "roles", data);
                     this.$nextTick(() => {
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         methods: {
             async updateHeroList() {
-                fetch(`Game/HeroList?roleId=${AddGame.$data.selectedRole}`).then((response) => {
+                fetch(`/Game/HeroList?roleId=${AddGame.$data.selectedRole}`).then((response) => {
                     response.json().then((data) => {
                         Vue.set(AddGame, "heroes", data);
                         this.$nextTick(() => {
