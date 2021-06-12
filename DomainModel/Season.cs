@@ -32,10 +32,19 @@ namespace DomainModel
         }
 
         [JsonIgnore]
-        public virtual Collection<Map> MapPool
+        public Collection<Map> MapPool
         {
             get => _lazyLoader.Load(this, ref _mapPool);
             set => _mapPool = value;
+        }
+
+        private Collection<Game> _games;
+
+        [JsonIgnore]
+        public Collection<Game> Games
+        {
+            get => _lazyLoader.Load(this, ref _games);
+            set => _games = value;
         }
     }
 }

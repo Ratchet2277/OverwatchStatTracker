@@ -6,6 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Folder Include="Components\WinRate" />
       <Folder Include="wwwroot\assets\heroes" />
     </ItemGroup>
 
@@ -63,6 +64,10 @@
       <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation\dist\jquery.validate.js" />
       <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation\dist\jquery.validate.min.js" />
       <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation\LICENSE.md" />
+      <_ContentIncludedByDefault Remove="Views\Shared\Components\WinRateComponent\Default.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\WinRate\WinRateByRole.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Components\WinRateController\Default.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Shared\Components\WinRateComponent\WinRateByRole.cshtml" />
     </ItemGroup>
 
     <ItemGroup>
@@ -131,6 +136,46 @@
       <Content Include="wwwroot\node_modules\cash-dom\LICENSE.md" />
       <Content Include="wwwroot\node_modules\cash-dom\package.json" />
       <Content Include="wwwroot\node_modules\cash-dom\README.md" />
+      <Content Include="wwwroot\node_modules\chart.js\auto\auto.esm.d.ts" />
+      <Content Include="wwwroot\node_modules\chart.js\auto\auto.esm.js" />
+      <Content Include="wwwroot\node_modules\chart.js\auto\auto.js" />
+      <Content Include="wwwroot\node_modules\chart.js\auto\package.json" />
+      <Content Include="wwwroot\node_modules\chart.js\dist\chart.esm.js" />
+      <Content Include="wwwroot\node_modules\chart.js\dist\chart.js" />
+      <Content Include="wwwroot\node_modules\chart.js\dist\chart.min.js" />
+      <Content Include="wwwroot\node_modules\chart.js\dist\chunks\helpers.segment.js" />
+      <Content Include="wwwroot\node_modules\chart.js\dist\helpers.esm.js" />
+      <Content Include="wwwroot\node_modules\chart.js\helpers\helpers.esm.d.ts" />
+      <Content Include="wwwroot\node_modules\chart.js\helpers\helpers.esm.js" />
+      <Content Include="wwwroot\node_modules\chart.js\helpers\helpers.js" />
+      <Content Include="wwwroot\node_modules\chart.js\helpers\package.json" />
+      <Content Include="wwwroot\node_modules\chart.js\LICENSE.md" />
+      <Content Include="wwwroot\node_modules\chart.js\package.json" />
+      <Content Include="wwwroot\node_modules\chart.js\README.md" />
+      <Content Include="wwwroot\node_modules\chart.js\types\adapters.d.ts" />
+      <Content Include="wwwroot\node_modules\chart.js\types\animation.d.ts" />
+      <Content Include="wwwroot\node_modules\chart.js\types\basic.d.ts" />
+      <Content Include="wwwroot\node_modules\chart.js\types\color.d.ts" />
+      <Content Include="wwwroot\node_modules\chart.js\types\element.d.ts" />
+      <Content Include="wwwroot\node_modules\chart.js\types\geometric.d.ts" />
+      <Content Include="wwwroot\node_modules\chart.js\types\helpers\helpers.canvas.d.ts" />
+      <Content Include="wwwroot\node_modules\chart.js\types\helpers\helpers.collection.d.ts" />
+      <Content Include="wwwroot\node_modules\chart.js\types\helpers\helpers.color.d.ts" />
+      <Content Include="wwwroot\node_modules\chart.js\types\helpers\helpers.core.d.ts" />
+      <Content Include="wwwroot\node_modules\chart.js\types\helpers\helpers.curve.d.ts" />
+      <Content Include="wwwroot\node_modules\chart.js\types\helpers\helpers.dom.d.ts" />
+      <Content Include="wwwroot\node_modules\chart.js\types\helpers\helpers.easing.d.ts" />
+      <Content Include="wwwroot\node_modules\chart.js\types\helpers\helpers.extras.d.ts" />
+      <Content Include="wwwroot\node_modules\chart.js\types\helpers\helpers.interpolation.d.ts" />
+      <Content Include="wwwroot\node_modules\chart.js\types\helpers\helpers.intl.d.ts" />
+      <Content Include="wwwroot\node_modules\chart.js\types\helpers\helpers.math.d.ts" />
+      <Content Include="wwwroot\node_modules\chart.js\types\helpers\helpers.options.d.ts" />
+      <Content Include="wwwroot\node_modules\chart.js\types\helpers\helpers.rtl.d.ts" />
+      <Content Include="wwwroot\node_modules\chart.js\types\helpers\helpers.segment.d.ts" />
+      <Content Include="wwwroot\node_modules\chart.js\types\helpers\index.d.ts" />
+      <Content Include="wwwroot\node_modules\chart.js\types\index.esm.d.ts" />
+      <Content Include="wwwroot\node_modules\chart.js\types\layout.d.ts" />
+      <Content Include="wwwroot\node_modules\chart.js\types\utils.d.ts" />
       <Content Include="wwwroot\node_modules\css2\example\demo.css" />
       <Content Include="wwwroot\node_modules\css2\example\index.js" />
       <Content Include="wwwroot\node_modules\css2\index.js" />
@@ -896,6 +941,11 @@
       <Content Include="wwwroot\node_modules\vue\types\umd.d.ts" />
       <Content Include="wwwroot\node_modules\vue\types\vnode.d.ts" />
       <Content Include="wwwroot\node_modules\vue\types\vue.d.ts" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Views\Shared\Components\WinRateComponent\Default.cshtml" />
+      <UpToDateCheckInput Remove="Views\WinRate\WinRateByRole.cshtml" />
     </ItemGroup>
 
 </Project>

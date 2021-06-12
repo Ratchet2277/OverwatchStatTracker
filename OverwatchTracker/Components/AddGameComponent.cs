@@ -5,19 +5,16 @@ using WebApplication.Models;
 
 namespace WebApplication.Components
 {
-    public class AddGameComponent : ViewComponent
+    public class AddGameComponent : BaseComponent
     {
-        private readonly TrackerContext _context;
-
-        public AddGameComponent(TrackerContext context)
+        
+        public AddGameComponent(TrackerContext context) : base(context)
         {
-            _context = context;
         }
-
+        
         public IViewComponentResult Invoke()
         {
-            var model = new AddGameViewModel(_context.Seasons.OrderByDescending(s => s.Number).First());
-
+            AddGameViewModel model = new(Context.Seasons.OrderByDescending(s => s.Number).First());
             return View(model);
         }
     }
