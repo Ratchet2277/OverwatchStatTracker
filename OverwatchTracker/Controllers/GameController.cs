@@ -9,6 +9,7 @@ using DomainModel.Types;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using WebApplication.Helpers;
 
 namespace WebApplication.Controllers
 {
@@ -20,10 +21,9 @@ namespace WebApplication.Controllers
 
         [ResponseCache(Duration = 3600)]
         [HttpGet]
-        public async Task<List<Map>> MapList()
+        public List<Map> MapList()
         {
-            return (await Context.Seasons.OrderByDescending(s => s.Number).FirstAsync()).MapPool
-                .Select(m => new Map {Name = m.Name, Id = m.Id, Type = m.Type, ImageUrl = m.ImageUrl}).ToList();
+            return SeasonHelper.GetLastSeason(Context.Seasons).MapPool.OrderBy(m => m.Name).ToList();
         }
 
         [HttpGet]
@@ -45,8 +45,7 @@ namespace WebApplication.Controllers
                 query = query.Where(h => h.Role == role);
             }
 
-            return query.Select(m => new Hero {Name = m.Name, Id = m.Id, Role = m.Role, ImageUrl = m.ImageUrl})
-                .ToList();
+            return query.ToList();
         }
 
         [HttpPost]
@@ -57,6 +56,7 @@ namespace WebApplication.Controllers
             game.DateTime = DateTime.Now;
             game.Map = await Context.Maps.FindAsync(newMap);
             game.Heroes = new Collection<Hero>(await Context.Heroes.Where(h => newHeroes.Contains(h.Id)).ToListAsync());
+            game.Season = SeasonHelper.GetLastSeason(Context.Seasons);
 
             if (newSquadMembers.Length > 0)
             {
