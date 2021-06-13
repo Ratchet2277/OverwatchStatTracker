@@ -1,21 +1,23 @@
 ﻿@model WebApplication.Models.ChartJsData<double>
-<div class="card">
+
+<div class="card medium">
     <div class="card-title">
-        Win rate by role
+        Win rate by hero
     </div>
     <div class="card-content">
-        <canvas id="wr-by-role"></canvas>
+        <canvas id="wr-by-hero" height="300px"></canvas>
     </div>
 </div>
 
 <script type="text/javascript">
    (function() {
-       let WrByRoleCtx = document.getElementById("wr-by-role")?.getContext("2d");
+       let WrByRoleCtx = document.getElementById("wr-by-hero")?.getContext("2d");
        new Chart(WrByRoleCtx, {
            type: 'bar',
            data: @Json.Serialize(Model),
            options: {
                responsive: true,
+               indexAxis: 'y',
                scales: {
                  x: {
                    stacked: true,
@@ -23,6 +25,12 @@
                  y: {
                    stacked: true
                  }
+               },
+               maintainAspectRatio: false,
+               elements: {
+                   bar: {
+                       borderWidth: 0
+                   }
                }
            }
        })
