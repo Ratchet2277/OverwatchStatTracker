@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace WebApplication.Controllers
 {
-    public class BaseController : Controller
+    public abstract class BaseController : Controller
     {
         protected readonly TrackerContext Context;
         protected readonly ILogger<BaseController> Logger;
