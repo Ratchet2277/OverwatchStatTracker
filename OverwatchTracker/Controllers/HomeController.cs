@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Linq;
 using DAL;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -14,7 +15,7 @@ namespace WebApplication.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View(Context.Games.OrderByDescending(g => g.DateTime).Take(10).ToList());
         }
 
         public IActionResult Privacy()

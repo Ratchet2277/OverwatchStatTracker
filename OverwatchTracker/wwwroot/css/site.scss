@@ -26,10 +26,18 @@ main {
   color: $error-color;
 }
 
-.fixed-action-btn {
-  bottom: 86px;
-}
-
 #add-game-modal {
   min-height: 75%;
+}
+
+.hero-list {
+  text-align: center;
+
+  span {
+    margin: auto;
+  }
+
+  .small-hero {
+    max-height: 2em;
+  }
 }
