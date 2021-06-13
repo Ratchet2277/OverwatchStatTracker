@@ -1,0 +1,75 @@
+﻿@using WebApplication.Models
+@model List<ChartJsData<int>>
+<div class="card">
+    <div class="card-title">
+        SR Evolution
+    </div>
+    <div class="card-content">
+        <ul class="collapsible">
+            <li class="active">
+                <div class="collapsible-header">Damage</div>
+                <div class="collapsible-body">
+                    <canvas id="sr-evolution-dps"></canvas>
+                </div>
+            </li>
+            <li>
+                <div class="collapsible-header">Support</div>
+                <div class="collapsible-body">
+                    <canvas id="sr-evolution-tank"></canvas>
+                </div>
+            </li>
+            <li>
+                <div class="collapsible-header">Tank</div>
+                <div class="collapsible-body">
+                    <canvas id="sr-evolution-support"></canvas>
+                </div>
+            </li>
+            <li>
+                <div class="collapsible-header">Open Queue</div>
+                <div class="collapsible-body">
+                    <canvas id="sr-evolution-oq"></canvas>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<script type="text/javascript">
+    (function() {
+        
+        const SR_EVOLUTIONS_OPTIONS = {
+            responsive: true,
+            elements: {
+                point: {
+                    radius: 0
+                }   
+            },
+            interaction: {
+                intersect: false,
+                mode: 'index',
+            },
+            plugins: {
+                tooltip: {
+                    position: "nearest",
+                }  
+            }
+        }
+        
+        let SrEvolutionLineCtx = [
+            document.getElementById("sr-evolution-dps")?.getContext("2d"),
+            document.getElementById("sr-evolution-support")?.getContext("2d"),
+            document.getElementById("sr-evolution-tank")?.getContext("2d"),
+            document.getElementById("sr-evolution-oq")?.getContext("2d")
+        ]
+       
+        let DataList = @Json.Serialize(Model) ?? [];
+        
+        for (let i in SrEvolutionLineCtx) {
+            new Chart(SrEvolutionLineCtx[i], {
+                type: 'line',
+                data: DataList[i],
+                options: SR_EVOLUTIONS_OPTIONS
+            })
+        }
+    })();
+</script>

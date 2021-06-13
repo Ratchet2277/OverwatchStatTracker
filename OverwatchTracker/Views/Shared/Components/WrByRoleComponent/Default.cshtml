@@ -1,31 +1,31 @@
-﻿@model WebApplication.Models.WinRate.ChartJsData<double>
-@{ var culture = System.Globalization.CultureInfo.InvariantCulture;}
-<div class="card">
-    <div class="card-title">
-        Win rate by Role
-    </div>
-    <div class="card-content">
-        <canvas id="wr-by-role"></canvas>
-    </div>
-</div>
+﻿@model WebApplication.Models.ChartJsData<double>
+       <div class="card">
+           <div class="card-title">
+               Win rate by role
+           </div>
+           <div class="card-content">
+               <canvas id="wr-by-role"></canvas>
+           </div>
+       </div>
+       
+       <script type="text/javascript">
+           (function() {
+               let WrByRoleCtx = document.getElementById("wr-by-role")?.getContext("2d");
+               new Chart(WrByRoleCtx, {
+                   type: 'bar',
+                   data: @Json.Serialize(Model),
+                   options: {
+                       responsive: true,
+                       scales: {
+                         x: {
+                           stacked: true,
+                         },
+                         y: {
+                           stacked: true
+                         }
+                       }
+                   }
+               })
+           })();
+       </script>
 
-<script type="text/javascript">
-    (function() {
-        let WrByRoleCtx = document.getElementById("wr-by-role")?.getContext("2d");
-        let WrByRoleChart = new Chart(WrByRoleCtx, {
-            type: 'bar',
-            data: @Json.Serialize(Model),
-            options: {
-                responsive: true,
-                scales: {
-                  x: {
-                    stacked: true,
-                  },
-                  y: {
-                    stacked: true
-                  }
-                }
-            }
-        })
-    })();
-</script>

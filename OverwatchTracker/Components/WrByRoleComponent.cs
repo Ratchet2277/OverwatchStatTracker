@@ -6,7 +6,6 @@ using DomainModel.Types;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication.Helpers;
 using WebApplication.Models;
-using WebApplication.Models.WinRate;
 
 namespace WebApplication.Components
 {

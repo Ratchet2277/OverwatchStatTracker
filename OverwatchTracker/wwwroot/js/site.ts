@@ -65,6 +65,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     let modals: NodeListOf<Element> = document.querySelectorAll('.modal')
     let modalInstances: M.Modal[] = M.Modal.init(modals, MODAL_OPTIONS);
+
+    const COLLAPSIBLE_OPTIONS = {}
+    let elems: NodeListOf<Element> = document.querySelectorAll('.collapsible');
+    var instances: M.Collapsible[] = M.Collapsible.init(elems, COLLAPSIBLE_OPTIONS);
     
     $('.select2').select2();
 })

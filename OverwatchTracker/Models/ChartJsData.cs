@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace WebApplication.Models.WinRate
+namespace WebApplication.Models
 {
     public class ChartJsData<T>
     {
