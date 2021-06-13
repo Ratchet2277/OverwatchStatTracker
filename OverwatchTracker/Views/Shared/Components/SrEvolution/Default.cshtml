@@ -1,5 +1,5 @@
 ﻿@using WebApplication.Models
-@model List<ChartJsData<int>>
+@model Dictionary<DomainModel.Types.GameType, ChartJsData<int>>
 <div class="card">
     <div class="card-title">
         SR Evolution
@@ -9,25 +9,25 @@
             <li class="active">
                 <div class="collapsible-header">Damage</div>
                 <div class="collapsible-body">
-                    <canvas id="sr-evolution-dps"></canvas>
+                    <canvas id="sr-evolution-dps" data-key="Damage"></canvas>
                 </div>
             </li>
             <li>
                 <div class="collapsible-header">Support</div>
                 <div class="collapsible-body">
-                    <canvas id="sr-evolution-tank"></canvas>
+                    <canvas id="sr-evolution-support" data-key="Support"></canvas>
                 </div>
             </li>
             <li>
                 <div class="collapsible-header">Tank</div>
                 <div class="collapsible-body">
-                    <canvas id="sr-evolution-support"></canvas>
+                    <canvas id="sr-evolution-tank" data-key="Tank"></canvas>
                 </div>
             </li>
             <li>
                 <div class="collapsible-header">Open Queue</div>
                 <div class="collapsible-body">
-                    <canvas id="sr-evolution-oq"></canvas>
+                    <canvas id="sr-evolution-oq" data-key="OpenQueue"></canvas>
                 </div>
             </li>
         </ul>
@@ -65,9 +65,14 @@
         let DataList = @Json.Serialize(Model) ?? [];
         
         for (let i in SrEvolutionLineCtx) {
+            let type = SrEvolutionLineCtx[i].canvas.dataset.key;
+            if (typeof DataList[type] === "undefined") {
+                SrEvolutionLineCtx[i].canvas.parentElement.innerHTML = "No data found for this role";
+                continue;
+            }
             new Chart(SrEvolutionLineCtx[i], {
                 type: 'line',
-                data: DataList[i],
+                data: DataList[type],
                 options: SR_EVOLUTIONS_OPTIONS
             })
         }

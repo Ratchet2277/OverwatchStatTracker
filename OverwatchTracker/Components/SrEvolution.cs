@@ -20,14 +20,14 @@ namespace WebApplication.Components
         {
             var season = SeasonHelper.GetLastSeason(Context.Seasons);
 
-            var group = season.Games.GroupBy(g => g.Type);
+            var group = season.Games.OrderBy(g => g.Type).GroupBy(g => g.Type);
             
-            List<ChartJsData<int>> datas = new List<ChartJsData<int>>();
+            Dictionary<GameType, ChartJsData<int>> datas = new Dictionary<GameType, ChartJsData<int>>();
 
             foreach (IGrouping<GameType,Game> games in group)
             {
                 var query = games.OrderBy(g => g.DateTime).TakeLast(10);
-                datas.Add(new ChartJsData<int>
+                datas[games.Key] = new ChartJsData<int>
                 {
                     // ReSharper disable once PossibleMultipleEnumeration
                     Labels = query.Select(g => g.DateTime.ToString()).ToList(),
@@ -42,7 +42,7 @@ namespace WebApplication.Components
                             Stepped = true
                         }
                     }
-                });
+                };
             }
             
             
