@@ -7,10 +7,10 @@ namespace WebApplication.Models
     public class DataSet<T>
     {
         [JsonPropertyName("label")]
-        public string Label { get; set; }
+        public string Label { get; }
 
         [JsonPropertyName("backgroundColor")]
-        public List<string>? BackgroundColor { get; set; } = new();
+        public List<string> BackgroundColor { get; set; } = new();
 
         [JsonPropertyName("data")] 
         public List<T> Data { get; set; } = new();
