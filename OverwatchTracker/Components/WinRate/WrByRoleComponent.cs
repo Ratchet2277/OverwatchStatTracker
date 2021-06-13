@@ -4,18 +4,18 @@ using Microsoft.AspNetCore.Mvc;
 using WebApplication.Helpers;
 using WebApplication.Models;
 
-namespace WebApplication.Components
+namespace WebApplication.Components.WinRate
 {
     public class WrByRoleComponent : BaseComponent
     {
         public WrByRoleComponent(TrackerContext context) : base(context)
         {
         }
-        
+
         public IViewComponentResult Invoke()
         {
             var season = SeasonHelper.GetLastSeason(Context.Seasons);
-            
+
             List<DataSet<double>> dataSets = new()
             {
                 new DataSet<double>("% Win").AddBacgroundColor("#03a9f4"),

@@ -1,10 +1,55 @@
-﻿@{
+﻿@model List<DomainModel.Game>
+
+@{
     ViewData["Title"] = "Home Page";
 }
-
-<div class="center row">
+<div class="row">
+    <div class="col s12">
+        <table class="highlight">
+            <caption>Last reccorded games</caption>
+            <tbody>
+            @foreach (var game in Model)
+            {
+                <tr>
+                    <td>
+                        @(game.DateTime.Date != DateTime.Today ? game.DateTime.ToShortDateString() : "")
+                        @game.DateTime.ToShortTimeString()
+                    </td>
+                    <td>@game.Map.Name</td>
+                    <td>@game.Type.ToString()</td>
+                    <td class="hero-list valign-wrapper">
+                        <span>
+                            @foreach (var hero in game.Heroes)
+                            {
+                                <img class="small-hero tooltipped" data-position="bottom" data-tooltip="@hero.Name" src="@hero.ImageUrl" alt="@hero.Name">
+                            }
+                        </span>
+                    </td>
+                    <td class="green-text">
+                        @game.AllieScore
+                    </td>
+                    <td class="red-text">
+                        @game.EnemyScore
+                    </td>
+                    <td class="amber-text">
+                        @game.Sr
+                    </td>
+                    <td>
+                        @foreach (var squadMember in game.SquadMembers)
+                        {
+                            <span>@squadMember.Name</span>
+                        }
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row center">
     <div class="col s12 m6 l5">
         @await Component.InvokeAsync("WrByRoleComponent")
+        @await Component.InvokeAsync("WrByHero")
     </div>
     <div class="col s12 m6 l7">
         @await Component.InvokeAsync("SrEvolution")
