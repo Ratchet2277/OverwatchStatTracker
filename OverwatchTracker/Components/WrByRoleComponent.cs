@@ -1,8 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Data;
 using DAL;
-using DomainModel;
-using DomainModel.Types;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication.Helpers;
 using WebApplication.Models;
@@ -28,11 +25,11 @@ namespace WebApplication.Components
 
             var winRates = WinRateHelper.WrByRole(season.Games);
 
-            foreach (var winRate in winRates)
+            foreach (var (_, winRate) in winRates)
             {
-                dataSets[0].AddData(winRate.Value.Rate * 100);
-                dataSets[1].AddData(winRate.Value.DrawRate * 100);
-                dataSets[2].AddData((1 - winRate.Value.Rate - winRate.Value.DrawRate) * 100);
+                dataSets[0].AddData(winRate.Rate * 100);
+                dataSets[1].AddData(winRate.DrawRate * 100);
+                dataSets[2].AddData((1 - winRate.Rate - winRate.DrawRate) * 100);
             }
 
             ChartJsData<double> data = new()
