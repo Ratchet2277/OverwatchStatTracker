@@ -27,16 +27,16 @@ namespace WebApplication.Models
             get => _stepValue is null ? _isSteped : _stepValue;
             set
             {
-                if (value is string)
+                switch (value)
                 {
-                    _stepValue = value;
-                    _isSteped = false;
-                }
-
-                if (value is bool)
-                {
-                    _isSteped = value;
-                    _stepValue = null;
+                    case string:
+                        _stepValue = value;
+                        _isSteped = false;
+                        break;
+                    case bool:
+                        _isSteped = value;
+                        _stepValue = null;
+                        break;
                 }
             }
         }
