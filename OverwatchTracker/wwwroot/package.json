@@ -8,7 +8,6 @@
     "lib": "lib"
   },
   "dependencies": {
-    "@types/chart.js": "^2.9.32",
     "chart.js": "^3.3.2",
     "css2": "0.0.2",
     "jquery": "^3.6.0",
@@ -21,7 +20,8 @@
   "devDependencies": {
     "@types/jquery": "^3.5.5",
     "@types/materialize-css": "^1.0.10",
-    "@types/select2": "^4.0.53"
+    "@types/select2": "^4.0.53",
+    "@types/chart.js": "^2.9.32"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
