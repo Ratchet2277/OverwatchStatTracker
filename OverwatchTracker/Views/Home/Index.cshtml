@@ -48,10 +48,10 @@
 </div>
 <div class="row center">
     <div class="col s12 m6 l5">
-        @await Component.InvokeAsync("WrByRoleComponent")
-        @await Component.InvokeAsync("WrByHero")
+        @await Html.PartialAsync("Chart/WinRate/ByType")
+        @await Html.PartialAsync("Chart/WinRate/ByHero")
     </div>
     <div class="col s12 m6 l7">
-        @await Component.InvokeAsync("SrEvolution")
+        @await Html.PartialAsync("Chart/SrEvolution")
     </div>
 </div>

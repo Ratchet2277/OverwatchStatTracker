@@ -8,7 +8,7 @@
     "lib": "lib"
   },
   "dependencies": {
-    "@types/chartjs": "0.0.31",
+    "@types/chart.js": "^2.9.32",
     "chart.js": "^3.3.2",
     "css2": "0.0.2",
     "jquery": "^3.6.0",

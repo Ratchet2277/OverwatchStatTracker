@@ -68,11 +68,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const COLLAPSIBLE_OPTIONS: Partial<M.CollapsibleOptions> = {}
     let collapsibleElems: NodeListOf<Element> = document.querySelectorAll('.collapsible');
-    var collapsibleInstances: M.Collapsible[] = M.Collapsible.init(collapsibleElems, COLLAPSIBLE_OPTIONS);
+    let collapsibleInstances: M.Collapsible[] = M.Collapsible.init(collapsibleElems, COLLAPSIBLE_OPTIONS);
     
     $('.select2').select2();
 
     const TOOLTIP_OPTIONS: Partial<M.TooltipOptions> = {}
     let tooltipElems: NodeListOf<Element> = document.querySelectorAll('.tooltipped');
-    var tooltipInstances: M.Tooltip[] = M.Tooltip.init(tooltipElems, TOOLTIP_OPTIONS);
+    let tooltipInstances: M.Tooltip[] = M.Tooltip.init(tooltipElems, TOOLTIP_OPTIONS);
+    
+    let canvas = <NodeListOf<HTMLCanvasElement>>document.querySelectorAll(".auto-chart-js");
+    canvas.forEach((canva) => {
+        const context = canva.getContext("2d")
+        if (!context)
+            return;
+        
+        let id = canva.id;
+        
+        fetch(`/ChartJs/Get/${canva.id}`).then((result) => {
+            result.json().then((data) => {
+                new Chart(context, data);
+            })
+        })
+    })
+    
 })

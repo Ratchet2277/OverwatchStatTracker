@@ -7,7 +7,7 @@
       "select2",
       "materialize-css",
       "vue",
-      "chartjs"
+      "chart.js"
     ],
     "lib": [
       "es5",
