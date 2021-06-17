@@ -2,7 +2,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using DAL;
-using Microsoft.EntityFrameworkCore;
 using WebApplication.Helpers;
 using WebApplication.Models;
 
@@ -19,10 +18,10 @@ namespace WebApplication.Buisness
         {
             var season = SeasonHelper.GetLastSeason(Context.Seasons);
 
-            var datas = new ChartJsData<double>()
+            var datas = new ChartJsData<double>
             {
-                Labels = new(),
-                DataSets = new()
+                Labels = new List<string>(),
+                DataSets = new List<DataSet<double>>()
                 {
                     new DataSet<double>("% Win"),
                     new DataSet<double>("% Draw")
@@ -43,7 +42,7 @@ namespace WebApplication.Buisness
                 .AddData(heroList.Select(h =>
                     (double) h.Games.Count(g => g.AllieScore == g.EnemyScore) / h.Games.Count * 100).ToList());
 
-            return new ChartJsOptions<double>()
+            return new ChartJsOptions<double>
             {
                 Data = datas,
                 Type = "bar",
@@ -55,7 +54,7 @@ namespace WebApplication.Buisness
                     {
                         x = new
                         {
-                            stacked = true,
+                            stacked = true
                         },
                         y = new
                         {
@@ -100,7 +99,7 @@ namespace WebApplication.Buisness
                 DataSets = dataSets
             };
 
-            return new ChartJsOptions<double>()
+            return new ChartJsOptions<double>
             {
                 Data = data,
                 Type = "bar",
@@ -111,7 +110,7 @@ namespace WebApplication.Buisness
                     {
                         x = new
                         {
-                            stacked = true,
+                            stacked = true
                         },
                         y = new
                         {

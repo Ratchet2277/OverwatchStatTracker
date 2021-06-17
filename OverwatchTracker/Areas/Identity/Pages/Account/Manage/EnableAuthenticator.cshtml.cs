@@ -62,10 +62,10 @@ namespace WebApplication.Areas.Identity.Pages.Account.Manage
             // Strip spaces and hypens
             var verificationCode = Input.Code.Replace(" ", string.Empty).Replace("-", string.Empty);
 
-            var is2faTokenValid = await _userManager.VerifyTwoFactorTokenAsync(
+            var is2FaTokenValid = await _userManager.VerifyTwoFactorTokenAsync(
                 user, _userManager.Options.Tokens.AuthenticatorTokenProvider, verificationCode);
 
-            if (!is2faTokenValid)
+            if (!is2FaTokenValid)
             {
                 ModelState.AddModelError("Input.Code", "Verification code is invalid.");
                 await LoadSharedKeyAndQrCodeUriAsync(user);
@@ -74,7 +74,7 @@ namespace WebApplication.Areas.Identity.Pages.Account.Manage
 
             await _userManager.SetTwoFactorEnabledAsync(user, true);
             var userId = await _userManager.GetUserIdAsync(user);
-            _logger.LogInformation("User with ID '{UserId}' has enabled 2FA with an authenticator app.", userId);
+            _logger.LogInformation("User with ID '{UserId}' has enabled 2FA with an authenticator app", userId);
 
             StatusMessage = "Your authenticator app has been verified.";
 

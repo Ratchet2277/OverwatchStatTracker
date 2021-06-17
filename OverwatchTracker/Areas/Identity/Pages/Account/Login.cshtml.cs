@@ -17,13 +17,11 @@ namespace WebApplication.Areas.Identity.Pages.Account
     {
         private readonly ILogger<LoginModel> _logger;
         private readonly SignInManager<User> _signInManager;
-        private readonly UserManager<User> _userManager;
 
         public LoginModel(SignInManager<User> signInManager,
             ILogger<LoginModel> logger,
             UserManager<User> userManager)
         {
-            _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
         }
@@ -64,7 +62,7 @@ namespace WebApplication.Areas.Identity.Pages.Account
                     await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, false);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User logged in.");
+                    _logger.LogInformation("User logged in");
                     return LocalRedirect(returnUrl);
                 }
 
@@ -72,7 +70,7 @@ namespace WebApplication.Areas.Identity.Pages.Account
                     return RedirectToPage("./LoginWith2fa", new {ReturnUrl = returnUrl, Input.RememberMe});
                 if (result.IsLockedOut)
                 {
-                    _logger.LogWarning("User account locked out.");
+                    _logger.LogWarning("User account locked out");
                     return RedirectToPage("./Lockout");
                 }
 

@@ -9,8 +9,6 @@ namespace WebApplication.Areas.Identity.Pages.Account.Manage
 {
     public class TwoFactorAuthenticationModel : PageModel
     {
-        private const string AuthenicatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}";
-        private readonly ILogger<TwoFactorAuthenticationModel> _logger;
         private readonly SignInManager<User> _signInManager;
 
         private readonly UserManager<User> _userManager;
@@ -22,14 +20,13 @@ namespace WebApplication.Areas.Identity.Pages.Account.Manage
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _logger = logger;
         }
 
         public bool HasAuthenticator { get; set; }
 
         public int RecoveryCodesLeft { get; set; }
 
-        [BindProperty] public bool Is2faEnabled { get; set; }
+        [BindProperty] public bool Is2FaEnabled { get; set; }
 
         public bool IsMachineRemembered { get; set; }
 
@@ -41,7 +38,7 @@ namespace WebApplication.Areas.Identity.Pages.Account.Manage
             if (user == null) return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
 
             HasAuthenticator = await _userManager.GetAuthenticatorKeyAsync(user) != null;
-            Is2faEnabled = await _userManager.GetTwoFactorEnabledAsync(user);
+            Is2FaEnabled = await _userManager.GetTwoFactorEnabledAsync(user);
             IsMachineRemembered = await _signInManager.IsTwoFactorClientRememberedAsync(user);
             RecoveryCodesLeft = await _userManager.CountRecoveryCodesAsync(user);
 

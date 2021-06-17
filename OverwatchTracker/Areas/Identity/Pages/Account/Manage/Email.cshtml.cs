@@ -14,7 +14,6 @@ namespace WebApplication.Areas.Identity.Pages.Account.Manage
     public class EmailModel : PageModel
     {
         private readonly IEmailSender _emailSender;
-        private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
 
         public EmailModel(
@@ -23,7 +22,6 @@ namespace WebApplication.Areas.Identity.Pages.Account.Manage
             IEmailSender emailSender)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
             _emailSender = emailSender;
         }
 

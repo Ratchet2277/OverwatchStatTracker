@@ -13,13 +13,11 @@ namespace WebApplication.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterConfirmationModel : PageModel
     {
-        private readonly IEmailSender _sender;
         private readonly UserManager<User> _userManager;
 
         public RegisterConfirmationModel(UserManager<User> userManager, IEmailSender sender)
         {
             _userManager = userManager;
-            _sender = sender;
         }
 
         public string Email { get; set; }

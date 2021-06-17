@@ -1,7 +1,7 @@
 ﻿@using DomainModel
-@inject SignInManager<User> SignInManager
+@inject SignInManager<User> _signInManager
 @{
-    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+    var hasExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
 <ul class="nav nav-pills flex-column">
     <li class="nav-item">

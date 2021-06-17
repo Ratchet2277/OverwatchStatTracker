@@ -11,12 +11,12 @@ using Microsoft.Extensions.Logging;
 namespace WebApplication.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
-    public class LoginWith2faModel : PageModel
+    public class LoginWith2FaModel : PageModel
     {
-        private readonly ILogger<LoginWith2faModel> _logger;
+        private readonly ILogger<LoginWith2FaModel> _logger;
         private readonly SignInManager<User> _signInManager;
 
-        public LoginWith2faModel(SignInManager<User> signInManager, ILogger<LoginWith2faModel> logger)
+        public LoginWith2FaModel(SignInManager<User> signInManager, ILogger<LoginWith2FaModel> logger)
         {
             _signInManager = signInManager;
             _logger = logger;
@@ -58,17 +58,17 @@ namespace WebApplication.Areas.Identity.Pages.Account
 
             if (result.Succeeded)
             {
-                _logger.LogInformation("User with ID '{UserId}' logged in with 2fa.", user.Id);
+                _logger.LogInformation("User with ID '{UserId}' logged in with 2fa", user.Id);
                 return LocalRedirect(returnUrl);
             }
 
             if (result.IsLockedOut)
             {
-                _logger.LogWarning("User with ID '{UserId}' account locked out.", user.Id);
+                _logger.LogWarning("User with ID '{UserId}' account locked out", user.Id);
                 return RedirectToPage("./Lockout");
             }
 
-            _logger.LogWarning("Invalid authenticator code entered for user with ID '{UserId}'.", user.Id);
+            _logger.LogWarning("Invalid authenticator code entered for user with ID '{UserId}'", user.Id);
             ModelState.AddModelError(string.Empty, "Invalid authenticator code.");
             return Page();
         }

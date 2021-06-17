@@ -9,7 +9,6 @@ namespace WebApplication.Areas.Identity.Pages.Account.Manage
 {
     public class PersonalDataModel : PageModel
     {
-        private readonly ILogger<PersonalDataModel> _logger;
         private readonly UserManager<User> _userManager;
 
         public PersonalDataModel(
@@ -17,7 +16,6 @@ namespace WebApplication.Areas.Identity.Pages.Account.Manage
             ILogger<PersonalDataModel> logger)
         {
             _userManager = userManager;
-            _logger = logger;
         }
 
         public async Task<IActionResult> OnGet()
