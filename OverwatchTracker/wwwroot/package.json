@@ -18,10 +18,10 @@
     "vue": "^2.6.14"
   },
   "devDependencies": {
+    "@types/chart.js": "^2.9.32",
     "@types/jquery": "^3.5.5",
     "@types/materialize-css": "^1.0.10",
-    "@types/select2": "^4.0.53",
-    "@types/chart.js": "^2.9.32"
+    "@types/select2": "^4.0.53"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

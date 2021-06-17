@@ -14,7 +14,7 @@
     <script src="~/node_modules/vue/dist/vue.min.js"></script>
     <script src="~/node_modules/select2/dist/js/select2.min.js"></script>
     <script src="~/node_modules/chart.js/dist/chart.js"></script>
-    
+
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", false)
 </head>
@@ -25,6 +25,7 @@
             @Html.ActionLink("Overwatch Performance Tracker", "Index", "Home", null, new {@class = "brand-logo"})
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
+                @await Html.PartialAsync("_LoginPartial")
             </ul>
         </div>
     </nav>

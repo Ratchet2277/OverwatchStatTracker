@@ -1,13 +1,14 @@
 ﻿using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace DomainModel
 {
-    public class User
+    public class User : IdentityUser
     {
-        private Collection<Game> _games;
         private readonly ILazyLoader _lazyLoader;
+        private Collection<Game> _games;
 
         public User()
         {
@@ -18,7 +19,6 @@ namespace DomainModel
             _lazyLoader = lazyLoader;
         }
 
-        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
