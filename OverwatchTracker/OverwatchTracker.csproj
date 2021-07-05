@@ -3,67 +3,10 @@
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
         <RootNamespace>WebApplication</RootNamespace>
+        <Nullable>disable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Areas\Identity\Data" />
-      <Folder Include="wwwroot\assets\heroes" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\dist\jquery.js" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\dist\jquery.min.js" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\dist\jquery.min.map" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\LICENSE.txt" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\forms\_checkboxes.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\forms\_file-input.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\forms\_forms.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\forms\_input-fields.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\forms\_radio-buttons.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\forms\_range.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\forms\_select.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\forms\_switches.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\_badges.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\_buttons.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\_cards.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\_carousel.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\_chips.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\_collapsible.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\_color-classes.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\_color-variables.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\_datepicker.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\_dropdown.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\_global.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\_grid.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\_icons-material-design.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\_materialbox.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\_modal.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\_navbar.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\_normalize.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\_preloader.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\_pulse.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\_sidenav.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\_slider.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\_table_of_contents.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\_tabs.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\_tapTarget.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\_timepicker.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\_toast.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\_tooltip.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\_transitions.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\_typography.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\_variables.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\components\_waves.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\materialize.css" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\materialize.css.map" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\css\materialize.scss" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\js\materialize.js" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\materialize\js\materialize.min.js" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation\dist\additional-methods.js" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation\dist\additional-methods.min.js" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation\dist\jquery.validate.js" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation\dist\jquery.validate.min.js" />
-      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation\LICENSE.md" />
       <_ContentIncludedByDefault Remove="Views\Shared\Components\WinRateComponent\Default.cshtml" />
       <_ContentIncludedByDefault Remove="Views\WinRate\WinRateByRole.cshtml" />
       <_ContentIncludedByDefault Remove="Pages\Components\WinRateController\Default.cshtml" />
@@ -91,53 +34,15 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="wwwroot\node_modules\@types\jquery\dist\jquery.slim.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\jquery\index.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\jquery\JQuery.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\jquery\JQueryStatic.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\jquery\legacy.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\jquery\LICENSE" />
-      <Content Include="wwwroot\node_modules\@types\jquery\misc.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\jquery\package.json" />
-      <Content Include="wwwroot\node_modules\@types\jquery\README.md" />
-      <Content Include="wwwroot\node_modules\@types\materialize-css\autocomplete.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\materialize-css\autoinit.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\materialize-css\carousel.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\materialize-css\character-counter.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\materialize-css\chips.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\materialize-css\collapsible.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\materialize-css\common.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\materialize-css\datepicker.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\materialize-css\dropdown.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\materialize-css\fab.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\materialize-css\formselect.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\materialize-css\index.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\materialize-css\inputfields.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\materialize-css\LICENSE" />
-      <Content Include="wwwroot\node_modules\@types\materialize-css\materialbox.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\materialize-css\modal.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\materialize-css\package.json" />
-      <Content Include="wwwroot\node_modules\@types\materialize-css\parallax.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\materialize-css\pushpin.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\materialize-css\range.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\materialize-css\README.md" />
-      <Content Include="wwwroot\node_modules\@types\materialize-css\scrollspy.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\materialize-css\sidenav.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\materialize-css\slider.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\materialize-css\tabs.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\materialize-css\taptarget.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\materialize-css\timepicker.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\materialize-css\toast.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\materialize-css\tooltip.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\materialize-css\waves.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\select2\index.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\select2\LICENSE" />
-      <Content Include="wwwroot\node_modules\@types\select2\package.json" />
-      <Content Include="wwwroot\node_modules\@types\select2\README.md" />
-      <Content Include="wwwroot\node_modules\@types\sizzle\index.d.ts" />
-      <Content Include="wwwroot\node_modules\@types\sizzle\LICENSE" />
-      <Content Include="wwwroot\node_modules\@types\sizzle\package.json" />
-      <Content Include="wwwroot\node_modules\@types\sizzle\README.md" />
+      <Folder Include="wwwroot\node_modules\.bin" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Views\Shared\Components\WinRateComponent\Default.cshtml" />
+      <UpToDateCheckInput Remove="Views\WinRate\WinRateByRole.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
       <Content Include="wwwroot\node_modules\cash-dom\CHANGELOG.md" />
       <Content Include="wwwroot\node_modules\cash-dom\dist\cash.d.ts" />
       <Content Include="wwwroot\node_modules\cash-dom\dist\cash.esm.js" />
@@ -147,58 +52,13 @@
       <Content Include="wwwroot\node_modules\cash-dom\LICENSE.md" />
       <Content Include="wwwroot\node_modules\cash-dom\package.json" />
       <Content Include="wwwroot\node_modules\cash-dom\README.md" />
-      <Content Include="wwwroot\node_modules\chart.js\auto\auto.esm.d.ts" />
-      <Content Include="wwwroot\node_modules\chart.js\auto\auto.esm.js" />
-      <Content Include="wwwroot\node_modules\chart.js\auto\auto.js" />
-      <Content Include="wwwroot\node_modules\chart.js\auto\package.json" />
       <Content Include="wwwroot\node_modules\chart.js\dist\chart.esm.js" />
       <Content Include="wwwroot\node_modules\chart.js\dist\chart.js" />
       <Content Include="wwwroot\node_modules\chart.js\dist\chart.min.js" />
       <Content Include="wwwroot\node_modules\chart.js\dist\chunks\helpers.segment.js" />
       <Content Include="wwwroot\node_modules\chart.js\dist\helpers.esm.js" />
-      <Content Include="wwwroot\node_modules\chart.js\helpers\helpers.esm.d.ts" />
-      <Content Include="wwwroot\node_modules\chart.js\helpers\helpers.esm.js" />
-      <Content Include="wwwroot\node_modules\chart.js\helpers\helpers.js" />
-      <Content Include="wwwroot\node_modules\chart.js\helpers\package.json" />
-      <Content Include="wwwroot\node_modules\chart.js\LICENSE.md" />
-      <Content Include="wwwroot\node_modules\chart.js\package.json" />
-      <Content Include="wwwroot\node_modules\chart.js\README.md" />
-      <Content Include="wwwroot\node_modules\chart.js\types\adapters.d.ts" />
-      <Content Include="wwwroot\node_modules\chart.js\types\animation.d.ts" />
-      <Content Include="wwwroot\node_modules\chart.js\types\basic.d.ts" />
-      <Content Include="wwwroot\node_modules\chart.js\types\color.d.ts" />
-      <Content Include="wwwroot\node_modules\chart.js\types\element.d.ts" />
-      <Content Include="wwwroot\node_modules\chart.js\types\geometric.d.ts" />
-      <Content Include="wwwroot\node_modules\chart.js\types\helpers\helpers.canvas.d.ts" />
-      <Content Include="wwwroot\node_modules\chart.js\types\helpers\helpers.collection.d.ts" />
-      <Content Include="wwwroot\node_modules\chart.js\types\helpers\helpers.color.d.ts" />
-      <Content Include="wwwroot\node_modules\chart.js\types\helpers\helpers.core.d.ts" />
-      <Content Include="wwwroot\node_modules\chart.js\types\helpers\helpers.curve.d.ts" />
-      <Content Include="wwwroot\node_modules\chart.js\types\helpers\helpers.dom.d.ts" />
-      <Content Include="wwwroot\node_modules\chart.js\types\helpers\helpers.easing.d.ts" />
-      <Content Include="wwwroot\node_modules\chart.js\types\helpers\helpers.extras.d.ts" />
-      <Content Include="wwwroot\node_modules\chart.js\types\helpers\helpers.interpolation.d.ts" />
-      <Content Include="wwwroot\node_modules\chart.js\types\helpers\helpers.intl.d.ts" />
-      <Content Include="wwwroot\node_modules\chart.js\types\helpers\helpers.math.d.ts" />
-      <Content Include="wwwroot\node_modules\chart.js\types\helpers\helpers.options.d.ts" />
-      <Content Include="wwwroot\node_modules\chart.js\types\helpers\helpers.rtl.d.ts" />
-      <Content Include="wwwroot\node_modules\chart.js\types\helpers\helpers.segment.d.ts" />
-      <Content Include="wwwroot\node_modules\chart.js\types\helpers\index.d.ts" />
-      <Content Include="wwwroot\node_modules\chart.js\types\index.esm.d.ts" />
-      <Content Include="wwwroot\node_modules\chart.js\types\layout.d.ts" />
-      <Content Include="wwwroot\node_modules\chart.js\types\utils.d.ts" />
-      <Content Include="wwwroot\node_modules\css2\example\demo.css" />
-      <Content Include="wwwroot\node_modules\css2\example\index.js" />
-      <Content Include="wwwroot\node_modules\css2\index.js" />
-      <Content Include="wwwroot\node_modules\css2\LICENSE" />
-      <Content Include="wwwroot\node_modules\css2\package.json" />
-      <Content Include="wwwroot\node_modules\css2\README.md" />
       <Content Include="wwwroot\node_modules\jquery-validation-unobtrusive\dist\jquery.validate.unobtrusive.js" />
       <Content Include="wwwroot\node_modules\jquery-validation-unobtrusive\dist\jquery.validate.unobtrusive.min.js" />
-      <Content Include="wwwroot\node_modules\jquery-validation-unobtrusive\LICENSE.txt" />
-      <Content Include="wwwroot\node_modules\jquery-validation-unobtrusive\package.json" />
-      <Content Include="wwwroot\node_modules\jquery-validation-unobtrusive\README.md" />
-      <Content Include="wwwroot\node_modules\jquery-validation\changelog.md" />
       <Content Include="wwwroot\node_modules\jquery-validation\dist\additional-methods.js" />
       <Content Include="wwwroot\node_modules\jquery-validation\dist\additional-methods.min.js" />
       <Content Include="wwwroot\node_modules\jquery-validation\dist\jquery.validate.js" />
@@ -327,11 +187,6 @@
       <Content Include="wwwroot\node_modules\jquery-validation\dist\localization\methods_nl.min.js" />
       <Content Include="wwwroot\node_modules\jquery-validation\dist\localization\methods_pt.js" />
       <Content Include="wwwroot\node_modules\jquery-validation\dist\localization\methods_pt.min.js" />
-      <Content Include="wwwroot\node_modules\jquery-validation\LICENSE.md" />
-      <Content Include="wwwroot\node_modules\jquery-validation\package.json" />
-      <Content Include="wwwroot\node_modules\jquery-validation\README.md" />
-      <Content Include="wwwroot\node_modules\jquery\AUTHORS.txt" />
-      <Content Include="wwwroot\node_modules\jquery\bower.json" />
       <Content Include="wwwroot\node_modules\jquery\dist\jquery.js" />
       <Content Include="wwwroot\node_modules\jquery\dist\jquery.min.js" />
       <Content Include="wwwroot\node_modules\jquery\dist\jquery.min.map" />
@@ -342,9 +197,6 @@
       <Content Include="wwwroot\node_modules\jquery\external\sizzle\dist\sizzle.min.js" />
       <Content Include="wwwroot\node_modules\jquery\external\sizzle\dist\sizzle.min.map" />
       <Content Include="wwwroot\node_modules\jquery\external\sizzle\LICENSE.txt" />
-      <Content Include="wwwroot\node_modules\jquery\LICENSE.txt" />
-      <Content Include="wwwroot\node_modules\jquery\package.json" />
-      <Content Include="wwwroot\node_modules\jquery\README.md" />
       <Content Include="wwwroot\node_modules\jquery\src\ajax.js" />
       <Content Include="wwwroot\node_modules\jquery\src\ajax\jsonp.js" />
       <Content Include="wwwroot\node_modules\jquery\src\ajax\load.js" />
@@ -495,7 +347,6 @@
       <Content Include="wwwroot\node_modules\materialize-css\js\toasts.js" />
       <Content Include="wwwroot\node_modules\materialize-css\js\tooltip.js" />
       <Content Include="wwwroot\node_modules\materialize-css\js\waves.js" />
-      <Content Include="wwwroot\node_modules\materialize-css\LICENSE" />
       <Content Include="wwwroot\node_modules\materialize-css\package.json" />
       <Content Include="wwwroot\node_modules\materialize-css\README.md" />
       <Content Include="wwwroot\node_modules\materialize-css\sass\components\forms\_checkboxes.scss" />
@@ -538,7 +389,6 @@
       <Content Include="wwwroot\node_modules\materialize-css\sass\components\_variables.scss" />
       <Content Include="wwwroot\node_modules\materialize-css\sass\components\_waves.scss" />
       <Content Include="wwwroot\node_modules\materialize-css\sass\materialize.scss" />
-      <Content Include="wwwroot\node_modules\select2\CHANGELOG.md" />
       <Content Include="wwwroot\node_modules\select2\dist\css\select2.css" />
       <Content Include="wwwroot\node_modules\select2\dist\css\select2.min.css" />
       <Content Include="wwwroot\node_modules\select2\dist\js\i18n\af.js" />
@@ -608,9 +458,6 @@
       <Content Include="wwwroot\node_modules\select2\dist\js\select2.full.min.js" />
       <Content Include="wwwroot\node_modules\select2\dist\js\select2.js" />
       <Content Include="wwwroot\node_modules\select2\dist\js\select2.min.js" />
-      <Content Include="wwwroot\node_modules\select2\LICENSE.md" />
-      <Content Include="wwwroot\node_modules\select2\package.json" />
-      <Content Include="wwwroot\node_modules\select2\README.md" />
       <Content Include="wwwroot\node_modules\select2\src\js\banner.end.js" />
       <Content Include="wwwroot\node_modules\select2\src\js\banner.start.js" />
       <Content Include="wwwroot\node_modules\select2\src\js\jquery.mousewheel.shim.js" />
@@ -719,6 +566,8 @@
       <Content Include="wwwroot\node_modules\select2\src\js\select2\utils.js" />
       <Content Include="wwwroot\node_modules\select2\src\js\wrapper.end.js" />
       <Content Include="wwwroot\node_modules\select2\src\js\wrapper.start.js" />
+      <Content Include="wwwroot\node_modules\select2\src\scss\core.css" />
+      <Content Include="wwwroot\node_modules\select2\src\scss\core.css.map" />
       <Content Include="wwwroot\node_modules\select2\src\scss\core.scss" />
       <Content Include="wwwroot\node_modules\select2\src\scss\mixins\_gradients.scss" />
       <Content Include="wwwroot\node_modules\select2\src\scss\theme\classic\layout.scss" />
@@ -731,9 +580,6 @@
       <Content Include="wwwroot\node_modules\select2\src\scss\_dropdown.scss" />
       <Content Include="wwwroot\node_modules\select2\src\scss\_multiple.scss" />
       <Content Include="wwwroot\node_modules\select2\src\scss\_single.scss" />
-      <Content Update="wwwroot\tsconfig.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
       <Content Include="wwwroot\node_modules\vue\dist\README.md" />
       <Content Include="wwwroot\node_modules\vue\dist\vue.common.dev.js" />
       <Content Include="wwwroot\node_modules\vue\dist\vue.common.js" />
@@ -749,7 +595,6 @@
       <Content Include="wwwroot\node_modules\vue\dist\vue.runtime.esm.js" />
       <Content Include="wwwroot\node_modules\vue\dist\vue.runtime.js" />
       <Content Include="wwwroot\node_modules\vue\dist\vue.runtime.min.js" />
-      <Content Include="wwwroot\node_modules\vue\LICENSE" />
       <Content Include="wwwroot\node_modules\vue\package.json" />
       <Content Include="wwwroot\node_modules\vue\README.md" />
       <Content Include="wwwroot\node_modules\vue\src\compiler\codeframe.js" />
@@ -952,11 +797,27 @@
       <Content Include="wwwroot\node_modules\vue\types\umd.d.ts" />
       <Content Include="wwwroot\node_modules\vue\types\vnode.d.ts" />
       <Content Include="wwwroot\node_modules\vue\types\vue.d.ts" />
+      <Content Remove="wwwroot\node_modules\jquery\external\**" />
+      <Content Remove="wwwroot\node_modules\jquery\src\**" />
+      <Content Remove="wwwroot\node_modules\select2\src\**" />
     </ItemGroup>
 
     <ItemGroup>
-      <UpToDateCheckInput Remove="Views\Shared\Components\WinRateComponent\Default.cshtml" />
-      <UpToDateCheckInput Remove="Views\WinRate\WinRateByRole.cshtml" />
+      <Compile Remove="wwwroot\node_modules\jquery\external\**" />
+      <Compile Remove="wwwroot\node_modules\jquery\src\**" />
+      <Compile Remove="wwwroot\node_modules\select2\src\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="wwwroot\node_modules\jquery\external\**" />
+      <EmbeddedResource Remove="wwwroot\node_modules\jquery\src\**" />
+      <EmbeddedResource Remove="wwwroot\node_modules\select2\src\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="wwwroot\node_modules\jquery\external\**" />
+      <None Remove="wwwroot\node_modules\jquery\src\**" />
+      <None Remove="wwwroot\node_modules\select2\src\**" />
     </ItemGroup>
 
 </Project>

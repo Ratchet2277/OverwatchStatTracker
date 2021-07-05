@@ -1,15 +1,19 @@
 ﻿using System.Diagnostics;
 using System.Linq;
 using DAL;
+using DomainModel;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WebApplication.Models;
 
 namespace WebApplication.Controllers
 {
+    [Authorize]
     public class HomeController : BaseController
     {
-        public HomeController(TrackerContext context, ILogger<HomeController> logger) : base(context, logger)
+        public HomeController(TrackerContext context, ILogger<HomeController> logger, UserManager<User> userManager) : base(context, logger, userManager)
         {
         }
 

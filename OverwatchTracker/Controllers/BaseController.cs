@@ -1,4 +1,6 @@
 ﻿using DAL;
+using DomainModel;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -8,11 +10,13 @@ namespace WebApplication.Controllers
     {
         protected readonly TrackerContext Context;
         protected readonly ILogger<BaseController> Logger;
+        protected readonly UserManager<User> UserManager;
 
-        public BaseController(TrackerContext context, ILogger<BaseController> logger)
+        public BaseController(TrackerContext context, ILogger<BaseController> logger, UserManager<User> userManager)
         {
             Context = context;
             Logger = logger;
+            UserManager = userManager;
         }
     }
 }

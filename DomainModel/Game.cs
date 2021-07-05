@@ -13,7 +13,11 @@ namespace DomainModel
         private Collection<Hero> _heroes;
 
         private Map _map;
-
+        public Map Map
+        {
+            get => _lazyLoader.Load(this, ref _map);
+            set => _map = value;
+        }
         private Collection<SquadMember> _squadMembers;
 
         private User _user;
@@ -30,12 +34,7 @@ namespace DomainModel
         public int Id { get; set; }
         public int Sr { get; set; }
         public DateTime DateTime { get; set; }
-
-        public Map Map
-        {
-            get => _lazyLoader.Load(this, ref _map);
-            set => _map = value;
-        }
+        
 
         [JsonIgnore]
         public Collection<Hero> Heroes

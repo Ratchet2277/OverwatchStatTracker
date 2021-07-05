@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using DAL;
+using DomainModel;
 using DomainModel.Types;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WebApplication.Buisness;
@@ -8,9 +11,10 @@ using WebApplication.Models.Contracts;
 
 namespace WebApplication.Controllers
 {
+    [Authorize]
     public class ChartJsController : BaseController
     {
-        public ChartJsController(TrackerContext context, ILogger<ChartJsController> logger) : base(context, logger)
+        public ChartJsController(TrackerContext context, ILogger<ChartJsController> logger, UserManager<User> userManager) : base(context, logger, userManager)
         {
         }
         

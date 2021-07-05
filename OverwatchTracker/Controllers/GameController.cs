@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using DAL;
 using DomainModel;
 using DomainModel.Types;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -13,9 +15,11 @@ using WebApplication.Helpers;
 
 namespace WebApplication.Controllers
 {
+    [Authorize]
+
     public class GameController : BaseController
     {
-        public GameController(TrackerContext context, ILogger<GameController> logger) : base(context, logger)
+        public GameController(TrackerContext context, ILogger<GameController> logger, UserManager<User> userManager) : base(context, logger, userManager)
         {
         }
 
@@ -57,6 +61,7 @@ namespace WebApplication.Controllers
             game.Map = await Context.Maps.FindAsync(newMap);
             game.Heroes = new Collection<Hero>(await Context.Heroes.Where(h => newHeroes.Contains(h.Id)).ToListAsync());
             game.Season = SeasonHelper.GetLastSeason(Context.Seasons);
+            game.User = await UserManager.GetUserAsync(User);
 
             if (newSquadMembers.Length > 0)
             {

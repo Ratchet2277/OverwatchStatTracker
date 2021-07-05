@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using DAL;
+using DomainModel;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using WebApplication.Models;
@@ -9,8 +11,7 @@ namespace WebApplication.Controllers
 {
     public class SquadMemberController : BaseController
     {
-        public SquadMemberController(TrackerContext context, ILogger<SquadMemberController> logger) : base(context,
-            logger)
+        public SquadMemberController(TrackerContext context, ILogger<SquadMemberController> logger, UserManager<User> userManager) : base(context, logger, userManager)
         {
         }
 
