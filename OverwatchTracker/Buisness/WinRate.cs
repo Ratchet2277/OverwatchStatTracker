@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using DAL;
+using DomainModel;
 using DomainModel.Types;
 using WebApplication.Helpers;
 using WebApplication.Models;
@@ -12,7 +13,7 @@ namespace WebApplication.Buisness
     [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
     public class WinRate : BaseBuisness
     {
-        public WinRate(TrackerContext context) : base(context)
+        public WinRate(TrackerContext context, User currentUser) : base(context, currentUser)
         {
         }
 
@@ -25,13 +26,13 @@ namespace WebApplication.Buisness
                 Labels = new List<string>(),
                 DataSets = new List<DataSet<double>>()
                 {
-                    new DataSet<double>("% Win"),
-                    new DataSet<double>("% Draw")
+                    new ("% Win"),
+                    new ("% Draw")
                 }
             };
 
             var heroList = season.HeroPool
-                .Where(h => h.Games.Count > 0)
+                .Where(h => h.Games.Any(g => g.User == CurrentUser))
                 .OrderByDescending(h => (double) h.Games.Count(g => g.AllieScore >= g.EnemyScore) / h.Games.Count);
 
             if (!heroList.Any())
@@ -90,7 +91,7 @@ namespace WebApplication.Buisness
                 new DataSet<double>("% Lose").AddBacgroundColor("#f44336")
             };
 
-            var winRates = WinRateHelper.WrByRole(season.Games);
+            var winRates = WinRateHelper.WrByRole(season.Games.Where(g => g.User == CurrentUser));
 
             if (!winRates.Any())
                 return null;

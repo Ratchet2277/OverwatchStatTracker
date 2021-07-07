@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using DAL;
 using DomainModel;
 using Microsoft.AspNetCore.Authorization;
@@ -17,9 +18,10 @@ namespace WebApplication.Controllers
         {
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(Context.Games.OrderByDescending(g => g.DateTime).Take(10).ToList());
+            var user = await UserManager.GetUserAsync(User);
+            return View(Context.Games.Where(g => g.User == user).OrderByDescending(g => g.DateTime).Take(10).ToList());
         }
 
         public IActionResult Privacy()

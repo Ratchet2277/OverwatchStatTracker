@@ -1,7 +1,4 @@
-﻿using DAL;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
-
+﻿
 namespace Initializer
 {
     internal class Program

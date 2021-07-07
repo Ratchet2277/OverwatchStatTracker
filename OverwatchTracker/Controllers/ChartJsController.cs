@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using DAL;
 using DomainModel;
 using DomainModel.Types;
@@ -21,16 +22,17 @@ namespace WebApplication.Controllers
         
         // GET
         [HttpGet("ChartJs/Get/{id}")]
-        public IChartJsOptions? Get(string id)
+        public async Task<IChartJsOptions?> Get(string id)
         {
+            var user = await UserManager.GetUserAsync(User);
             return id switch
             {
-                "wr-by-hero" => new WinRate(Context).ByHero(),
-                "wr-by-type" => new WinRate(Context).ByType(),
-                "sr-evolution-damage" => new SrEvolution(Context).ByType(GameType.Damage),
-                "sr-evolution-support" => new SrEvolution(Context).ByType(GameType.Support),
-                "sr-evolution-tank" => new SrEvolution(Context).ByType(GameType.Tank),
-                "sr-evolution-open-queue" => new SrEvolution(Context).ByType(GameType.OpenQueue),
+                "wr-by-hero" => new WinRate(Context, user).ByHero(),
+                "wr-by-type" => new WinRate(Context, user).ByType(),
+                "sr-evolution-damage" => new SrEvolution(Context, user).ByType(GameType.Damage),
+                "sr-evolution-support" => new SrEvolution(Context, user).ByType(GameType.Support),
+                "sr-evolution-tank" => new SrEvolution(Context, user).ByType(GameType.Tank),
+                "sr-evolution-open-queue" => new SrEvolution(Context, user).ByType(GameType.OpenQueue),
                 _ => throw new KeyNotFoundException()
             };
         }
