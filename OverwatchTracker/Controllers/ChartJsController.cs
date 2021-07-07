@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using DAL;
 using DomainModel;
 using DomainModel.Types;
@@ -20,7 +21,7 @@ namespace WebApplication.Controllers
         
         // GET
         [HttpGet("ChartJs/Get/{id}")]
-        public IChartJsOptions Get(string id)
+        public IChartJsOptions? Get(string id)
         {
             return id switch
             {

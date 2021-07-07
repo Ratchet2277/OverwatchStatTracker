@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using DAL;
+using DomainModel.Types;
 using WebApplication.Helpers;
 using WebApplication.Models;
 
@@ -14,7 +16,7 @@ namespace WebApplication.Buisness
         {
         }
 
-        public ChartJsOptions<double> ByHero()
+        public ChartJsOptions<double>? ByHero()
         {
             var season = SeasonHelper.GetLastSeason(Context.Seasons);
 
@@ -31,6 +33,9 @@ namespace WebApplication.Buisness
             var heroList = season.HeroPool
                 .Where(h => h.Games.Count > 0)
                 .OrderByDescending(h => (double) h.Games.Count(g => g.AllieScore >= g.EnemyScore) / h.Games.Count);
+
+            if (!heroList.Any())
+                return null;
 
             datas.Labels.AddRange(heroList.Select(h => h.Name).ToList());
 
@@ -73,9 +78,10 @@ namespace WebApplication.Buisness
             };
         }
 
-        public ChartJsOptions<double> ByType()
+        public ChartJsOptions<double>? ByType()
         {
             var season = SeasonHelper.GetLastSeason(Context.Seasons);
+            var labels = new List<string>();
 
             List<DataSet<double>> dataSets = new()
             {
@@ -86,16 +92,21 @@ namespace WebApplication.Buisness
 
             var winRates = WinRateHelper.WrByRole(season.Games);
 
-            foreach (var (_, winRate) in winRates)
+            if (!winRates.Any())
+                return null;
+
+            foreach (var (type, winRate) in winRates)
             {
                 dataSets[0].AddData(winRate.Rate * 100);
                 dataSets[1].AddData(winRate.DrawRate * 100);
                 dataSets[2].AddData((1 - winRate.Rate - winRate.DrawRate) * 100);
+                
+                labels.Add(type == GameType.OpenQueue ? "Open Queue" : type.ToString());
             }
 
             ChartJsData<double> data = new()
             {
-                Labels = new List<string> {"Damage", "Support", "Tank", "Open Queue"},
+                Labels = labels,
                 DataSets = dataSets
             };
 

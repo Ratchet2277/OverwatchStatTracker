@@ -11,16 +11,11 @@ namespace WebApplication.Helpers
         public static Dictionary<GameType, WinRate> WrByRole(IEnumerable<Game> games)
         {
             var enumerable = games.ToList();
-            return new Dictionary<GameType, WinRate>
-            {
-                {GameType.Damage, GetWinRate(enumerable.Where(g => g.Type == GameType.Damage))},
-                {GameType.Support, GetWinRate(enumerable.Where(g => g.Type == GameType.Support))},
-                {GameType.Tank, GetWinRate(enumerable.Where(g => g.Type == GameType.Tank))},
-                {GameType.OpenQueue, GetWinRate(enumerable.Where(g => g.Type == GameType.OpenQueue))}
-            };
+
+            return enumerable.GroupBy(g => g.Type).ToDictionary(group => group.Key, GetWinRate);
         }
 
-        public static WinRate GetWinRate(IEnumerable<Game> games)
+        private static WinRate GetWinRate(IEnumerable<Game> games)
         {
             var enumerable = games.ToList();
             var nbWin = enumerable.Count(g => g.AllieScore > g.EnemyScore);

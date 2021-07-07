@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using System.Linq;
 using DAL;
 using DomainModel.Types;
@@ -14,21 +15,28 @@ namespace WebApplication.Buisness
         {
         }
 
-        public ChartJsOptions<int> ByType(GameType type)
+        public ChartJsOptions<int>? ByType(GameType type)
         {
             var season = SeasonHelper.GetLastSeason(Context.Seasons);
 
             var games = season.Games.OrderBy(g => g.Type).Where(g => g.Type == type);
 
             var query = games.OrderBy(g => g.DateTime).TakeLast(10);
-            
+
+            if (!query.Any())
+            {
+                return null;
+            }
+
             var data = new ChartJsData<int>
             {
                 // ReSharper disable once PossibleMultipleEnumeration
                 Labels = query.Select(g => g.DateTime.ToString()).ToList(),
+                
+                
                 DataSets = new List<DataSet<int>>
                 {
-                    new ($"{type.ToString()} Rank")
+                    new ($"{(type == GameType.OpenQueue ? "Open Queue" : type.ToString())} Rank")
                     {
                         // ReSharper disable once PossibleMultipleEnumeration
                         Data = query.Select(g => g.Sr).ToList(),
@@ -38,7 +46,6 @@ namespace WebApplication.Buisness
                     }
                 }
             };
-
             return new ChartJsOptions<int>()
             {
                 Data = data,

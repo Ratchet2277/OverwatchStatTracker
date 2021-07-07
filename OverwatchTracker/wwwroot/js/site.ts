@@ -84,11 +84,20 @@ document.addEventListener('DOMContentLoaded', () => {
         
         let id = canva.id;
         
-        fetch(`/ChartJs/Get/${canva.id}`).then((result) => {
-            result.json().then((data) => {
+        fetch(`/ChartJs/Get/${canva.id}`, {
+            headers: {
+                "Accept": "application/json"
+            }
+        })
+            .then(response => response.json())
+            .then((data) => {
                 new Chart(context, data);
             })
-        })
+            .catch(() =>  {
+                if (!context.canvas.parentElement)
+                    return;
+                context.canvas.parentElement.innerText = "Not enough Data"
+            })
     })
     
 })
