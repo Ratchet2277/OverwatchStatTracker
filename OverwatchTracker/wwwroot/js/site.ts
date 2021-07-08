@@ -64,25 +64,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     let modals: NodeListOf<Element> = document.querySelectorAll('.modal')
-    let modalInstances: M.Modal[] = M.Modal.init(modals, MODAL_OPTIONS);
+    M.Modal.init(modals, MODAL_OPTIONS);
 
     const COLLAPSIBLE_OPTIONS: Partial<M.CollapsibleOptions> = {}
     let collapsibleElems: NodeListOf<Element> = document.querySelectorAll('.collapsible');
-    let collapsibleInstances: M.Collapsible[] = M.Collapsible.init(collapsibleElems, COLLAPSIBLE_OPTIONS);
+    M.Collapsible.init(collapsibleElems, COLLAPSIBLE_OPTIONS);
     
     $('.select2').select2();
 
     const TOOLTIP_OPTIONS: Partial<M.TooltipOptions> = {}
     let tooltipElems: NodeListOf<Element> = document.querySelectorAll('.tooltipped');
-    let tooltipInstances: M.Tooltip[] = M.Tooltip.init(tooltipElems, TOOLTIP_OPTIONS);
+    M.Tooltip.init(tooltipElems, TOOLTIP_OPTIONS);
     
     let canvas = <NodeListOf<HTMLCanvasElement>>document.querySelectorAll(".auto-chart-js");
+    
     canvas.forEach((canva) => {
-        const context = canva.getContext("2d")
+        const context = canva.getContext("2d");
         if (!context)
             return;
-        
-        let id = canva.id;
         
         fetch(`/ChartJs/Get/${canva.id}`, {
             headers: {
