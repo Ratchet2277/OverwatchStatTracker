@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using DAL;
@@ -26,7 +27,7 @@ namespace WebApplication.Buisness
             {
                 games = games.Where(g => g.Type == type);
             }
-            
+
             var query = games.OrderBy(g => g.DateTime).TakeLast(10);
 
             if (!query.Any())
@@ -80,6 +81,60 @@ namespace WebApplication.Buisness
                     }
                 }
             };
+        }
+
+        public Tuple<float, float>? GetAverageEvolutionByType(GameType? type)
+        {
+            var season = SeasonHelper.GetLastSeason(Context.Seasons);
+
+            var games = season.Games.Where(g => g.User == CurrentUser);
+
+            if (type is not null)
+            {
+                games = games.Where(g => g.Type == type);
+            }
+
+            if (!games.Any())
+                return null;
+
+            var listGames = games.OrderBy(g => g.DateTime).ToList();
+
+            var totalWin = 0;
+            var nbWin = 0;
+            var totalLose = 0;
+            var nbLose = 0;
+
+            for (var i = 1; i < listGames.Count - 1; i++)
+            {
+                if (listGames[i].AllieScore > listGames[i].EnemyScore)
+                {
+                    totalWin += listGames[i].Sr - listGames[i - 1].Sr;
+                    nbWin++;
+                    continue;
+                }
+
+                if (listGames[i].AllieScore == listGames[i].EnemyScore) continue;
+
+                totalLose += listGames[i].Sr - listGames[i - 1].Sr;
+                nbLose++;
+            }
+
+            return new Tuple<float, float>((float) totalWin / nbWin, (float) totalLose / nbLose);
+        }
+
+        public Dictionary<GameType, Tuple<float, float>> GetAverageEvolution()
+        {
+            var result = new Dictionary<GameType, Tuple<float, float>>();
+
+            foreach (GameType gameType in (GameType[]) Enum.GetValues(typeof(GameType)))
+            {
+                var evolutionByType = GetAverageEvolutionByType(gameType);
+                if (evolutionByType is null)
+                    continue;
+                result.Add(gameType, evolutionByType);
+            }
+
+            return result;
         }
     }
 }

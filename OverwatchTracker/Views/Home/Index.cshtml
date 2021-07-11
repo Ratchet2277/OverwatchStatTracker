@@ -1,4 +1,4 @@
-﻿@model List<DomainModel.Game>
+﻿@model WebApplication.Models.HomeIndexModels;
 
 @{
     ViewData["Title"] = "Home Page";
@@ -8,7 +8,7 @@
         <table class="highlight">
             <caption>Last reccorded games</caption>
             <tbody>
-            @foreach (var game in Model)
+            @foreach (var game in Model.Games)
             {
                 <tr>
                     <td>
@@ -53,5 +53,42 @@
     </div>
     <div class="col s12 m6 l7">
         @await Html.PartialAsync("Chart/SrEvolution")
+    </div>
+</div>
+<div class="row">
+    <div class="col s12">
+        <captation>Average Sr change</captation>
+        <table class="responsive-table center">
+            <thead>
+            <tr>
+                @foreach (var srDeltaAverage in Model.SrDeltaAverage)
+                {
+                    <th colspan="2">
+                        @srDeltaAverage.Key
+                    </th>
+                }
+            </tr>
+            <tr>
+                @foreach (var unused in Model.SrDeltaAverage)
+                {
+                    <th>
+                        By win
+                    </th>
+                    <th>
+                        By lose
+                    </th>
+                }
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                @foreach (var srDeltaAverage in Model.SrDeltaAverage)
+                {
+                    <td>+@Math.Round(srDeltaAverage.Value.Item1, 2)</td>
+                    <td>@Math.Round(srDeltaAverage.Value.Item2, 2)</td>
+                }
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>

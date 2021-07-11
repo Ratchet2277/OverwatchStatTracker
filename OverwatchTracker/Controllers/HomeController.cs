@@ -1,12 +1,16 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using DAL;
 using DomainModel;
+using DomainModel.Types;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using WebApplication.Buisness;
 using WebApplication.Models;
 
 namespace WebApplication.Controllers
@@ -21,7 +25,13 @@ namespace WebApplication.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await UserManager.GetUserAsync(User);
-            return View(Context.Games.Where(g => g.User == user).OrderByDescending(g => g.DateTime).Take(10).ToList());
+            var srEvolution = new SrEvolution(Context, user);
+            var model = new HomeIndexModels
+            {
+                Games = Context.Games.Where(g => g.User == user).OrderByDescending(g => g.DateTime).Take(10).ToList(),
+                SrDeltaAverage = srEvolution.GetAverageEvolution()
+            };
+            return View(model);
         }
 
         public IActionResult Privacy()
