@@ -15,13 +15,13 @@ using WebApplication.Models;
 
 namespace WebApplication.Controllers
 {
-    [Authorize]
     public class HomeController : BaseController
     {
         public HomeController(TrackerContext context, ILogger<HomeController> logger, UserManager<User> userManager) : base(context, logger, userManager)
         {
         }
-
+        
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var user = await UserManager.GetUserAsync(User);

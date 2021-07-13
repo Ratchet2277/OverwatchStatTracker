@@ -57,7 +57,7 @@ namespace WebApplication
             {
                 endpoints.MapControllerRoute(
                     "Identity",
-                    "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                    "{area:exists}/{controller}/{action}/{id?}");
                 endpoints.MapControllerRoute(
                     "default",
                     "{controller=Home}/{action=Index}/{id?}");

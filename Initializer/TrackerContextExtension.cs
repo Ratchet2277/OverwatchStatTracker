@@ -354,7 +354,7 @@ namespace Initializer
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(
-                @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=TrackerDB;Integrated Security=true");
+                @"Server=localhost\SQLEXPRESS;Database=TrackerDB;Trusted_Connection=True;");
             base.OnConfiguring(optionsBuilder);
         }
     }
