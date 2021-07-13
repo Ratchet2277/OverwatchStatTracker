@@ -83,7 +83,7 @@ namespace WebApplication.Buisness
             };
         }
 
-        public Tuple<float, float>? GetAverageEvolutionByType(GameType? type)
+        private Tuple<float, float>? GetAverageEvolutionByType(GameType? type)
         {
             var season = SeasonHelper.GetLastSeason(Context.Seasons);
 
@@ -126,7 +126,7 @@ namespace WebApplication.Buisness
         {
             var result = new Dictionary<GameType, Tuple<float, float>>();
 
-            foreach (GameType gameType in (GameType[]) Enum.GetValues(typeof(GameType)))
+            foreach (var gameType in (GameType[]) Enum.GetValues(typeof(GameType)))
             {
                 var evolutionByType = GetAverageEvolutionByType(gameType);
                 if (evolutionByType is null)
