@@ -19,7 +19,7 @@
                     <td>@game.Type.ToString()</td>
                     <td class="hero-list valign-wrapper">
                         <span>
-                            @foreach (var hero in game.Heroes)
+                            @foreach (var hero in game.Heroes.OrderBy(h => h.Name).ToList())
                             {
                                 <img class="small-hero tooltipped" data-position="bottom" data-tooltip="@hero.Name" src="@hero.ImageUrl" alt="@hero.Name">
                             }
@@ -35,7 +35,7 @@
                         @game.Sr
                     </td>
                     <td>
-                        @foreach (var squadMember in game.SquadMembers)
+                        @foreach (var squadMember in game.SquadMembers.OrderBy(s => s.Name).ToList())
                         {
                             <span>@squadMember.Name</span>
                         }
