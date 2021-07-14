@@ -4,11 +4,18 @@ using DAL;
 using DomainModel;
 using DomainModel.Types;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Initializer
 {
     public class TrackerContextExtension : TrackerContext
     {
+        private IConfiguration _configuration;
+
+        public TrackerContextExtension(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         public void Initialize(bool dropAlways = false)
         {
             if (dropAlways)
@@ -354,7 +361,7 @@ namespace Initializer
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(
-                @"Server=localhost\SQLEXPRESS;Database=TrackerDB;Trusted_Connection=True;");
+                _configuration.GetConnectionString("TrackerDB"));
             base.OnConfiguring(optionsBuilder);
         }
     }
