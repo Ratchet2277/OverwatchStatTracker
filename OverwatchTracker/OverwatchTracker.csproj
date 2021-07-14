@@ -4,6 +4,9 @@
         <TargetFramework>net5.0</TargetFramework>
         <RootNamespace>WebApplication</RootNamespace>
         <Nullable>disable</Nullable>
+        
+        <PreBuildEvent Condition=" '$(OS)' == 'Windows' ">appcmd stop sites "Tracker"</PreBuildEvent>
+        <PostBuildEvent Condition=" '$(OS)' == 'Windows' ">appcmd start sites "Tracker"</PostBuildEvent>
     </PropertyGroup>
 
     <ItemGroup>
@@ -47,5 +50,14 @@
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory> 
         </Content> 
     </ItemGroup>
+    
+    <ItemGroup>
+      <None Include="Web.config">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </None>
+    </ItemGroup>
+
 
 </Project>
