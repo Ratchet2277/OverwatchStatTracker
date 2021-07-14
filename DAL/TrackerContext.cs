@@ -14,6 +14,12 @@ namespace DAL
         {
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseLazyLoadingProxies();
+        }
+
         // public override DbSet<User> Users { get; set; }
         public DbSet<Hero> Heroes { get; set; }
         public DbSet<Map> Maps { get; set; }

@@ -6,45 +6,13 @@ namespace DomainModel
 {
     public class Season
     {
-        private readonly ILazyLoader _lazyLoader;
-
-        private Collection<Hero> _heroPool;
-
-        private Collection<Map> _mapPool;
-
-        public Season()
-        {
-        }
-
-        public Season(ILazyLoader lazyLoader)
-        {
-            _lazyLoader = lazyLoader;
-        }
-
         public int Id { get; set; }
         public int Number { get; set; }
 
-        [JsonIgnore]
-        public Collection<Hero> HeroPool
-        {
-            get => _lazyLoader.Load(this, ref _heroPool);
-            set => _heroPool = value;
-        }
+        [JsonIgnore] public virtual Collection<Hero> HeroPool { get; set; }
 
-        [JsonIgnore]
-        public Collection<Map> MapPool
-        {
-            get => _lazyLoader.Load(this, ref _mapPool);
-            set => _mapPool = value;
-        }
+        [JsonIgnore] public virtual Collection<Map> MapPool { get; set; }
 
-        private Collection<Game> _games;
-
-        [JsonIgnore]
-        public Collection<Game> Games
-        {
-            get => _lazyLoader.Load(this, ref _games);
-            set => _games = value;
-        }
+        [JsonIgnore] public virtual Collection<Game> Games { get; set; }
     }
 }
