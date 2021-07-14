@@ -8,13 +8,7 @@
         <PreBuildEvent Condition=" '$(OS)' == 'Windows' ">appcmd stop sites "Tracker"</PreBuildEvent>
         <PostBuildEvent Condition=" '$(OS)' == 'Windows' ">appcmd start sites "Tracker"</PostBuildEvent>
     </PropertyGroup>
-
-    <ItemGroup>
-      <_ContentIncludedByDefault Remove="Views\Shared\Components\WinRateComponent\Default.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\WinRate\WinRateByRole.cshtml" />
-      <_ContentIncludedByDefault Remove="Pages\Components\WinRateController\Default.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Shared\Components\WinRateComponent\WinRateByRole.cshtml" />
-    </ItemGroup>
+    
 
     <ItemGroup>
       <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.8" />
