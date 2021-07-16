@@ -34,7 +34,7 @@
                 <label for="Game_Heroes">Hero</label>
             </div>
             <div class="input-field col s12 m6">
-                @Html.TextBoxFor(m => m.Game.Sr)
+                @Html.TextBoxFor(m => m.Game.Sr, htmlAttributes: new {type = "number", min = 0, max = 5000})
                 @Html.LabelFor(m => m.Game.Sr)
             </div>
 
@@ -49,11 +49,11 @@
                 </select>
             </div>
             <div class="input-field col s12 m6">
-                @Html.TextBoxFor(m => m.Game.AllieScore)
+                @Html.TextBoxFor(m => m.Game.AllieScore, htmlAttributes: new {type = "number", min = 0})
                 @Html.LabelFor(m => m.Game.AllieScore)
             </div>
             <div class="input-field col s12 m6">
-                @Html.TextBoxFor(m => m.Game.EnemyScore)
+                @Html.TextBoxFor(m => m.Game.EnemyScore, htmlAttributes: new {type = "number", min = 0})
                 @Html.LabelFor(m => m.Game.EnemyScore)
             </div>
             <div class="col s12 center">
