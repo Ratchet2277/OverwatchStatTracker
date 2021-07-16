@@ -42,11 +42,11 @@ namespace WebApplication.Buisness
 
             datas.DataSets[0].AddBacgroundColor("#03a9f4")
                 .AddData(heroList.Select(h =>
-                    (double) h.Games.Count(g => g.AllieScore > g.EnemyScore) / h.Games.Count * 100).ToList());
+                    (double) h.Games.Where(g => g.User == CurrentUser).Count(g => g.AllieScore > g.EnemyScore) / h.Games.Count * 100).ToList());
 
             datas.DataSets[1].AddBacgroundColor("#ffeb3b")
                 .AddData(heroList.Select(h =>
-                    (double) h.Games.Count(g => g.AllieScore == g.EnemyScore) / h.Games.Count * 100).ToList());
+                    (double) h.Games.Where(g => g.User == CurrentUser).Count(g => g.AllieScore == g.EnemyScore) / h.Games.Count * 100).ToList());
 
             return new ChartJsOptions<double>
             {
