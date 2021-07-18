@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -29,7 +30,8 @@ namespace WebApplication.Controllers
             var model = new HomeIndexModels
             {
                 Games = Context.Games.Where(g => g.User == user).OrderByDescending(g => g.DateTime).Take(10).ToList(),
-                SrDeltaAverage = srEvolution.GetAverageEvolution()
+                SrDeltaAverage = srEvolution.GetAverageEvolution(),
+                SrEvolution = srEvolution
             };
             return View(model);
         }

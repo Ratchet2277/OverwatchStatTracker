@@ -40,6 +40,10 @@
                             <span>@squadMember.Name</span>
                         }
                     </td>
+                    @{var delta = Model.SrEvolution.DeltaLastGame(game);}
+                    <td class="right-align@(delta is null ? "" : delta > 0 ? " green-text" : delta < 0 ? " red-text" : " amber-text")">
+                        @delta
+                    </td>
                 </tr>
             }
             </tbody>

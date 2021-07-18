@@ -136,5 +136,17 @@ namespace WebApplication.Buisness
 
             return result;
         }
+
+        public int? DeltaLastGame(Game game)
+        {
+            var previousGameQuery = Context.Games
+                .Where(g => g.DateTime < game.DateTime && g.User == game.User && g.Type == game.Type)
+                .OrderByDescending(g => g.DateTime);
+
+            if (previousGameQuery.Any())
+                return game.Sr - previousGameQuery.First().Sr;
+
+            return null;
+        }
     }
 }
