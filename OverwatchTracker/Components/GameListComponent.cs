@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using DAL;
 using DomainModel;
 using DomainModel.Types;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebApplication.Buisness;
 using WebApplication.Helpers;
 using WebApplication.Models;
@@ -29,10 +27,10 @@ namespace WebApplication.Components
 
             return View(new GameListComponentModel
             {
-                Games = season.Games.Where(g => g.User == currentUser && (type is null || g.Type == type)).Skip(size * page).Take(size).ToList(),
-                SrEvolution = new SrEvolution(Context,  currentUser)
+                Games = season.Games.Where(g => g.User == currentUser && (type is null || g.Type == type))
+                    .Skip(size * page).Take(size).ToList(),
+                SrEvolution = new SrEvolution(Context, currentUser)
             });
         }
-
     }
 }

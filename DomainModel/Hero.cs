@@ -1,7 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 using DomainModel.Types;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace DomainModel
 {

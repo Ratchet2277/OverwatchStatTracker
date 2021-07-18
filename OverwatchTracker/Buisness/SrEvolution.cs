@@ -23,17 +23,11 @@ namespace WebApplication.Buisness
 
             var games = season.Games.Where(g => g.User == CurrentUser);
 
-            if (type is not null)
-            {
-                games = games.Where(g => g.Type == type);
-            }
+            if (type is not null) games = games.Where(g => g.Type == type);
 
             var query = games.OrderBy(g => g.DateTime);
 
-            if (!query.Any())
-            {
-                return null;
-            }
+            if (!query.Any()) return null;
 
             var data = new ChartJsData<int>
             {
@@ -53,7 +47,7 @@ namespace WebApplication.Buisness
                     }
                 }
             };
-            return new ChartJsOptions<int>()
+            return new ChartJsOptions<int>
             {
                 Data = data,
                 Type = "line",
@@ -70,13 +64,13 @@ namespace WebApplication.Buisness
                     interaction = new
                     {
                         intersect = false,
-                        mode = "index",
+                        mode = "index"
                     },
                     plugins = new
                     {
                         tooltip = new
                         {
-                            position = "nearest",
+                            position = "nearest"
                         }
                     }
                 }
@@ -87,12 +81,9 @@ namespace WebApplication.Buisness
         {
             var season = SeasonHelper.GetLastSeason(Context.Seasons);
 
-            var games = season.Games.Where(g => g.User == CurrentUser);
+            var games = season.Games.Where(g => g.User == CurrentUser && g.EnemyScore != g.AllieScore);
 
-            if (type is not null)
-            {
-                games = games.Where(g => g.Type == type);
-            }
+            if (type is not null) games = games.Where(g => g.Type == type);
 
             if (!games.Any())
                 return null;
@@ -104,7 +95,7 @@ namespace WebApplication.Buisness
             var totalLose = 0;
             var nbLose = 0;
 
-            for (var i = 1; i < listGames.Count - 1; i++)
+            for (var i = 1; i < listGames.Count; i++)
             {
                 if (listGames[i].AllieScore > listGames[i].EnemyScore)
                 {
@@ -112,8 +103,6 @@ namespace WebApplication.Buisness
                     nbWin++;
                     continue;
                 }
-
-                if (listGames[i].AllieScore == listGames[i].EnemyScore) continue;
 
                 totalLose += listGames[i].Sr - listGames[i - 1].Sr;
                 nbLose++;
