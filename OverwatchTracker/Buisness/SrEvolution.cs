@@ -28,7 +28,7 @@ namespace WebApplication.Buisness
                 games = games.Where(g => g.Type == type);
             }
 
-            var query = games.OrderBy(g => g.DateTime).TakeLast(10);
+            var query = games.OrderBy(g => g.DateTime);
 
             if (!query.Any())
             {
