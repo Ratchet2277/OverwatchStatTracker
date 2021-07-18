@@ -1,0 +1,35 @@
+﻿@model Dictionary<DomainModel.Types.GameType, Tuple<float, float>>
+
+<captation>Average Sr change</captation>
+<table class="responsive-table center">
+    <thead>
+    <tr>
+        @foreach (var (gameType, _) in Model)
+        {
+            <th colspan="2">
+                @gameType
+            </th>
+        }
+    </tr>
+    <tr>
+        @foreach (var _ in Model)
+        {
+            <th>
+                By win
+            </th>
+            <th>
+                By lose
+            </th>
+        }
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        @foreach (var (_, (byWin, byLose)) in Model)
+        {
+            <td>+@Math.Round(byWin, 2)</td>
+            <td>@Math.Round(byLose, 2)</td>
+        }
+    </tr>
+    </tbody>
+</table>

@@ -1,53 +1,11 @@
-﻿@model WebApplication.Models.HomeIndexModels;
+﻿@using WebApplication.Components
 
 @{
     ViewData["Title"] = "Home Page";
 }
 <div class="row">
     <div class="col s12">
-        <table class="highlight">
-            <caption>Last reccorded games</caption>
-            <tbody>
-            @foreach (var game in Model.Games)
-            {
-                <tr>
-                    <td>
-                        @(game.DateTime.Date != DateTime.Today ? game.DateTime.ToShortDateString() : "")
-                        @game.DateTime.ToShortTimeString()
-                    </td>
-                    <td>@game.Map.Name</td>
-                    <td>@game.Type.ToString()</td>
-                    <td class="hero-list valign-wrapper">
-                        <span>
-                            @foreach (var hero in game.Heroes.OrderBy(h => h.Name).ToList())
-                            {
-                                <img class="small-hero tooltipped" data-position="bottom" data-tooltip="@hero.Name" src="@hero.ImageUrl" alt="@hero.Name">
-                            }
-                        </span>
-                    </td>
-                    <td class="green-text">
-                        @game.AllieScore
-                    </td>
-                    <td class="red-text">
-                        @game.EnemyScore
-                    </td>
-                    <td class="amber-text">
-                        @game.Sr
-                    </td>
-                    <td>
-                        @foreach (var squadMember in game.SquadMembers.OrderBy(s => s.Name).ToList())
-                        {
-                            <span>@squadMember.Name</span>
-                        }
-                    </td>
-                    @{var delta = Model.SrEvolution.DeltaLastGame(game);}
-                    <td class="right-align@(delta is null ? "" : delta > 0 ? " green-text" : delta < 0 ? " red-text" : " amber-text")">
-                        @delta
-                    </td>
-                </tr>
-            }
-            </tbody>
-        </table>
+        @await Component.InvokeAsync(nameof(GameListComponent))
     </div>
 </div>
 <div class="row center">
@@ -61,38 +19,6 @@
 </div>
 <div class="row">
     <div class="col s12">
-        <captation>Average Sr change</captation>
-        <table class="responsive-table center">
-            <thead>
-            <tr>
-                @foreach (var srDeltaAverage in Model.SrDeltaAverage)
-                {
-                    <th colspan="2">
-                        @srDeltaAverage.Key
-                    </th>
-                }
-            </tr>
-            <tr>
-                @foreach (var unused in Model.SrDeltaAverage)
-                {
-                    <th>
-                        By win
-                    </th>
-                    <th>
-                        By lose
-                    </th>
-                }
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                @foreach (var srDeltaAverage in Model.SrDeltaAverage)
-                {
-                    <td>+@Math.Round(srDeltaAverage.Value.Item1, 2)</td>
-                    <td>@Math.Round(srDeltaAverage.Value.Item2, 2)</td>
-                }
-            </tr>
-            </tbody>
-        </table>
+        @await Component.InvokeAsync(nameof(AverageSrChangeComponent))
     </div>
 </div>

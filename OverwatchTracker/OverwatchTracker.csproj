@@ -43,10 +43,10 @@
         <Content Include="wwwroot\node_modules\**"> 
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory> 
         </Content>
-        <Content  Update="Web.config">
+        <Content Update="Web.config">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
           <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-        </Content > 
+        </Content> 
     </ItemGroup>
 
 
