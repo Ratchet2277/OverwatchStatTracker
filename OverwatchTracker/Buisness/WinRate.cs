@@ -33,7 +33,7 @@ namespace WebApplication.Buisness
 
             var heroList = season.HeroPool
                 .Where(h => h.Games.Any(g => g.User == CurrentUser))
-                .OrderByDescending(h => (double) h.Games.Count(g => g.AllieScore >= g.EnemyScore) / h.Games.Count);
+                .OrderByDescending(h => (double) h.Games.Where(g => g.User == CurrentUser).Count(g => g.AllieScore >= g.EnemyScore) / h.Games.Count);
 
             if (!heroList.Any())
                 return null;
