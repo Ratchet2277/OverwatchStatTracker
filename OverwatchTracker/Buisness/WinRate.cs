@@ -60,6 +60,8 @@ namespace WebApplication.Buisness
                     {
                         x = new
                         {
+                            min = 0,
+                            max = 100,
                             stacked = true
                         },
                         y = new
@@ -126,6 +128,8 @@ namespace WebApplication.Buisness
                         },
                         y = new
                         {
+                            min = 0,
+                            max = 100,
                             stacked = true
                         }
                     }
