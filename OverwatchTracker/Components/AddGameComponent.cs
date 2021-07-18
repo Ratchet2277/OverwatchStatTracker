@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using DAL;
 using Microsoft.AspNetCore.Mvc;
+using WebApplication.Helpers;
 using WebApplication.Models;
 
 namespace WebApplication.Components
@@ -14,7 +15,7 @@ namespace WebApplication.Components
         
         public IViewComponentResult Invoke()
         {
-            AddGameViewModel model = new(Context.Seasons.OrderByDescending(s => s.Number).First());
+            AddGameViewModel model = new(SeasonHelper.GetLastSeason(Context.Seasons));
             return View(model);
         }
     }
