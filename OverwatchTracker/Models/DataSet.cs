@@ -18,23 +18,23 @@ namespace WebApplication.Models
         [JsonPropertyName("borderColor")]
         public string? BorderColor { get; set; }
 
-        private bool _isSteped;
+        private bool _isStepped;
         private string? _stepValue;
 
         [JsonPropertyName("stepped")]
         public dynamic? Stepped
         {
-            get => _stepValue is null ? _isSteped : _stepValue;
+            get => _stepValue is null ? _isStepped : _stepValue;
             set
             {
                 switch (value)
                 {
                     case string:
                         _stepValue = value;
-                        _isSteped = false;
+                        _isStepped = false;
                         break;
                     case bool:
-                        _isSteped = value;
+                        _isStepped = value;
                         _stepValue = null;
                         break;
                 }
