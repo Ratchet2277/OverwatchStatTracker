@@ -28,6 +28,7 @@ namespace WebApplication.Components
             return View(new GameListComponentModel
             {
                 Games = season.Games.Where(g => g.User == currentUser && (type is null || g.Type == type))
+                    .OrderByDescending(g => g.DateTime)
                     .Skip(size * page).Take(size).ToList(),
                 SrEvolution = new SrEvolution(Context, currentUser)
             });
