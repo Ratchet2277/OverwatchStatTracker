@@ -2,10 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using DAL;
 using DomainModel;
 using DomainModel.Types;
-using WebApplication.Helpers;
+using Microsoft.AspNetCore.Identity;
 using WebApplication.Models;
 
 namespace WebApplication.Buisness
@@ -13,15 +15,21 @@ namespace WebApplication.Buisness
     public class SrEvolution : BaseBuisness
 
     {
-        public SrEvolution(TrackerContext context, User currentUser) : base(context, currentUser)
+        private readonly SeasonBuisness _seasonBuisness;
+
+        public SrEvolution(TrackerContext context, UserManager<User> userManager, SeasonBuisness seasonBuisness,
+            ClaimsPrincipal user) : base(context, userManager, user)
         {
+            _seasonBuisness = seasonBuisness;
         }
 
-        public ChartJsOptions<int>? ByType(GameType? type)
+        public async Task<ChartJsOptions<int>?> ByType(GameType? type)
         {
-            var season = SeasonHelper.GetLastSeason(Context.Seasons);
+            var season = _seasonBuisness.GetLastSeason();
 
-            var games = season.Games.Where(g => g.User == CurrentUser);
+            var currentUser = await UserManager.GetUserAsync(User);
+
+            var games = season.Games.Where(g => g.User == currentUser);
 
             if (type is not null) games = games.Where(g => g.Type == type);
 
@@ -77,11 +85,13 @@ namespace WebApplication.Buisness
             };
         }
 
-        private Tuple<float, float>? GetAverageEvolutionByType(GameType? type)
+        private async Task<Tuple<float, float>?> GetAverageEvolutionByType(GameType? type)
         {
-            var season = SeasonHelper.GetLastSeason(Context.Seasons);
+            var season = _seasonBuisness.GetLastSeason();
 
-            var games = season.Games.Where(g => g.User == CurrentUser && g.EnemyScore != g.AllieScore);
+            var currentUser = await UserManager.GetUserAsync(User);
+
+            var games = season.Games.Where(g => g.User == currentUser && g.EnemyScore != g.AllieScore);
 
             if (type is not null) games = games.Where(g => g.Type == type);
 
@@ -111,13 +121,13 @@ namespace WebApplication.Buisness
             return new Tuple<float, float>((float) totalWin / nbWin, (float) totalLose / nbLose);
         }
 
-        public Dictionary<GameType, Tuple<float, float>> GetAverageEvolution()
+        public async Task<Dictionary<GameType, Tuple<float, float>>> GetAverageEvolution()
         {
             var result = new Dictionary<GameType, Tuple<float, float>>();
 
             foreach (var gameType in (GameType[]) Enum.GetValues(typeof(GameType)))
             {
-                var evolutionByType = GetAverageEvolutionByType(gameType);
+                var evolutionByType = await GetAverageEvolutionByType(gameType);
                 if (evolutionByType is null)
                     continue;
                 result.Add(gameType, evolutionByType);

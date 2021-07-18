@@ -2,11 +2,13 @@ using DAL;
 using DomainModel;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebApplication.Buisness;
 
 namespace WebApplication
 {
@@ -23,6 +25,12 @@ namespace WebApplication
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<UserManager<User>>();
+            services.AddScoped<SrEvolution>();
+            services.AddScoped<WinRate>();
+            services.AddScoped<SeasonBuisness>();
+            services.AddHttpContextAccessor();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient(p => p.GetRequiredService<IHttpContextAccessor>().HttpContext?.User);
 
             services.AddDbContext<TrackerContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("TrackerDB"))

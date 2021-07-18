@@ -1,17 +1,22 @@
-﻿using DAL;
+﻿using System.Security.Claims;
+using DAL;
 using DomainModel;
+using Microsoft.AspNetCore.Identity;
 
 namespace WebApplication.Buisness
 {
     public class BaseBuisness
     {
-        public BaseBuisness(TrackerContext context, User currentUser)
+        protected ClaimsPrincipal User;
+
+        public BaseBuisness(TrackerContext context, UserManager<User> userManager, ClaimsPrincipal user)
         {
             Context = context;
-            CurrentUser = currentUser;
+            UserManager = userManager;
+            User = user;
         }
 
-        protected User CurrentUser { get; set; }
+        protected UserManager<User> UserManager { get; set; }
         protected TrackerContext Context { get; set; }
     }
 }

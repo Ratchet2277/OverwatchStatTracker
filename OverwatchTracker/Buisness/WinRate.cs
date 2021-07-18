@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using DAL;
 using DomainModel;
 using DomainModel.Types;
-using WebApplication.Helpers;
+using Microsoft.AspNetCore.Identity;
 using WebApplication.Models;
 
 namespace WebApplication.Buisness
@@ -13,27 +15,35 @@ namespace WebApplication.Buisness
     [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
     public class WinRate : BaseBuisness
     {
-        public WinRate(TrackerContext context, User currentUser) : base(context, currentUser)
+        private readonly SeasonBuisness _seasonBuisness;
+
+        public WinRate(TrackerContext context, UserManager<User> userManager, SeasonBuisness seasonBuisness,
+            ClaimsPrincipal user) : base(context, userManager, user)
         {
+            _seasonBuisness = seasonBuisness;
         }
 
-        public ChartJsOptions<double>? ByHero()
+        public async Task<ChartJsOptions<double>?> ByHero()
         {
-            var season = SeasonHelper.GetLastSeason(Context.Seasons);
+            var season = _seasonBuisness.GetLastSeason();
+
+            var currentUser = await UserManager.GetUserAsync(User);
 
             var datas = new ChartJsData<double>
             {
                 Labels = new List<string>(),
-                DataSets = new List<DataSet<double>>()
+                DataSets = new List<DataSet<double>>
                 {
-                    new ("% Win"),
-                    new ("% Draw")
+                    new("% Win"),
+                    new("% Draw")
                 }
             };
 
             var heroList = season.HeroPool
-                .Where(h => h.Games.Any(g => g.User == CurrentUser))
-                .OrderByDescending(h => (double) h.Games.Where(g => g.User == CurrentUser).Count(g => g.AllieScore >= g.EnemyScore) / h.Games.Count);
+                .Where(h => h.Games.Any(g => g.User == currentUser))
+                .OrderByDescending(h =>
+                    (double) h.Games.Where(g => g.User == currentUser).Count(g => g.AllieScore >= g.EnemyScore) /
+                    h.Games.Count);
 
             if (!heroList.Any())
                 return null;
@@ -42,11 +52,13 @@ namespace WebApplication.Buisness
 
             datas.DataSets[0].AddBacgroundColor("#03a9f4")
                 .AddData(heroList.Select(h =>
-                    (double) h.Games.Where(g => g.User == CurrentUser).Count(g => g.AllieScore > g.EnemyScore) / h.Games.Count * 100).ToList());
+                    (double) h.Games.Where(g => g.User == currentUser).Count(g => g.AllieScore > g.EnemyScore) /
+                    h.Games.Count * 100).ToList());
 
             datas.DataSets[1].AddBacgroundColor("#ffeb3b")
                 .AddData(heroList.Select(h =>
-                    (double) h.Games.Where(g => g.User == CurrentUser).Count(g => g.AllieScore == g.EnemyScore) / h.Games.Count * 100).ToList());
+                    (double) h.Games.Where(g => g.User == currentUser).Count(g => g.AllieScore == g.EnemyScore) /
+                    h.Games.Count * 100).ToList());
 
             return new ChartJsOptions<double>
             {
@@ -81,10 +93,12 @@ namespace WebApplication.Buisness
             };
         }
 
-        public ChartJsOptions<double>? ByType()
+        public async Task<ChartJsOptions<double>?> ByType()
         {
-            var season = SeasonHelper.GetLastSeason(Context.Seasons);
+            var season = _seasonBuisness.GetLastSeason();
             var labels = new List<string>();
+            var currentUser = await UserManager.GetUserAsync(User);
+
 
             List<DataSet<double>> dataSets = new()
             {
@@ -93,7 +107,7 @@ namespace WebApplication.Buisness
                 new DataSet<double>("% Lose").AddBacgroundColor("#f44336")
             };
 
-            var winRates = WinRateHelper.WrByRole(season.Games.Where(g => g.User == CurrentUser));
+            var winRates = WinRateHelper.WrByRole(season.Games.Where(g => g.User == currentUser));
 
             if (!winRates.Any())
                 return null;
@@ -103,7 +117,7 @@ namespace WebApplication.Buisness
                 dataSets[0].AddData(winRate.Rate * 100);
                 dataSets[1].AddData(winRate.DrawRate * 100);
                 dataSets[2].AddData((1 - winRate.Rate - winRate.DrawRate) * 100);
-                
+
                 labels.Add(type == GameType.OpenQueue ? "Open Queue" : type.ToString());
             }
 

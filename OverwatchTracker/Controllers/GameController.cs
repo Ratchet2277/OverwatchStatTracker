@@ -11,23 +11,26 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using WebApplication.Helpers;
+using WebApplication.Buisness;
 
 namespace WebApplication.Controllers
 {
     [Authorize]
-
     public class GameController : BaseController
     {
-        public GameController(TrackerContext context, ILogger<GameController> logger, UserManager<User> userManager) : base(context, logger, userManager)
+        private readonly SeasonBuisness _seasonBuisness;
+
+        public GameController(TrackerContext context, ILogger<GameController> logger, UserManager<User> userManager,
+            SeasonBuisness seasonBuisness) : base(context, logger, userManager)
         {
+            _seasonBuisness = seasonBuisness;
         }
 
         [ResponseCache(Duration = 3600)]
         [HttpGet]
         public List<Map> MapList()
         {
-            return SeasonHelper.GetLastSeason(Context.Seasons).MapPool.OrderBy(m => m.Name).ToList();
+            return _seasonBuisness.GetLastSeason().MapPool.OrderBy(m => m.Name).ToList();
         }
 
         [HttpGet]
@@ -45,9 +48,7 @@ namespace WebApplication.Controllers
             IEnumerable<Hero> query = season.HeroPool.OrderBy(h => h.Name);
 
             if (Enum.TryParse(roleId.ToString(), out Role role) && season.HeroPool.Any(h => h.Role == role))
-            {
                 query = query.Where(h => h.Role == role);
-            }
 
             return query.ToList();
         }
@@ -60,7 +61,7 @@ namespace WebApplication.Controllers
             game.DateTime = DateTime.Now;
             game.Map = await Context.Maps.FindAsync(newMap);
             game.Heroes = new Collection<Hero>(await Context.Heroes.Where(h => newHeroes.Contains(h.Id)).ToListAsync());
-            game.Season = SeasonHelper.GetLastSeason(Context.Seasons);
+            game.Season = _seasonBuisness.GetLastSeason();
             game.User = await UserManager.GetUserAsync(User);
 
             if (newSquadMembers.Length > 0)

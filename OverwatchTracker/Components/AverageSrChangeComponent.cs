@@ -1,27 +1,22 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using DAL;
-using DomainModel;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using WebApplication.Buisness;
 
 namespace WebApplication.Components
 {
     public class AverageSrChangeComponent : BaseComponent
     {
-        private readonly UserManager<User> _userManager;
-        
-        public AverageSrChangeComponent(TrackerContext context, UserManager<User> userManager) : base(context)
+        public AverageSrChangeComponent(TrackerContext context, IServiceProvider serviceProvider) : base(context,
+            serviceProvider)
         {
-            _userManager = userManager;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var currentUser = await _userManager.GetUserAsync(UserClaimsPrincipal);
-            var srEvolution = new SrEvolution(Context, currentUser);
-            return View(srEvolution.GetAverageEvolution());
+            return View(await ServiceProvider.GetService<SrEvolution>()?.GetAverageEvolution()!);
         }
-
     }
 }
