@@ -4,11 +4,10 @@ using WebApplication.Buisness;
 
 namespace WebApplication.Models
 {
-    public class GameListComponentModel
+    public class GameListModel
     {
         public List<Game> Games { get; set; }
 
         public SrEvolution SrEvolution { get; set; }
-
     }
 }

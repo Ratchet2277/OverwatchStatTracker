@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using DAL;
-using DomainModel;
 using DomainModel.Types;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using WebApplication.Buisness;
@@ -14,26 +11,19 @@ namespace WebApplication.Components
 {
     public class GameListComponent : BaseComponent
     {
-        private readonly SeasonBuisness _seasonBuisness;
-        private readonly UserManager<User> _userManager;
+        private readonly GamesBuisness _gamesBuisness;
 
-        public GameListComponent(TrackerContext context, UserManager<User> userManager, SeasonBuisness seasonBuisness,
+        public GameListComponent(TrackerContext context, GamesBuisness gamesBuisness,
             IServiceProvider serviceProvider) : base(context, serviceProvider)
         {
-            _userManager = userManager;
-            _seasonBuisness = seasonBuisness;
+            _gamesBuisness = gamesBuisness;
         }
 
         public async Task<IViewComponentResult> InvokeAsync(int page = 0, int size = 10, GameType? type = null)
         {
-            var season = _seasonBuisness.GetLastSeason();
-            var currentUser = await _userManager.GetUserAsync(UserClaimsPrincipal);
-
-            return View(new GameListComponentModel
+            return View(new GameListModel
             {
-                Games = season.Games.Where(g => g.User == currentUser && (type is null || g.Type == type))
-                    .OrderByDescending(g => g.DateTime)
-                    .Skip(size * page).Take(size).ToList(),
+                Games = await _gamesBuisness.GetGames(page, size, type),
                 SrEvolution = ServiceProvider.GetService<SrEvolution>()
             });
         }
