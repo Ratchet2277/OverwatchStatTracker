@@ -25,9 +25,16 @@ namespace WebApplication
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<UserManager<User>>();
+
+            #region Buisness
+
             services.AddScoped<SrEvolution>();
             services.AddScoped<WinRate>();
             services.AddScoped<SeasonBuisness>();
+            services.AddScoped<GamesBuisness>();
+
+            #endregion
+
             services.AddHttpContextAccessor();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient(p => p.GetRequiredService<IHttpContextAccessor>().HttpContext?.User);
