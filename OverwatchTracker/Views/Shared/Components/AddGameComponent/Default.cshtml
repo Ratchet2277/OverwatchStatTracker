@@ -1,4 +1,4 @@
-﻿@model WebApplication.Models.AddGameViewModel
+﻿@model DomainModel.Game
 
 <div class="fixed-action-btn">
     <a class="btn-floating btn-large waves-effect waves-light modal-trigger" href="#add-game-modal">
@@ -7,58 +7,5 @@
 </div>
 
 <div class="modal" id="add-game-modal">
-    @using (Html.BeginForm(controllerName: "Game", actionName: "Create"))
-    {
-        <div class="modal-content row" id="add-game">
-            <h4>Ajouter une game</h4>
-            <div class="input-field col s12 m6">
-                <select name="Game.NewMap" id="Game_Map">
-                    <option v-for="map in maps" v-bind:value="map.id">{{ map.name }}</option>
-                </select>
-                <label for="Game_Map">Map</label>
-            </div>
-
-            <div class="input-field col s12 m6">
-                <select name="Game.Type" id="Game_Type"
-                        v-model="selectedRole"
-                        v-on:change="updateHeroList">
-                    <option v-for="(role, id) in roles" v-bind:value="id">{{ role }}</option>
-                </select>
-                <label for="Game_Type">Type</label>
-            </div>
-
-            <div class="input-field col s12 m6">
-                <select name="Game.NewHeroes" id="Game_Heroes" multiple>
-                    <option v-for="hero in heroes" v-bind:value="hero.id" v-bind:data-icon="hero.imageUrl" class="right">{{ hero.name }}</option>
-                </select>
-                <label for="Game_Heroes">Hero</label>
-            </div>
-            <div class="input-field col s12 m6">
-                @Html.TextBoxFor(m => m.Game.Sr, new {type = "number", min = 0, max = 5000})
-                @Html.LabelFor(m => m.Game.Sr)
-            </div>
-
-            <div class="input-field col s12">
-                <label for="Game_SquadMembers">Pré-mate</label>
-                <select name="Game.NewSquadMembers" id="Game_SquadMembers"
-                        class="select2 browser-default"
-                        data-tags="true"
-                        multiple
-                        data-width="100%"
-                        data-ajax--url="/SquadMember/Search">
-                </select>
-            </div>
-            <div class="input-field col s12 m6">
-                @Html.TextBoxFor(m => m.Game.AllieScore, new {type = "number", min = 0})
-                @Html.LabelFor(m => m.Game.AllieScore)
-            </div>
-            <div class="input-field col s12 m6">
-                @Html.TextBoxFor(m => m.Game.EnemyScore, new {type = "number", min = 0})
-                @Html.LabelFor(m => m.Game.EnemyScore)
-            </div>
-            <div class="col s12 center">
-                <button class="btn wave-effect">Enregistrer</button>
-            </div>
-        </div>
-    }
+    @await Html.PartialAsync("_gameForm")
 </div>

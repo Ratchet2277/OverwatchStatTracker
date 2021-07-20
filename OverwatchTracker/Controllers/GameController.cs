@@ -55,7 +55,7 @@ namespace WebApplication.Controllers
             return query.ToList();
         }
 
-        [HttpPost]
+        [HttpPost("/Create")]
         [ValidateAntiForgeryToken]
         public async Task<RedirectToActionResult> Create(Game game)
         {
@@ -82,6 +82,44 @@ namespace WebApplication.Controllers
             }
 
             Context.Games.Add(game);
+
+            await Context.SaveChangesAsync();
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet("/Edit/{id:int}")]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var game = await Context.Games.FirstAsync(g => g.Id == id);
+
+            return View(game);
+        }
+
+        [HttpPost("/Edit")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Game game)
+        {
+            game.Map = await Context.Maps.FindAsync(game.NewMap);
+            game.Heroes =
+                new Collection<Hero>(await Context.Heroes.Where(h => game.NewHeroes.Contains(h.Id)).ToListAsync());
+
+            if (game.NewSquadMembers.Length > 0)
+            {
+                game.SquadMembers = new Collection<SquadMember>();
+                foreach (var squadMemberName in game.NewSquadMembers)
+                {
+                    if (Context.SquadMembers.Any(s => s.Name == squadMemberName))
+                    {
+                        game.SquadMembers.Add(Context.SquadMembers.First(s => s.Name == squadMemberName));
+                        continue;
+                    }
+
+                    game.SquadMembers.Add(new SquadMember {Name = squadMemberName});
+                }
+            }
+
+            Context.Games.Update(game);
 
             await Context.SaveChangesAsync();
 

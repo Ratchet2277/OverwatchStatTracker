@@ -1,0 +1,9 @@
+﻿@model DomainModel.Game
+
+@{
+    ViewBag.Title = $"Edit game on {Model.Map.Name}";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@await Html.PartialAsync("_GameForm", Model)
