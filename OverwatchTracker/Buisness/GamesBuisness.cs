@@ -19,14 +19,15 @@ namespace WebApplication.Buisness
             _seasonBuisness = seasonBuisness;
         }
 
-        public async Task<List<Game>> GetGames(int page = 0, int size = 10, GameType? type = null)
+        public async Task<List<Game>> GetGames(int page = 0, int? size = 10, GameType? type = null)
         {
             var season = _seasonBuisness.GetLastSeason();
             var currentUser = await UserManager.GetUserAsync(User);
 
-            return season.Games.Where(g => g.User == currentUser && (type is null || g.Type == type))
-                .OrderByDescending(g => g.DateTime)
-                .Skip(size * page).Take(size).ToList();
+            var query = season.Games.Where(g => g.User == currentUser && (type is null || g.Type == type))
+                .OrderByDescending(g => g.DateTime);
+
+            return size is not null ? query.Skip(page * (int) size).Take((int) size).ToList() : query.ToList();
         }
     }
 }
