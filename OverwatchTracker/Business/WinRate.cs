@@ -10,22 +10,22 @@ using DomainModel.Types;
 using Microsoft.AspNetCore.Identity;
 using WebApplication.Models;
 
-namespace WebApplication.Buisness
+namespace WebApplication.Business
 {
     [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
-    public class WinRate : BaseBuisness
+    public class WinRate : BaseBusiness
     {
-        private readonly SeasonBuisness _seasonBuisness;
+        private readonly SeasonBusiness _seasonBusiness;
 
-        public WinRate(TrackerContext context, UserManager<User> userManager, SeasonBuisness seasonBuisness,
+        public WinRate(TrackerContext context, UserManager<User> userManager, SeasonBusiness seasonBusiness,
             ClaimsPrincipal user) : base(context, userManager, user)
         {
-            _seasonBuisness = seasonBuisness;
+            _seasonBusiness = seasonBusiness;
         }
 
         public async Task<ChartJsOptions<double>?> ByHero()
         {
-            var season = _seasonBuisness.GetLastSeason();
+            var season = _seasonBusiness.GetLastSeason();
 
             var currentUser = await UserManager.GetUserAsync(User);
 
@@ -98,7 +98,7 @@ namespace WebApplication.Buisness
 
         public async Task<ChartJsOptions<double>?> ByType()
         {
-            var season = _seasonBuisness.GetLastSeason();
+            var season = _seasonBusiness.GetLastSeason();
             var labels = new List<string>();
             var currentUser = await UserManager.GetUserAsync(User);
 

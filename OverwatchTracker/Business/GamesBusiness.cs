@@ -7,21 +7,21 @@ using DomainModel;
 using DomainModel.Types;
 using Microsoft.AspNetCore.Identity;
 
-namespace WebApplication.Buisness
+namespace WebApplication.Business
 {
-    public class GamesBuisness : BaseBuisness
+    public class GamesBusiness : BaseBusiness
     {
-        private readonly SeasonBuisness _seasonBuisness;
+        private readonly SeasonBusiness _seasonBusiness;
 
-        public GamesBuisness(TrackerContext context, UserManager<User> userManager, ClaimsPrincipal user,
-            SeasonBuisness seasonBuisness) : base(context, userManager, user)
+        public GamesBusiness(TrackerContext context, UserManager<User> userManager, ClaimsPrincipal user,
+            SeasonBusiness seasonBusiness) : base(context, userManager, user)
         {
-            _seasonBuisness = seasonBuisness;
+            _seasonBusiness = seasonBusiness;
         }
 
         public async Task<List<Game>> GetGames(int page = 0, int? size = 10, GameType? type = null)
         {
-            var season = _seasonBuisness.GetLastSeason();
+            var season = _seasonBusiness.GetLastSeason();
             var currentUser = await UserManager.GetUserAsync(User);
 
             var query = season.Games.Where(g => g.User == currentUser && (type is null || g.Type == type))

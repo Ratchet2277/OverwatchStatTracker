@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using DomainModel;
-using WebApplication.Buisness;
+using WebApplication.Business;
 
 namespace WebApplication.Models
 {

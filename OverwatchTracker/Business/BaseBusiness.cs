@@ -3,13 +3,13 @@ using DAL;
 using DomainModel;
 using Microsoft.AspNetCore.Identity;
 
-namespace WebApplication.Buisness
+namespace WebApplication.Business
 {
-    public class BaseBuisness
+    public class BaseBusiness
     {
         protected ClaimsPrincipal User;
 
-        public BaseBuisness(TrackerContext context, UserManager<User> userManager, ClaimsPrincipal user)
+        public BaseBusiness(TrackerContext context, UserManager<User> userManager, ClaimsPrincipal user)
         {
             Context = context;
             UserManager = userManager;

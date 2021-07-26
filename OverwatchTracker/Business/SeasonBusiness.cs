@@ -4,11 +4,11 @@ using DAL;
 using DomainModel;
 using Microsoft.AspNetCore.Identity;
 
-namespace WebApplication.Buisness
+namespace WebApplication.Business
 {
-    public class SeasonBuisness : BaseBuisness
+    public class SeasonBusiness : BaseBusiness
     {
-        public SeasonBuisness(TrackerContext context, UserManager<User> userManager, ClaimsPrincipal user) : base(
+        public SeasonBusiness(TrackerContext context, UserManager<User> userManager, ClaimsPrincipal user) : base(
             context, userManager, user)
         {
         }

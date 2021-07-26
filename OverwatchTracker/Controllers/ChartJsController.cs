@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using WebApplication.Buisness;
+using WebApplication.Business;
 using WebApplication.Models.Contracts;
 
 namespace WebApplication.Controllers

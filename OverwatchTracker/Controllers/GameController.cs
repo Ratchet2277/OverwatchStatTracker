@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using DAL;
 using DomainModel;
+using DomainModel.Types;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using WebApplication.Buisness;
+using WebApplication.Business;
+using WebApplication.Models;
 
 namespace WebApplication.Controllers
 {
@@ -17,12 +19,14 @@ namespace WebApplication.Controllers
     [Route("Game")]
     public partial class GameController : BaseController
     {
-        private readonly SeasonBuisness _seasonBuisness;
+        private readonly SeasonBusiness _seasonBusiness;
+        private readonly GamesBusiness _gamesBusiness;
 
         public GameController(TrackerContext context, ILogger<GameController> logger, UserManager<User> userManager,
-            SeasonBuisness seasonBuisness) : base(context, logger, userManager)
+            SeasonBusiness seasonBusiness, GamesBusiness gamesBusiness) : base(context, logger, userManager)
         {
-            _seasonBuisness = seasonBuisness;
+            _seasonBusiness = seasonBusiness;
+            _gamesBusiness = gamesBusiness;
         }
 
         [HttpPost]
@@ -33,7 +37,7 @@ namespace WebApplication.Controllers
             game.Map = await Context.Maps.FindAsync(game.NewMap);
             game.Heroes =
                 new Collection<Hero>(await Context.Heroes.Where(h => game.NewHeroes.Contains(h.Id)).ToListAsync());
-            game.Season = _seasonBuisness.GetLastSeason();
+            game.Season = _seasonBusiness.GetLastSeason();
             game.User = await UserManager.GetUserAsync(User);
 
             if (game.NewSquadMembers.Length > 0)
@@ -56,6 +60,17 @@ namespace WebApplication.Controllers
             await Context.SaveChangesAsync();
 
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet("History\\{.type}\\{.page:int}")]
+        public async Task<IActionResult> History(GameType? type, int page = 0)
+        {
+            var currentUser = await UserManager.GetUserAsync(User);
+
+            var pagination =
+                new Pagination<Game>(_seasonBusiness.GetLastSeason().Games.Where(g => g.User == currentUser));
+
+            return View(new GameHistoryModel(pagination));
         }
     }
 }

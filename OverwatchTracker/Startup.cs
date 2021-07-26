@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WebApplication.Buisness;
+using WebApplication.Business;
 
 namespace WebApplication
 {
@@ -30,8 +30,8 @@ namespace WebApplication
 
             services.AddScoped<SrEvolution>();
             services.AddScoped<WinRate>();
-            services.AddScoped<SeasonBuisness>();
-            services.AddScoped<GamesBuisness>();
+            services.AddScoped<SeasonBusiness>();
+            services.AddScoped<GamesBusiness>();
 
             #endregion
 

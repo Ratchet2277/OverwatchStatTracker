@@ -23,7 +23,7 @@ namespace DomainModel
         [Range(0, int.MaxValue)] [Required] public int EnemyScore { get; set; }
         public GameType Type { get; set; }
 
-        [JsonIgnore] public virtual Collection<SquadMember> SquadMembers { get; set; }
+        [JsonIgnore] public virtual Collection<SquadMember> SquadMembers { get; set; } = new();
 
         [JsonIgnore] public virtual User User { get; set; }
 

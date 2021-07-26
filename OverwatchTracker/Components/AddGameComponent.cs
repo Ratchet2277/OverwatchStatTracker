@@ -2,17 +2,17 @@
 using DAL;
 using DomainModel;
 using Microsoft.AspNetCore.Mvc;
-using WebApplication.Buisness;
+using WebApplication.Business;
 namespace WebApplication.Components
 {
     public class AddGameComponent : BaseComponent
     {
-        private readonly SeasonBuisness _seasonBuisness;
+        private readonly SeasonBusiness _seasonBusiness;
 
-        public AddGameComponent(TrackerContext context, SeasonBuisness seasonBuisness, IServiceProvider serviceProvider)
+        public AddGameComponent(TrackerContext context, SeasonBusiness seasonBusiness, IServiceProvider serviceProvider)
             : base(context, serviceProvider)
         {
-            _seasonBuisness = seasonBuisness;
+            _seasonBusiness = seasonBusiness;
         }
 
         public IViewComponentResult Invoke()

@@ -31,10 +31,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="wwwroot\node_modules\.bin" />
-    </ItemGroup>
-
-    <ItemGroup>
       <UpToDateCheckInput Remove="Views\Shared\Components\WinRateComponent\Default.cshtml" />
       <UpToDateCheckInput Remove="Views\WinRate\WinRateByRole.cshtml" />
     </ItemGroup>

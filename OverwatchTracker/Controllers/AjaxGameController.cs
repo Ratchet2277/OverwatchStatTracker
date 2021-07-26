@@ -17,7 +17,7 @@ namespace WebApplication.Controllers
         [HttpGet("MapList")]
         public List<Map> MapList()
         {
-            return _seasonBuisness.GetLastSeason().MapPool.OrderBy(m => m.Name).ToList();
+            return _seasonBusiness.GetLastSeason().MapPool.OrderBy(m => m.Name).ToList();
         }
 
         [HttpGet("RoleList")]

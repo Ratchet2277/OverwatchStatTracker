@@ -10,22 +10,22 @@ using DomainModel.Types;
 using Microsoft.AspNetCore.Identity;
 using WebApplication.Models;
 
-namespace WebApplication.Buisness
+namespace WebApplication.Business
 {
-    public class SrEvolution : BaseBuisness
+    public class SrEvolution : BaseBusiness
 
     {
-        private readonly SeasonBuisness _seasonBuisness;
+        private readonly SeasonBusiness _seasonBusiness;
 
-        public SrEvolution(TrackerContext context, UserManager<User> userManager, SeasonBuisness seasonBuisness,
+        public SrEvolution(TrackerContext context, UserManager<User> userManager, SeasonBusiness seasonBusiness,
             ClaimsPrincipal user) : base(context, userManager, user)
         {
-            _seasonBuisness = seasonBuisness;
+            _seasonBusiness = seasonBusiness;
         }
 
         public async Task<ChartJsOptions<int>?> ByType(GameType? type)
         {
-            var season = _seasonBuisness.GetLastSeason();
+            var season = _seasonBusiness.GetLastSeason();
 
             var currentUser = await UserManager.GetUserAsync(User);
 
@@ -87,7 +87,7 @@ namespace WebApplication.Buisness
 
         private async Task<Tuple<float, float>?> GetAverageEvolutionByType(GameType? type)
         {
-            var season = _seasonBuisness.GetLastSeason();
+            var season = _seasonBusiness.GetLastSeason();
 
             var currentUser = await UserManager.GetUserAsync(User);
 

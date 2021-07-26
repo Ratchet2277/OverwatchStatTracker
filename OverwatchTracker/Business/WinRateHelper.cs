@@ -6,9 +6,9 @@ using DomainModel;
 using DomainModel.Types;
 using Microsoft.AspNetCore.Identity;
 
-namespace WebApplication.Buisness
+namespace WebApplication.Business
 {
-    public class WinRateHelper : BaseBuisness
+    public class WinRateHelper : BaseBusiness
     {
         public WinRateHelper(TrackerContext context, UserManager<User> userManager, ClaimsPrincipal user) : base(
             context, userManager, user)

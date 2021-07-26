@@ -18,13 +18,14 @@ document.addEventListener('DOMContentLoaded', () => {
             heroes: [],
             roles: [],
             selectedRole: -1,
+            lastSr: 0
         },
         async created() {
             fetch('/Game/MapList').then((response) => {
                 response.json().then((data) => {
                     Vue.set(AddGame, "maps", data);
                     this.$nextTick(() => {
-                        let select:HTMLSelectElement = <HTMLSelectElement>document.getElementById("Game_Map");
+                        let select: HTMLSelectElement = <HTMLSelectElement>document.getElementById("Game_Map");
                         M.FormSelect.getInstance(select)?.destroy();
                         M.FormSelect.init(select, SELECT_FORMS_OPTIONS);
                     });
@@ -35,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 response.json().then((data) => {
                     Vue.set(AddGame, "roles", data);
                     this.$nextTick(() => {
-                        let select:HTMLSelectElement = <HTMLSelectElement>document.getElementById("Game_Type");
+                        let select: HTMLSelectElement = <HTMLSelectElement>document.getElementById("Game_Type");
                         M.FormSelect.getInstance(select)?.destroy();
                         M.FormSelect.init(select, SELECT_FORMS_OPTIONS);
                     });
