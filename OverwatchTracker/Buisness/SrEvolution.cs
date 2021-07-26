@@ -91,9 +91,11 @@ namespace WebApplication.Buisness
 
             var currentUser = await UserManager.GetUserAsync(User);
 
+            //no need to count draw since they always keep the same SR 
             var games = season.Games.Where(g => g.User == currentUser && g.EnemyScore != g.AllieScore);
 
-            if (type is not null) games = games.Where(g => g.Type == type);
+            if (type is not null)
+                games = games.Where(g => g.Type == type);
 
             if (!games.Any())
                 return null;

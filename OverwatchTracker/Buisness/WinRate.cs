@@ -42,8 +42,9 @@ namespace WebApplication.Buisness
             var heroList = season.HeroPool
                 .Where(h => h.Games.Any(g => g.User == currentUser))
                 .OrderByDescending(h =>
-                    (double) h.Games.Where(g => g.User == currentUser).Count(g => g.AllieScore >= g.EnemyScore) /
-                    h.Games.Count);
+                    (double) h.Games.Count(g => g.AllieScore >= g.EnemyScore && g.User == currentUser) /
+                    h.Games.Count(g => g.User == currentUser)
+                );
 
             if (!heroList.Any())
                 return null;
@@ -52,13 +53,15 @@ namespace WebApplication.Buisness
 
             datas.DataSets[0].AddBacgroundColor("#03a9f4")
                 .AddData(heroList.Select(h =>
-                    (double) h.Games.Where(g => g.User == currentUser).Count(g => g.AllieScore > g.EnemyScore) /
-                    h.Games.Count * 100).ToList());
+                        (double) h.Games.Count(g => g.AllieScore > g.EnemyScore && g.User == currentUser) /
+                        h.Games.Count(g => g.User == currentUser) * 100).ToList()
+                );
 
             datas.DataSets[1].AddBacgroundColor("#ffeb3b")
                 .AddData(heroList.Select(h =>
-                    (double) h.Games.Where(g => g.User == currentUser).Count(g => g.AllieScore == g.EnemyScore) /
-                    h.Games.Count * 100).ToList());
+                        (double) h.Games.Count(g => g.AllieScore == g.EnemyScore && g.User == currentUser) /
+                        h.Games.Count(g => g.User == currentUser) * 100).ToList()
+                );
 
             return new ChartJsOptions<double>
             {
