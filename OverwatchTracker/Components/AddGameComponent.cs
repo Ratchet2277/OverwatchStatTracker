@@ -3,8 +3,6 @@ using DAL;
 using DomainModel;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication.Buisness;
-using WebApplication.Models;
-
 namespace WebApplication.Components
 {
     public class AddGameComponent : BaseComponent
