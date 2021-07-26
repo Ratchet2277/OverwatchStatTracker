@@ -1,0 +1,9 @@
+﻿@model WebApplication.Models.GameListModel;
+
+@{
+    ViewBag.Title = "Game History";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@await Html.PartialAsync("_GameList", Model)
