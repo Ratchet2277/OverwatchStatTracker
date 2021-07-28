@@ -46,13 +46,13 @@ namespace WebApplication.Controllers
                 game.SquadMembers = new Collection<SquadMember>();
                 foreach (var squadMember in game.NewSquadMembers)
                 {
-                    if (Context.SquadMembers.Any(s => s.Name == squadMember))
+                    if (Context.SquadMembers.Any(s => s.Name == squadMember && s.MainUser == game.User))
                     {
                         game.SquadMembers.Add(Context.SquadMembers.First(s => s.Name == squadMember));
                         continue;
                     }
 
-                    game.SquadMembers.Add(new SquadMember {Name = squadMember});
+                    game.SquadMembers.Add(new SquadMember {Name = squadMember, MainUser = game.User});
                 }
             }
 

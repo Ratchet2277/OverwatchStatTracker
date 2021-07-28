@@ -6,9 +6,11 @@ namespace DAL
 {
     public class TrackerContext : IdentityDbContext<User>
     {
+        //*
         public TrackerContext(DbContextOptions options) : base(options)
         {
         }
+        //*/
 
         public TrackerContext()
         {
@@ -24,8 +26,10 @@ namespace DAL
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // only for dotnet-ef tool
-            // optionsBuilder.UseSqlServer(
-            //     @"Data Source=(localdb)\mssqllocaldb;Initial Catalog=TrackerDB;Integrated Security=true", b => b.MigrationsAssembly("Initializer"));
+            /*
+            optionsBuilder.UseSqlServer(
+            @"Data Source=(localdb)\mssqllocaldb;Initial Catalog=TrackerDB;Integrated Security=true", b => b.MigrationsAssembly("Initializer"));
+            //*/
 
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseLazyLoadingProxies();
