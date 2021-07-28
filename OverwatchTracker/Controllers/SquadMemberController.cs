@@ -17,7 +17,9 @@ namespace WebApplication.Controllers
 
         public async Task<Select2Result> Search(string term)
         {
-            Select2Result result = new(await Context.SquadMembers.Where(s => s.Name.Contains(term))
+            var currentUser = await UserManager.GetUserAsync(User);
+            Select2Result result = new(await Context.SquadMembers
+                .Where(s => s.Name.Contains(term) && s.MainUser == currentUser)
                 .Select(s => s.Name)
                 .ToListAsync());
             return result;
