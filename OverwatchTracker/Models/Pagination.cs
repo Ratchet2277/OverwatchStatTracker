@@ -77,7 +77,7 @@ namespace WebApplication.Models
 
                 allPages.Add(Page + ClosePages + 1, CloseFarPageSeparator);
 
-                for (var i = start; i < NbPages - 1; i += FarPagesStep) allPages.Add(i, i.ToString());
+                for (var i = start; i < NbPages; i += FarPagesStep) allPages.Add(i, i.ToString());
             }
 
             //Last page
