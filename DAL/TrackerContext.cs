@@ -28,7 +28,13 @@ namespace DAL
             // only for dotnet-ef tool
             /*
             optionsBuilder.UseSqlServer(
-            @"Data Source=(localdb)\mssqllocaldb;Initial Catalog=TrackerDB;Integrated Security=true", b => b.MigrationsAssembly("Initializer"));
+                @"Data Source=(localdb)\mssqllocaldb;Initial Catalog=TrackerDB;Integrated Security=true",
+                b => b.MigrationsAssembly("Initializer"));
+            //*/
+            /*
+            optionsBuilder.UseSqlServer(
+                @"Server=localhost\SQLEXPRESS;Database=TrackerDB;Trusted_Connection=True;",
+                b => b.MigrationsAssembly("Initializer"));
             //*/
 
             base.OnConfiguring(optionsBuilder);
