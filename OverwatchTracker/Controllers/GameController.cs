@@ -68,18 +68,6 @@ namespace WebApplication.Controllers
         [HttpGet("History/Page/{page:int?}")]
         public async Task<IActionResult> History(int page = 1, GameType? type = null)
         {
-            var currentUser = await UserManager.GetUserAsync(User);
-
-            var query = _seasonBusiness.GetLastSeason().Games.Where(g => g.User == currentUser);
-
-            if (type is not null)
-            {
-                query = query.Where(g => g.Type == type);
-            }
-
-            var pagination =
-                new Pagination<Game>(query.OrderBy(g => g.DateTime));
-
             return View(ActivatorUtilities.CreateInstance<GameHistoryModel>(ServiceProvider, await _gamesBusiness.GetGames(page, 10, type)));
         }
 
