@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using WebApplication.Business;
 using WebApplication.Models;
@@ -16,19 +17,17 @@ using WebApplication.Models;
 namespace WebApplication.Controllers
 {
     [Authorize]
-    [Route("Game")]
+    [Route("Game/")]
     public partial class GameController : BaseController
     {
         private readonly SeasonBusiness _seasonBusiness;
         private readonly GamesBusiness _gamesBusiness;
-        private readonly SrEvolution _srEvolution;
 
         public GameController(TrackerContext context, ILogger<GameController> logger, UserManager<User> userManager,
-            SeasonBusiness seasonBusiness, GamesBusiness gamesBusiness, SrEvolution srEvolution) : base(context, logger, userManager)
+            SeasonBusiness seasonBusiness, GamesBusiness gamesBusiness, IServiceProvider serviceProvider) : base(context, logger, userManager, serviceProvider)
         {
             _seasonBusiness = seasonBusiness;
             _gamesBusiness = gamesBusiness;
-            _srEvolution = srEvolution;
         }
 
         [HttpPost]
@@ -64,16 +63,23 @@ namespace WebApplication.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpGet("{.type?}")]
-        [HttpGet("{.type?}/Page/{page:int?}")]
-        public async Task<IActionResult> Index(int page = 0, GameType? type = null)
+        [HttpGet("History/{type?}")]
+        [HttpGet("History/{type?}/Page/{page:int?}")]
+        public async Task<IActionResult> History(int page = 1, GameType? type = null)
         {
             var currentUser = await UserManager.GetUserAsync(User);
 
-            var pagination =
-                new Pagination<Game>(_seasonBusiness.GetLastSeason().Games.Where(g => g.User == currentUser));
+            var query = _seasonBusiness.GetLastSeason().Games.Where(g => g.User == currentUser);
 
-            return View(new GameHistoryModel(pagination));
+            if (type is not null)
+            {
+                query = query.Where(g => g.Type == type);
+            }
+
+            var pagination =
+                new Pagination<Game>(query.OrderBy(g => g.DateTime));
+
+            return View(ActivatorUtilities.CreateInstance<GameHistoryModel>(ServiceProvider, await _gamesBusiness.GetGames(page, 10, type)));
         }
 
         [HttpGet("Edit/{id:int}")]
@@ -113,7 +119,7 @@ namespace WebApplication.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpPost("/Edit")]
+        [HttpPost("Edit")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Game game)
         {

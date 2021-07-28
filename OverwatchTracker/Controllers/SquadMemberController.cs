@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using DAL;
 using DomainModel;
@@ -11,7 +12,7 @@ namespace WebApplication.Controllers
 {
     public class SquadMemberController : BaseController
     {
-        public SquadMemberController(TrackerContext context, ILogger<SquadMemberController> logger, UserManager<User> userManager) : base(context, logger, userManager)
+        public SquadMemberController(TrackerContext context, ILogger<SquadMemberController> logger, UserManager<User> userManager, IServiceProvider serviceProvider) : base(context, logger, userManager, serviceProvider)
         {
         }
 

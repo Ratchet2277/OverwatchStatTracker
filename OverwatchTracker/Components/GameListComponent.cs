@@ -19,13 +19,9 @@ namespace WebApplication.Components
             _gamesBusiness = gamesBusiness;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(int page = 0, int size = 10, GameType? type = null)
+        public async Task<IViewComponentResult> InvokeAsync(int page = 1, int size = 10, GameType? type = null)
         {
-            return View(new GameListModel
-            {
-                Games = await _gamesBusiness.GetGames(page, size, type),
-                SrEvolution = ServiceProvider.GetService<SrEvolution>()
-            });
+            return View(ActivatorUtilities.CreateInstance<GameListModel>(ServiceProvider, await _gamesBusiness.GetGames(page, size, type)));
         }
     }
 }

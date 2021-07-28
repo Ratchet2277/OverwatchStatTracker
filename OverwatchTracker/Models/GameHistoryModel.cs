@@ -1,20 +1,21 @@
-﻿
-#nullable enable
+﻿#nullable enable
+using System;
 using DomainModel;
 using DomainModel.Types;
+using WebApplication.Business;
 
 namespace WebApplication.Models
 {
-    public class GameHistoryModel
+    public class GameHistoryModel : GameListModel
     {
-        public Pagination<Game> Games { get; }
         public GameType? Type { get; set; }
         public MapType? MapType { get; set; }
         public string[]? SquadMembers { get; set; }
+        public DateTime UpperDateTime { get; set; }
+        public DateTime LowerDateTime { get; set; }
 
-        public GameHistoryModel(Pagination<Game> games)
+        public GameHistoryModel(Pagination<Game> games, SrEvolution srEvolution) : base(games, srEvolution)
         {
-            Games = games;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using DAL;
+﻿using System;
+using DAL;
 using DomainModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,12 +12,15 @@ namespace WebApplication.Controllers
         protected readonly TrackerContext Context;
         protected readonly ILogger<BaseController> Logger;
         protected readonly UserManager<User> UserManager;
+        
+        protected readonly IServiceProvider ServiceProvider;
 
-        public BaseController(TrackerContext context, ILogger<BaseController> logger, UserManager<User> userManager)
+        public BaseController(TrackerContext context, ILogger<BaseController> logger, UserManager<User> userManager, IServiceProvider serviceProvider)
         {
             Context = context;
             Logger = logger;
             UserManager = userManager;
+            ServiceProvider = serviceProvider;
         }
     }
 }

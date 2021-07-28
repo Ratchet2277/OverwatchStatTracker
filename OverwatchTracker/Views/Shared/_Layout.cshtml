@@ -25,7 +25,7 @@
             @Html.ActionLink("Overwatch Performance Tracker", "Index", "Home", null, new {@class = "brand-logo"})
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                <li>@Html.ActionLink("Game History", "", "Game")</li>
+                <li>@Html.ActionLink("Game History", "History", "Game")</li>
                 @await Html.PartialAsync("_LoginPartial")
             </ul>
         </div>

@@ -9,41 +9,61 @@ namespace WebApplication.Models
         //User friendly, start at 1
         public int Page
         {
-            get => _page + 1;
-            set => _page = value - 1;
+            get => Page0 + 1;
+            set => Page0 = value - 1;
         }
 
-        //Start at 0;
-        public int Page0 => _page;
-        private int _page;
-        private readonly int _pageSize;
+        //Start at 0, code firnedly
+        public int Page0 { get; private set; }
+
+        private readonly int? _pageSize;
         public List<T> List => _loadGames();
         private readonly IEnumerable<T> _query;
         public int NbPages { get; set; }
 
-        public Pagination(IEnumerable<T> query, int page = 1, int pageSize = 10)
+        public Pagination(IEnumerable<T> query, int page = 1, int? pageSize = 10)
         {
+            if (page < 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(page), "Negative or zero are value not allowed here");
+            }
+
+            if (pageSize < 10)
+            {
+                throw new ArgumentOutOfRangeException(nameof(pageSize), "Negative or zero value are not allowed here");
+            }
             _query = query;
-            _page = page - 1;
+            Page0 = page - 1;
             _pageSize = pageSize;
-            NbPages = (int) Math.Ceiling((float) _query.Count() / _pageSize);
+            if (_pageSize is not null)
+            {
+                NbPages = (int) Math.Ceiling((float) (_query.Count() / _pageSize));
+            }
+            else
+            {
+                NbPages = 1;
+            }
             _loadGames();
         }
 
         private List<T> _loadGames()
         {
-            return _query.Skip(_pageSize * _page).Take(_pageSize).ToList();
+            if (_pageSize is null)
+            {
+                return _query.ToList();
+            }
+            return _query.Skip((int) (_pageSize * Page0)).Take((int) _pageSize).ToList();
         }
 
         public Pagination<T> Next(int nb = 1)
         {
-            _page = Math.Min(_page + nb, NbPages - 1);
+            Page0 = Math.Min(Page0 + nb, NbPages - 1);
             return this;
         }
 
         public Pagination<T> Prev(int nb = 1)
         {
-            _page = Math.Max(0, _page - nb);
+            Page0 = Math.Max(0, Page0 - nb);
             return this;
         }
 
