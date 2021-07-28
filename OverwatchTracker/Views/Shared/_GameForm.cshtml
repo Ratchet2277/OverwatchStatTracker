@@ -52,7 +52,7 @@
             <label for="Game_Heroes">Hero</label>
         </div>
         <div class="input-field col s12 m6">
-            @Html.TextBoxFor(g => g.Sr, new {type = "number", min = 0, max = 5000})
+            <input data-val="true" data-val-range="The field Sr must be between 0 and 5000." data-val-range-max="5000" data-val-range-min="0" data-val-required="The Sr field is required." id="Sr" max="5000" min="0" name="Game.Sr" type="number" value="0">
             @Html.LabelFor(g => g.Sr)
         </div>
 
@@ -71,11 +71,11 @@
             </select>
         </div>
         <div class="input-field col s12 m6">
-            @Html.TextBoxFor(g => g.AllieScore, new {type = "number", min = 0})
+            <input data-val="true" data-val-range="The field AllieScore must be between 0 and 2147483647." data-val-range-max="2147483647" data-val-range-min="0" data-val-required="The AllieScore field is required." id="AllieScore" min="0" name="Game.AllieScore" type="number" value="0" data-dashlane-rid="a52721a7dfc9179b" data-form-type="other">
             @Html.LabelFor(g => g.AllieScore)
         </div>
         <div class="input-field col s12 m6">
-            @Html.TextBoxFor(g => g.EnemyScore, new {type = "number", min = 0})
+            <input data-val="true" data-val-range="The field EnemyScore must be between 0 and 2147483647." data-val-range-max="2147483647" data-val-range-min="0" data-val-required="The EnemyScore field is required." id="EnemyScore" min="0" name="Game.EnemyScore" type="number" value="0" data-dashlane-rid="1bfa093912f7c9f5" data-form-type="other">
             @Html.LabelFor(g => g.EnemyScore)
         </div>
         <div class="col s12 center">
