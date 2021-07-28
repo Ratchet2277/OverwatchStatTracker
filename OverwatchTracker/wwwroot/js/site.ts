@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 response.json().then((data) => {
                     Vue.set(AddGame, "maps", data);
                     this.$nextTick(() => {
-                        let select: HTMLSelectElement = <HTMLSelectElement>document.getElementById("Game_Map");
+                        let select: HTMLSelectElement = <HTMLSelectElement>document.getElementById("Map");
                         M.FormSelect.getInstance(select)?.destroy();
                         M.FormSelect.init(select, SELECT_FORMS_OPTIONS);
                     });
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 response.json().then((data) => {
                     Vue.set(AddGame, "roles", data);
                     this.$nextTick(() => {
-                        let select: HTMLSelectElement = <HTMLSelectElement>document.getElementById("Game_Type");
+                        let select: HTMLSelectElement = <HTMLSelectElement>document.getElementById("Type");
                         M.FormSelect.getInstance(select)?.destroy();
                         M.FormSelect.init(select, SELECT_FORMS_OPTIONS);
                     });
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     response.json().then((data) => {
                         Vue.set(AddGame, "heroes", data);
                         this.$nextTick(() => {
-                            let select:HTMLSelectElement = <HTMLSelectElement>document.getElementById("Game_Heroes");
+                            let select:HTMLSelectElement = <HTMLSelectElement>document.getElementById("Heroes");
                             M.FormSelect.getInstance(select)?.destroy();
                             M.FormSelect.init(select, SELECT_FORMS_OPTIONS);
                         })

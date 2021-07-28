@@ -1,6 +1,6 @@
 ﻿@model DomainModel.Game
 
-@using (Html.BeginForm(controllerName: "Game", actionName: Model.Id > 0 ? "Edit" : "Create"))
+@using (Html.BeginForm(controllerName: "Game", actionName: Model.Id != 0 ? "Edit" : "Create"))
 {
     @if (Model.Id != 0)
     {
@@ -9,7 +9,7 @@
     <div class="modal-content row" id="add-game">
         <h4>Ajouter une game</h4>
         <div class="input-field col s12 m6">
-            <select name="Game.NewMap" id="Game_Map">
+            <select name="NewMap" id="Map">
                 @if (Model.Id > 0)
                 {
                     <option v-for="map in maps" v-bind:value="map.id" :selected="map.id == {Model.Map?.Id}">{{ map.name }}</option>
@@ -19,11 +19,11 @@
                     <option v-for="map in maps" v-bind:value="map.id">{{ map.name }}</option>
                 }
             </select>
-            <label for="Game_Map">Map</label>
+            @Html.LabelFor(g => g.Map)
         </div>
 
         <div class="input-field col s12 m6">
-            <select name="Game.Type" id="Game_Type"
+            <select name="Type" id="Type"
                     v-model="selectedRole"
                     v-on:change="updateHeroList">
                 @if (Model.Id > 0)
@@ -35,11 +35,11 @@
                     <option v-for="(role, id) in roles" v-bind:value="id">{{ role }}</option>
                 }
             </select>
-            <label for="Game_Type">Type</label>
+            @Html.LabelFor(g => g.Type)
         </div>
 
         <div class="input-field col s12 m6">
-            <select name="Game.NewHeroes" id="Game_Heroes" multiple>
+            <select name="NewHeroes" id="Heroes" multiple>
                 @if (Model.Id > 0)
                 {
                     <option v-for="hero in heroes" v-bind:value="hero.id" v-bind:data-icon="hero.imageUrl" class="right" :selected="@(Json.Serialize(Model.Heroes.Select(h => h.Id).ToArray())).includes(hero.id)">{{ hero.name }}</option>
@@ -49,16 +49,16 @@
                     <option v-for="hero in heroes" v-bind:value="hero.id" v-bind:data-icon="hero.imageUrl" class="right">{{ hero.name }}</option>
                 }
             </select>
-            <label for="Game_Heroes">Hero</label>
+            @Html.LabelFor(g => g.Heroes)
         </div>
         <div class="input-field col s12 m6">
-            <input data-val="true" data-val-range="The field Sr must be between 0 and 5000." data-val-range-max="5000" data-val-range-min="0" data-val-required="The Sr field is required." id="Sr" max="5000" min="0" name="Game.Sr" type="number" value="0">
+            @Html.TextBoxFor(g => g.Sr, new {type = "number", min = 0, max = 5000})
             @Html.LabelFor(g => g.Sr)
         </div>
 
         <div class="input-field col s12">
-            <label for="Game_SquadMembers">Pré-mate</label>
-            <select name="Game.NewSquadMembers" id="Game_SquadMembers"
+            @Html.LabelFor(g => g.SquadMembers)
+            <select name="NewSquadMembers" id="SquadMembers"
                     class="select2 browser-default"
                     data-tags="true"
                     multiple
@@ -71,15 +71,15 @@
             </select>
         </div>
         <div class="input-field col s12 m6">
-            <input data-val="true" data-val-range="The field AllieScore must be between 0 and 2147483647." data-val-range-max="2147483647" data-val-range-min="0" data-val-required="The AllieScore field is required." id="AllieScore" min="0" name="Game.AllieScore" type="number" value="0" data-dashlane-rid="a52721a7dfc9179b" data-form-type="other">
+            @Html.TextBoxFor(g => g.AllieScore, new {type = "number", min = 0})
             @Html.LabelFor(g => g.AllieScore)
         </div>
         <div class="input-field col s12 m6">
-            <input data-val="true" data-val-range="The field EnemyScore must be between 0 and 2147483647." data-val-range-max="2147483647" data-val-range-min="0" data-val-required="The EnemyScore field is required." id="EnemyScore" min="0" name="Game.EnemyScore" type="number" value="0" data-dashlane-rid="1bfa093912f7c9f5" data-form-type="other">
+            @Html.TextBoxFor(g => g.EnemyScore, new {type = "number", min = 0})
             @Html.LabelFor(g => g.EnemyScore)
         </div>
         <div class="col s12 center">
-            <button class="btn wave-effect">Enregistrer</button>
+            <button class="btn wave-effect">Save</button>
         </div>
     </div>
 }
