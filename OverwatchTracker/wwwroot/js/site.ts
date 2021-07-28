@@ -100,4 +100,8 @@ document.addEventListener('DOMContentLoaded', () => {
             })
     })
     
+    //prevent disabled pagination link to redirect
+    $('.pagination .disabled a, .pagination .active a').on('click', event => {
+        event.preventDefault();
+    })
 })

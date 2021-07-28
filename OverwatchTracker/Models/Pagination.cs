@@ -135,6 +135,6 @@ namespace WebApplication.Models
         }
 
         public int? NextPage => Page < NbPages ? Page + 1 : null;
-        public int? PrevPage => Page > 0 ? Page - 1 : null;
+        public int? PrevPage => Page > 1 ? Page - 1 : null;
     }
 }
