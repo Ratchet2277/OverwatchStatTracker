@@ -1,14 +1,20 @@
 ﻿@using WebApplication.Components
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Dashboard";
 }
 <div class="row">
+    <div class="col s12 center">
+        <h3>Past 10 Games</h3>
+    </div>
     <div class="col s12">
         @await Component.InvokeAsync(nameof(GameListComponent))
     </div>
 </div>
 <div class="row center">
+    <div class="col s12">
+        <h3>Global Stats</h3>
+    </div>
     <div class="col s12 m6 l5">
         @await Html.PartialAsync("Chart/WinRate/ByType")
         @await Html.PartialAsync("Chart/WinRate/ByHero")
@@ -18,6 +24,9 @@
     </div>
 </div>
 <div class="row">
+    <div class="col s12 center">
+        <h3>Average SR Change per game</h3>
+    </div>
     <div class="col s12">
         @await Component.InvokeAsync(nameof(AverageSrChangeComponent))
     </div>

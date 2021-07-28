@@ -3,8 +3,9 @@
 @{
     ViewBag.Title = "Game History";
 }
-
-<h2>@ViewBag.Title</h2>
+<div class="col s12 center">
+    <h3>@ViewBag.Title</h3>
+</div>
 
 @await Html.PartialAsync("_GameList", Model)
 <div class="col s12 center">
