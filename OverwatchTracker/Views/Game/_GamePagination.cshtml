@@ -1,0 +1,20 @@
+﻿@model WebApplication.Models.GameHistoryModel
+
+<ul class="pagination">
+    <li class="@(Model.Games.PrevPage is null ? "disabled" : "")">
+        <a href="@Url.Action("History", new {type = Model.Type, page = Model.Games.PrevPage})">
+            <i class="material-icons">chevron_left</i>
+        </a>
+    </li>
+    @foreach (var (number, value) in Model.Games.PageToShow())
+    {
+        <li class="@(value == Model.Games.CloseFarPageSeparator ? "disabled" : number == Model.Games.Page ? "active" : "waves-effect")">
+            @Html.ActionLink(value, "History", new {type = Model.Type, page = (int?) number})
+        </li>
+    }
+    <li class="@(Model.Games.NextPage is null ? "disabled" : "")">
+        <a href="@Url.Action("History", new {type = Model.Type, page = Model.Games.NextPage})">
+            <i class="material-icons">chevron_right</i>
+        </a>
+    </li>
+</ul>

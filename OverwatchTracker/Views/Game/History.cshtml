@@ -7,3 +7,6 @@
 <h2>@ViewBag.Title</h2>
 
 @await Html.PartialAsync("_GameList", Model)
+<div class="col s12 center">
+    @await Html.PartialAsync("_GamePagination", Model)
+</div>

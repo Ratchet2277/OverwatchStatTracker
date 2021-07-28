@@ -65,6 +65,7 @@ namespace WebApplication.Controllers
 
         [HttpGet("History/{type?}")]
         [HttpGet("History/{type?}/Page/{page:int?}")]
+        [HttpGet("History/Page/{page:int?}")]
         public async Task<IActionResult> History(int page = 1, GameType? type = null)
         {
             var currentUser = await UserManager.GetUserAsync(User);
