@@ -1,4 +1,4 @@
-﻿namespace WebApplication.Struct
+﻿namespace DomainModel.Struct
 {
     public struct WinRate
     {

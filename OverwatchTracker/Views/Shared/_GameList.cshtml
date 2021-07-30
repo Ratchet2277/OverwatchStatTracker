@@ -39,6 +39,11 @@
             <td class="right-align@(delta is null ? "" : delta > 0 ? " green-text" : delta < 0 ? " red-text" : " amber-text")">
                 @delta
             </td>
+            <td>
+                <a class="btn btn-flat" href="@Url.ActionLink("Edit", "Game", new {game.Id})">
+                    <i class="material-icons">edit</i>
+                </a>
+            </td>
         </tr>
     }
     </tbody>

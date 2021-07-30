@@ -15,21 +15,21 @@ namespace WebApplication.Business
         {
         }
 
-        public static Dictionary<GameType, Struct.WinRate> WrByRole(IEnumerable<Game> games)
+        public static Dictionary<GameType, DomainModel.Struct.WinRate> WrByRole(IEnumerable<Game> games)
         {
             var enumerable = games.ToList();
 
             return enumerable.GroupBy(g => g.Type).ToDictionary(group => group.Key, GetWinRate);
         }
 
-        private static Struct.WinRate GetWinRate(IEnumerable<Game> games)
+        private static DomainModel.Struct.WinRate GetWinRate(IEnumerable<Game> games)
         {
             var enumerable = games.ToList();
             var nbWin = enumerable.Count(g => g.AllieScore > g.EnemyScore);
             var nbDraw = enumerable.Count(g => g.AllieScore == g.EnemyScore);
             var nbTotal = enumerable.Count;
-            if (nbTotal == 0) return new Struct.WinRate();
-            return new Struct.WinRate
+            if (nbTotal == 0) return new DomainModel.Struct.WinRate();
+            return new DomainModel.Struct.WinRate
             {
                 Rate = (double) nbWin / nbTotal,
                 DrawRate = (double) nbDraw / nbTotal

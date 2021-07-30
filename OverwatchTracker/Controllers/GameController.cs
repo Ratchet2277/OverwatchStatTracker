@@ -78,39 +78,9 @@ namespace WebApplication.Controllers
             return View(game);
         }
 
-        public async Task<IActionResult> Edit(Game game, string[] newSquadMembers, int newMap,
-            int[] newHeroes)
-        {
-            game.Map = await Context.Maps.FindAsync(newMap);
-            game.Heroes = new Collection<Hero>(await Context.Heroes.Where(h => newHeroes.Contains(h.Id)).ToListAsync());
-
-            game.SquadMembers.Clear();
-
-            if (newSquadMembers.Length > 0)
-            {
-                game.SquadMembers = new Collection<SquadMember>();
-                foreach (var squadMember in newSquadMembers)
-                {
-                    if (Context.SquadMembers.Any(s => s.Name == squadMember))
-                    {
-                        game.SquadMembers.Add(Context.SquadMembers.First(s => s.Name == squadMember));
-                        continue;
-                    }
-
-                    game.SquadMembers.Add(new SquadMember {Name = squadMember});
-                }
-            }
-
-            Context.Games.Update(game);
-
-            await Context.SaveChangesAsync();
-
-            return RedirectToAction("Index", "Home");
-        }
-
         [HttpPost("Edit")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Game game)
+        public async Task<IActionResult> SaveEdit(Game game)
         {
             game.Map = await Context.Maps.FindAsync(game.NewMap);
             game.Heroes =

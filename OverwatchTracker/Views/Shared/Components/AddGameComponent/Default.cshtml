@@ -7,5 +7,7 @@
 </div>
 
 <div class="modal" id="add-game-modal">
-    @await Html.PartialAsync("_GameForm", Model)
+    <div class="modal-content row">
+        @await Html.PartialAsync("_GameForm", Model)
+    </div>
 </div>

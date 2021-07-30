@@ -1,18 +1,18 @@
 ﻿@model DomainModel.Game
+<div id="add-game">
 
-@using (Html.BeginForm(controllerName: "Game", actionName: Model.Id != 0 ? "Edit" : "Create"))
-{
-    @if (Model.Id != 0)
+    @using (Html.BeginForm(controllerName: "Game", actionName: Model.Id != 0 ? "SaveEdit" : "Create"))
     {
-        @Html.HiddenFor(g => g.Id)
-    }
-    <div class="modal-content row" id="add-game">
+        @if (Model.Id != 0)
+        {
+            @Html.HiddenFor(g => g.Id)
+        }
         <h4>Ajouter une game</h4>
         <div class="input-field col s12 m6">
             <select name="NewMap" id="Map">
                 @if (Model.Id > 0)
                 {
-                    <option v-for="map in maps" v-bind:value="map.id" :selected="map.id == {Model.Map?.Id}">{{ map.name }}</option>
+                    <option v-for="map in maps" v-bind:value="map.id" :selected="map.id == @Model.Map?.Id">{{ map.name }}</option>
                 }
                 else
                 {
@@ -28,7 +28,7 @@
                     v-on:change="updateHeroList">
                 @if (Model.Id > 0)
                 {
-                    <option v-for="(role, id) in roles" v-bind:value="id" :selected="id == @Model.Type">{{ role }}</option>
+                    <option v-for="(role, id) in roles" v-bind:value="id" :selected="id == @((int) Model.Type)">{{ role }}</option>
                 }
                 else
                 {
@@ -81,5 +81,5 @@
         <div class="col s12 center">
             <button class="btn wave-effect">Save</button>
         </div>
-    </div>
-}
+    }
+</div>
