@@ -83,48 +83,44 @@ namespace WebApplication.Controllers
 
         [HttpPost("Edit")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SaveEdit(Game game)
+        public async Task<IActionResult> SaveEdit(Game newGame)
         {
-            game.Map = await Context.Maps.FindAsync(game.NewMap);
-            game.Heroes = Context.Entry(game).Entity.Heroes;
-            game.SquadMembers = Context.Entry(game).Entity.SquadMembers;
-            game.User = Context.Entry(game).Entity.User;
+            var game = await Context.Games.FindAsync(newGame.Id);
+            game.AllieScore = newGame.AllieScore;
+            game.EnemyScore = newGame.EnemyScore;
+            game.Sr = newGame.Sr;
 
-            Console.WriteLine(game);
+            if (game.Map.Id != newGame.NewMap) game.Map = await Context.Maps.FindAsync(newGame.NewMap);
 
-            foreach (var hero in game.Heroes) Console.WriteLine(hero);
-
-            foreach (var heroToDel in game.Heroes.Where(h => !game.NewHeroes.Contains(h.Id)).ToList())
+            foreach (var heroToDel in game.Heroes.Where(h => !newGame.NewHeroes.Contains(h.Id)).ToList())
                 game.Heroes.Remove(heroToDel);
 
             foreach (var heroToAdd in Context.Heroes.Where(h =>
-                game.NewHeroes.Contains(h.Id) && !game.Heroes.Contains(h))) game.Heroes.Add(heroToAdd);
+                newGame.NewHeroes.Contains(h.Id) && !game.Heroes.Contains(h))) game.Heroes.Add(heroToAdd);
 
-            if (game.NewSquadMembers.Length > 0)
+            foreach (var squadMemberName in newGame.NewSquadMembers)
             {
-                foreach (var squadMemberName in game.NewSquadMembers)
+                if (game.SquadMembers.Any(s => newGame.NewSquadMembers.Contains(s.Name)))
+                    continue;
+
+                if (Context.SquadMembers.Any(s => s.Name == squadMemberName && s.MainUser == game.User))
                 {
-                    if (game.SquadMembers.Any(s => game.NewSquadMembers.Contains(s.Name)))
-                        continue;
-
-                    if (Context.SquadMembers.Any(s => s.Name == squadMemberName && s.MainUser == game.User))
-                    {
-                        game.SquadMembers.Add(Context.SquadMembers.First(s => s.Name == squadMemberName));
-                        continue;
-                    }
-
-                    game.SquadMembers.Add(new SquadMember {Name = squadMemberName, MainUser = game.User});
+                    game.SquadMembers.Add(Context.SquadMembers.First(s => s.Name == squadMemberName));
+                    continue;
                 }
 
-                foreach (var squadMemberToDel in game.SquadMembers.Where(s => !game.NewSquadMembers.Contains(s.Name)))
-                    game.SquadMembers.Remove(squadMemberToDel);
+                game.SquadMembers.Add(new SquadMember {Name = squadMemberName, MainUser = game.User});
             }
+
+            foreach (var squadMemberToDel in game.SquadMembers.Where(s => !newGame.NewSquadMembers.Contains(s.Name))
+                .ToList())
+                game.SquadMembers.Remove(squadMemberToDel);
 
             Context.Games.Update(game);
 
             await Context.SaveChangesAsync();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("History");
         }
     }
 }
