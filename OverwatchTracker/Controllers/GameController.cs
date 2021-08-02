@@ -78,6 +78,8 @@ namespace WebApplication.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var game = await Context.Games.FirstOrDefaultAsync(g => g.Id == id);
+            var currentUser = await UserManager.GetUserAsync(User);
+            if (game.User != currentUser) return Forbid();
             return View(game);
         }
 
@@ -86,6 +88,8 @@ namespace WebApplication.Controllers
         public async Task<IActionResult> SaveEdit(Game newGame)
         {
             var game = await Context.Games.FindAsync(newGame.Id);
+            var currentUser = await UserManager.GetUserAsync(User);
+            if (game.User != currentUser) return Forbid();
             game.AllieScore = newGame.AllieScore;
             game.EnemyScore = newGame.EnemyScore;
             game.Sr = newGame.Sr;
