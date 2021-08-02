@@ -20,11 +20,12 @@ namespace WebApplication.Controllers
     [Route("Game/")]
     public partial class GameController : BaseController
     {
-        private readonly SeasonBusiness _seasonBusiness;
         private readonly GamesBusiness _gamesBusiness;
+        private readonly SeasonBusiness _seasonBusiness;
 
         public GameController(TrackerContext context, ILogger<GameController> logger, UserManager<User> userManager,
-            SeasonBusiness seasonBusiness, GamesBusiness gamesBusiness, IServiceProvider serviceProvider) : base(context, logger, userManager, serviceProvider)
+            SeasonBusiness seasonBusiness, GamesBusiness gamesBusiness, IServiceProvider serviceProvider) : base(
+            context, logger, userManager, serviceProvider)
         {
             _seasonBusiness = seasonBusiness;
             _gamesBusiness = gamesBusiness;
@@ -48,7 +49,8 @@ namespace WebApplication.Controllers
                 {
                     if (Context.SquadMembers.Any(s => s.Name == squadMember && s.MainUser == game.User))
                     {
-                        game.SquadMembers.Add(Context.SquadMembers.First(s => s.Name == squadMember));
+                        game.SquadMembers.Add(Context.SquadMembers.First(s =>
+                            s.Name == squadMember && s.MainUser == game.User));
                         continue;
                     }
 
@@ -68,7 +70,8 @@ namespace WebApplication.Controllers
         [HttpGet("History/Page/{page:int?}")]
         public async Task<IActionResult> History(int page = 1, GameType? type = null)
         {
-            return View(ActivatorUtilities.CreateInstance<GameHistoryModel>(ServiceProvider, await _gamesBusiness.GetGames(page, 10, type)));
+            return View(ActivatorUtilities.CreateInstance<GameHistoryModel>(ServiceProvider,
+                await _gamesBusiness.GetGames(page, 10, type)));
         }
 
         [HttpGet("Edit/{id:int}")]
@@ -83,22 +86,38 @@ namespace WebApplication.Controllers
         public async Task<IActionResult> SaveEdit(Game game)
         {
             game.Map = await Context.Maps.FindAsync(game.NewMap);
-            game.Heroes =
-                new Collection<Hero>(await Context.Heroes.Where(h => game.NewHeroes.Contains(h.Id)).ToListAsync());
+            game.Heroes = Context.Entry(game).Entity.Heroes;
+            game.SquadMembers = Context.Entry(game).Entity.SquadMembers;
+            game.User = Context.Entry(game).Entity.User;
+
+            Console.WriteLine(game);
+
+            foreach (var hero in game.Heroes) Console.WriteLine(hero);
+
+            foreach (var heroToDel in game.Heroes.Where(h => !game.NewHeroes.Contains(h.Id)).ToList())
+                game.Heroes.Remove(heroToDel);
+
+            foreach (var heroToAdd in Context.Heroes.Where(h =>
+                game.NewHeroes.Contains(h.Id) && !game.Heroes.Contains(h))) game.Heroes.Add(heroToAdd);
 
             if (game.NewSquadMembers.Length > 0)
             {
-                game.SquadMembers = new Collection<SquadMember>();
                 foreach (var squadMemberName in game.NewSquadMembers)
                 {
-                    if (Context.SquadMembers.Any(s => s.Name == squadMemberName))
+                    if (game.SquadMembers.Any(s => game.NewSquadMembers.Contains(s.Name)))
+                        continue;
+
+                    if (Context.SquadMembers.Any(s => s.Name == squadMemberName && s.MainUser == game.User))
                     {
                         game.SquadMembers.Add(Context.SquadMembers.First(s => s.Name == squadMemberName));
                         continue;
                     }
 
-                    game.SquadMembers.Add(new SquadMember {Name = squadMemberName});
+                    game.SquadMembers.Add(new SquadMember {Name = squadMemberName, MainUser = game.User});
                 }
+
+                foreach (var squadMemberToDel in game.SquadMembers.Where(s => !game.NewSquadMembers.Contains(s.Name)))
+                    game.SquadMembers.Remove(squadMemberToDel);
             }
 
             Context.Games.Update(game);
