@@ -3,21 +3,28 @@
 
 // Write your JavaScript code.
 
-
+const Vue2 = Vue.extend({
+    props: {},
+    methods: {
+        updateHeroList() {
+            this.$emit("updateHeroList")
+        }
+    }
+})
 document.addEventListener('DOMContentLoaded', () => {
     const SELECT_FORMS_OPTIONS: Partial<M.FormSelectOptions> = {
         dropdownOptions: {
             container: document.body
         }
     }
-    
-    let AddGame: Vue = new Vue({
+
+    let AddGame: Vue = new Vue2({
         el: "#add-game",
         data: {
             maps: [],
             heroes: [],
             roles: [],
-            selectedRole: -1,
+            selectedRole: null,
             lastSr: 0
         },
         async created() {
@@ -31,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 })
             })
-            
+
             fetch('/Game/RoleList').then((response) => {
                 response.json().then((data) => {
                     Vue.set(AddGame, "roles", data);
@@ -41,6 +48,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         M.FormSelect.init(select, SELECT_FORMS_OPTIONS);
                     });
                 })
+            })
+            this.$nextTick(() => {
+                if (this.$data.selectedRole !== null) {
+                    this.updateHeroList()
+                }
             })
         },
         methods: {
@@ -91,6 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
             .then(response => response.json())
             .then((data) => {
+                // @ts-ignore
                 new Chart(context, data);
             })
             .catch(() =>  {

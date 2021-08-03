@@ -25,15 +25,10 @@
         <div class="input-field col s12 m6">
             <select name="Type" id="Type"
                     v-model="selectedRole"
-                    v-on:change="updateHeroList">
-                @if (Model.Id > 0)
-                {
-                    <option v-for="(role, id) in roles" v-bind:value="id" :selected="id == @((int) Model.Type)">{{ role }}</option>
-                }
-                else
-                {
-                    <option v-for="(role, id) in roles" v-bind:value="id">{{ role }}</option>
-                }
+                    v-on:change="updateHeroList"
+                    @* Selected Role when edit an existing game *@
+                    @Html.Raw(Model.Id > 0 ? $":run=\"!selectedRole ? selectedRole = {(int) Model.Type} && updateHeroList : true\"" : "")>
+                <option v-for="(role, id) in roles" v-bind:value="id">{{ role }}</option>
             </select>
             @Html.LabelFor(g => g.Type)
         </div>
