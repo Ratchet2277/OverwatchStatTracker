@@ -8,6 +8,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Initializer", "Initializer\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{4F6C15B3-A2FC-4187-8315-7968D4E2A4FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{D0D8275E-0925-4379-81B2-C8940DC62901}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository.Contracts", "Repository.Contracts\Repository.Contracts.csproj", "{5CD2B4F4-BFEA-4BC0-8835-1D23FC33F7EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +34,13 @@ Global
 		{4F6C15B3-A2FC-4187-8315-7968D4E2A4FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F6C15B3-A2FC-4187-8315-7968D4E2A4FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F6C15B3-A2FC-4187-8315-7968D4E2A4FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0D8275E-0925-4379-81B2-C8940DC62901}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0D8275E-0925-4379-81B2-C8940DC62901}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0D8275E-0925-4379-81B2-C8940DC62901}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0D8275E-0925-4379-81B2-C8940DC62901}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CD2B4F4-BFEA-4BC0-8835-1D23FC33F7EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CD2B4F4-BFEA-4BC0-8835-1D23FC33F7EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CD2B4F4-BFEA-4BC0-8835-1D23FC33F7EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CD2B4F4-BFEA-4BC0-8835-1D23FC33F7EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
