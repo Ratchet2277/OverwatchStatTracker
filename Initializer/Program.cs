@@ -1,5 +1,4 @@
-﻿
-using System.IO;
+﻿using System.IO;
 using Microsoft.Extensions.Configuration;
 
 namespace Initializer
@@ -10,16 +9,11 @@ namespace Initializer
 
         private static void Main()
         {
-            
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false);
-            
-            _configuration = builder.Build();
 
-            var context = new TrackerContextExtension(_configuration);
-            
-            context.Initialize(true);
+            _configuration = builder.Build();
         }
     }
 }

@@ -2,7 +2,7 @@
 using DomainModel;
 using Microsoft.AspNetCore.Identity;
 
-namespace WebApplication.Business
+namespace Business
 {
     public class BaseBusiness
     {

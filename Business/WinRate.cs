@@ -4,10 +4,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Business;
 using DomainModel;
 using DomainModel.Types;
 using Microsoft.AspNetCore.Identity;
-using WebApplication.Models;
 
 namespace WebApplication.Business
 {

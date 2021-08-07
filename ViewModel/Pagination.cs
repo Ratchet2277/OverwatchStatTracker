@@ -20,7 +20,7 @@ namespace WebApplication.Models
             Page0 = page - 1;
             _pageSize = pageSize;
             if (_pageSize is not null)
-                NbPages = (int) Math.Ceiling(_query.Count() / (float) _pageSize);
+                NbPages = (int)Math.Ceiling(_query.Count() / (float)_pageSize);
             else
                 NbPages = 1;
             _loadGames();
@@ -89,7 +89,7 @@ namespace WebApplication.Models
         private List<T> _loadGames()
         {
             if (_pageSize is null) return _query.ToList();
-            return _query.Skip((int) (_pageSize * Page0)).Take((int) _pageSize).ToList();
+            return _query.Skip((int)(_pageSize * Page0)).Take((int)_pageSize).ToList();
         }
 
         public Pagination<T> Next(int nb = 1)

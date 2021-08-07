@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <RootNamespace>DataModel</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Business\Business.csproj"/>
+        <ProjectReference Include="..\DomainModel\DomainModel.csproj"/>
+        <ProjectReference Include="..\ViewModel.Contract\ViewModel.Contract.csproj"/>
+    </ItemGroup>
+
+</Project>

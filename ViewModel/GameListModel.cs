@@ -10,6 +10,7 @@ namespace WebApplication.Models
             Games = games;
             SrEvolution = srEvolution;
         }
+
         public Pagination<Game> Games { get; private set; }
 
         public SrEvolution SrEvolution { get; private set; }

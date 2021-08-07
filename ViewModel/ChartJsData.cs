@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using WebApplication.Models;
 
-namespace WebApplication.Models
+namespace DataModel
 {
     public class ChartJsData<T>
     {
