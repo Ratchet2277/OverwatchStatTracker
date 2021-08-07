@@ -54,7 +54,7 @@ namespace WebApplication.Controllers
                         continue;
                     }
 
-                    game.SquadMembers.Add(new SquadMember {Name = squadMember, MainUser = game.User});
+                    game.SquadMembers.Add(new SquadMember { Name = squadMember, MainUser = game.User });
                 }
             }
 
@@ -92,6 +92,7 @@ namespace WebApplication.Controllers
             if (game.User != currentUser) return Forbid();
             game.AllieScore = newGame.AllieScore;
             game.EnemyScore = newGame.EnemyScore;
+            game.Type = newGame.Type;
             game.Sr = newGame.Sr;
 
             if (game.Map.Id != newGame.NewMap) game.Map = await Context.Maps.FindAsync(newGame.NewMap);
@@ -113,7 +114,7 @@ namespace WebApplication.Controllers
                     continue;
                 }
 
-                game.SquadMembers.Add(new SquadMember {Name = squadMemberName, MainUser = game.User});
+                game.SquadMembers.Add(new SquadMember { Name = squadMemberName, MainUser = game.User });
             }
 
             foreach (var squadMemberToDel in game.SquadMembers.Where(s => !newGame.NewSquadMembers.Contains(s.Name))
