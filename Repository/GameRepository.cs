@@ -87,6 +87,7 @@ namespace Repository
 
             game.AllieScore = newGame.AllieScore;
             game.EnemyScore = newGame.EnemyScore;
+            game.Type = newGame.Type;
             game.Sr = newGame.Sr;
 
             if (game.Map.Id != newGame.NewMap) game.Map = await Context.Maps.FindAsync(newGame.NewMap);
