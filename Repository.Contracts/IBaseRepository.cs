@@ -1,10 +1,17 @@
-﻿namespace Repository.Contracts
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace Repository.Contracts
 {
-    public interface IBaseRepository
+    public interface IBaseRepository<T>
     {
-        public void ToArray();
-        public void ToArrayAsync();
-        public void ToList();
-        public void ToListAsync();
+        public T[] ToArray();
+        public Task<T[]> ToArrayAsync();
+        public List<T> ToList();
+        public Task<List<T>> ToListAsync();
+        public Task<T> Get(int id);
+        public void Add(T entity);
+
+        public void Update(T entity);
     }
 }

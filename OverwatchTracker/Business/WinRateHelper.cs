@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using DAL;
 using DomainModel;
 using DomainModel.Types;
 using Microsoft.AspNetCore.Identity;
@@ -10,8 +9,8 @@ namespace WebApplication.Business
 {
     public class WinRateHelper : BaseBusiness
     {
-        public WinRateHelper(TrackerContext context, UserManager<User> userManager, ClaimsPrincipal user) : base(
-            context, userManager, user)
+        public WinRateHelper(UserManager<User> userManager, ClaimsPrincipal user) : base(
+            userManager, user)
         {
         }
 
@@ -31,8 +30,8 @@ namespace WebApplication.Business
             if (nbTotal == 0) return new DomainModel.Struct.WinRate();
             return new DomainModel.Struct.WinRate
             {
-                Rate = (double) nbWin / nbTotal,
-                DrawRate = (double) nbDraw / nbTotal
+                Rate = (double)nbWin / nbTotal,
+                DrawRate = (double)nbDraw / nbTotal
             };
         }
     }

@@ -15,11 +15,13 @@ namespace WebApplication.Business
     public class SrEvolution : BaseBusiness
 
     {
+        private readonly TrackerContext _context;
         private readonly SeasonBusiness _seasonBusiness;
 
         public SrEvolution(TrackerContext context, UserManager<User> userManager, SeasonBusiness seasonBusiness,
-            ClaimsPrincipal user) : base(context, userManager, user)
+            ClaimsPrincipal user) : base(userManager, user)
         {
+            _context = context;
             _seasonBusiness = seasonBusiness;
         }
 
@@ -50,7 +52,7 @@ namespace WebApplication.Business
                         // ReSharper disable once PossibleMultipleEnumeration
                         Data = query.Select(g => g.Sr).ToList(),
                         BorderColor = "#f44336",
-                        BackgroundColor = new List<string> {"#f44336"},
+                        BackgroundColor = new List<string> { "#f44336" },
                         Stepped = true
                     }
                 }
@@ -120,14 +122,14 @@ namespace WebApplication.Business
                 nbLose++;
             }
 
-            return new Tuple<float, float>((float) totalWin / nbWin, (float) totalLose / nbLose);
+            return new Tuple<float, float>((float)totalWin / nbWin, (float)totalLose / nbLose);
         }
 
         public async Task<Dictionary<GameType, Tuple<float, float>>> GetAverageEvolution()
         {
             var result = new Dictionary<GameType, Tuple<float, float>>();
 
-            foreach (var gameType in (GameType[]) Enum.GetValues(typeof(GameType)))
+            foreach (var gameType in (GameType[])Enum.GetValues(typeof(GameType)))
             {
                 var evolutionByType = await GetAverageEvolutionByType(gameType);
                 if (evolutionByType is null)
@@ -140,7 +142,7 @@ namespace WebApplication.Business
 
         public int? DeltaLastGame(Game game)
         {
-            var previousGameQuery = Context.Games
+            var previousGameQuery = _context.Games
                 .Where(g => g.DateTime < game.DateTime && g.User == game.User && g.Type == game.Type)
                 .OrderByDescending(g => g.DateTime);
 

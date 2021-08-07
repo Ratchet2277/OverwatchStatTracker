@@ -8,14 +8,17 @@ namespace WebApplication.Business
 {
     public class SeasonBusiness : BaseBusiness
     {
+        private readonly TrackerContext _context;
+
         public SeasonBusiness(TrackerContext context, UserManager<User> userManager, ClaimsPrincipal user) : base(
-            context, userManager, user)
+            userManager, user)
         {
+            _context = context;
         }
 
         public Season GetLastSeason()
         {
-            return Context.Seasons.OrderByDescending(s => s.Number).First();
+            return _context.Seasons.OrderByDescending(s => s.Number).First();
         }
     }
 }

@@ -27,7 +27,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\DAL\DAL.csproj" />
+        <ProjectReference Include="..\DAL\DAL.csproj"/>
+        <ProjectReference Include="..\Repository.Contracts\Repository.Contracts.csproj"/>
+        <ProjectReference Include="..\Repository\Repository.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

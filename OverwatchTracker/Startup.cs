@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Repository;
+using Repository.Contracts;
 using WebApplication.Business;
 
 namespace WebApplication
@@ -26,12 +28,18 @@ namespace WebApplication
         {
             services.AddScoped<UserManager<User>>();
 
-            #region Buisness
+            #region Business
 
             services.AddScoped<SrEvolution>();
             services.AddScoped<WinRate>();
             services.AddScoped<SeasonBusiness>();
             services.AddScoped<GamesBusiness>();
+
+            #endregion
+
+            #region Repository
+
+            services.AddScoped<IGameRepository, GameRepository>();
 
             #endregion
 

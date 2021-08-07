@@ -4,7 +4,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using DAL;
 using DomainModel;
 using DomainModel.Types;
 using Microsoft.AspNetCore.Identity;
@@ -17,8 +16,8 @@ namespace WebApplication.Business
     {
         private readonly SeasonBusiness _seasonBusiness;
 
-        public WinRate(TrackerContext context, UserManager<User> userManager, SeasonBusiness seasonBusiness,
-            ClaimsPrincipal user) : base(context, userManager, user)
+        public WinRate(UserManager<User> userManager, SeasonBusiness seasonBusiness,
+            ClaimsPrincipal user) : base(userManager, user)
         {
             _seasonBusiness = seasonBusiness;
         }
@@ -42,7 +41,7 @@ namespace WebApplication.Business
             var heroList = season.HeroPool
                 .Where(h => h.Games.Any(g => g.User == currentUser))
                 .OrderByDescending(h =>
-                    (double) h.Games.Count(g => g.AllieScore >= g.EnemyScore && g.User == currentUser) /
+                    (double)h.Games.Count(g => g.AllieScore >= g.EnemyScore && g.User == currentUser) /
                     h.Games.Count(g => g.User == currentUser)
                 );
 
@@ -53,13 +52,13 @@ namespace WebApplication.Business
 
             datas.DataSets[0].AddBacgroundColor("#03a9f4")
                 .AddData(heroList.Select(h =>
-                        (double) h.Games.Count(g => g.AllieScore > g.EnemyScore && g.User == currentUser) /
+                        (double)h.Games.Count(g => g.AllieScore > g.EnemyScore && g.User == currentUser) /
                         h.Games.Count(g => g.User == currentUser) * 100).ToList()
                 );
 
             datas.DataSets[1].AddBacgroundColor("#ffeb3b")
                 .AddData(heroList.Select(h =>
-                        (double) h.Games.Count(g => g.AllieScore == g.EnemyScore && g.User == currentUser) /
+                        (double)h.Games.Count(g => g.AllieScore == g.EnemyScore && g.User == currentUser) /
                         h.Games.Count(g => g.User == currentUser) * 100).ToList()
                 );
 

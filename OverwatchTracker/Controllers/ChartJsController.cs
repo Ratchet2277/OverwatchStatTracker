@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using DAL;
 using DomainModel;
 using DomainModel.Types;
 using Microsoft.AspNetCore.Authorization;
@@ -18,9 +17,9 @@ namespace WebApplication.Controllers
     [Authorize]
     public class ChartJsController : BaseController
     {
-
-        public ChartJsController(TrackerContext context, ILogger<ChartJsController> logger,
-            UserManager<User> userManager, IServiceProvider serviceProvider) : base(context, logger, userManager, serviceProvider)
+        public ChartJsController(ILogger<ChartJsController> logger,
+            UserManager<User> userManager, IServiceProvider serviceProvider) : base(logger, userManager,
+            serviceProvider)
         {
         }
 
