@@ -1,4 +1,4 @@
-﻿namespace WebApplication.Models.Contracts
+﻿namespace ViewModel.Contract
 {
     public interface IChartJsOptions
     {

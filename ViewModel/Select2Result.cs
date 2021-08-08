@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace WebApplication.Models
+namespace DataModel
 {
     public class Select2Result
     {

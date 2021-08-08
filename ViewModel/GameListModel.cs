@@ -1,11 +1,11 @@
-﻿using DomainModel;
-using WebApplication.Business;
+﻿using Business.Contracts;
+using DomainModel;
 
-namespace WebApplication.Models
+namespace DataModel
 {
     public class GameListModel
     {
-        public GameListModel(Pagination<Game> games, SrEvolution srEvolution)
+        public GameListModel(Pagination<Game> games, ISrEvolution srEvolution)
         {
             Games = games;
             SrEvolution = srEvolution;
@@ -13,6 +13,6 @@ namespace WebApplication.Models
 
         public Pagination<Game> Games { get; private set; }
 
-        public SrEvolution SrEvolution { get; private set; }
+        public ISrEvolution SrEvolution { get; }
     }
 }

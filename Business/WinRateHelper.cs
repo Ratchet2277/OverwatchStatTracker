@@ -1,17 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using Business;
 using DomainModel;
 using DomainModel.Types;
 using Microsoft.AspNetCore.Identity;
 
-namespace WebApplication.Business
+namespace Business
 {
     public class WinRateHelper : BaseBusiness
     {
-        public WinRateHelper(UserManager<User> userManager, ClaimsPrincipal user) : base(
-            userManager, user)
+        public WinRateHelper(UserManager<User> userManager, ClaimsPrincipal user,
+            IServiceProvider serviceProvider) : base(
+            userManager, user, serviceProvider)
         {
         }
 

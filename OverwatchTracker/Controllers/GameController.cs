@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Business;
+using DataModel;
 using DomainModel;
 using DomainModel.Types;
 using Microsoft.AspNetCore.Authorization;
@@ -8,8 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Repository.Contracts;
-using WebApplication.Business;
-using WebApplication.Models;
 
 namespace WebApplication.Controllers
 {

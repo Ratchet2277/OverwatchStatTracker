@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModel", "ViewModel\View
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModel.Contract", "ViewModel.Contract\ViewModel.Contract.csproj", "{C85360D8-5891-4093-AE28-3A1DA7F2F738}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business.Contracts", "Business.Contracts\Business.Contracts.csproj", "{5D0F945C-F811-4FC6-9F03-6775DD3A596C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -60,5 +62,9 @@ Global
 		{C85360D8-5891-4093-AE28-3A1DA7F2F738}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C85360D8-5891-4093-AE28-3A1DA7F2F738}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C85360D8-5891-4093-AE28-3A1DA7F2F738}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D0F945C-F811-4FC6-9F03-6775DD3A596C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D0F945C-F811-4FC6-9F03-6775DD3A596C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D0F945C-F811-4FC6-9F03-6775DD3A596C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D0F945C-F811-4FC6-9F03-6775DD3A596C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

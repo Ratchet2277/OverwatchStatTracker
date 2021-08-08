@@ -1,15 +1,14 @@
-﻿using System;
-using DAL;
+﻿using DAL;
 
 namespace Repository
 {
     public abstract class BaseRepository
     {
-        protected TrackerContext Context { get; set; }
-
         public BaseRepository(TrackerContext context)
         {
             Context = context;
         }
+
+        protected TrackerContext Context { get; set; }
     }
 }

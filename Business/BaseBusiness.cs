@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.Security.Claims;
 using DomainModel;
 using Microsoft.AspNetCore.Identity;
 
@@ -8,12 +9,14 @@ namespace Business
     {
         protected ClaimsPrincipal User;
 
-        public BaseBusiness(UserManager<User> userManager, ClaimsPrincipal user)
+        public BaseBusiness(UserManager<User> userManager, ClaimsPrincipal user, IServiceProvider serviceProvider)
         {
             UserManager = userManager;
             User = user;
+            ServiceProvider = serviceProvider;
         }
 
         protected UserManager<User> UserManager { get; set; }
+        protected IServiceProvider ServiceProvider { get; }
     }
 }

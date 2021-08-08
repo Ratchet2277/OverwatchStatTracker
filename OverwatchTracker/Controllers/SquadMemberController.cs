@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Threading.Tasks;
 using DAL;
+using DataModel;
 using DomainModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using WebApplication.Models;
 
 namespace WebApplication.Controllers
 {

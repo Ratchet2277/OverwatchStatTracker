@@ -6,8 +6,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Business\Business.csproj"/>
+        <ProjectReference Include="..\Business.Contracts\Business.Contracts.csproj"/>
         <ProjectReference Include="..\DomainModel\DomainModel.csproj"/>
+        <ProjectReference Include="..\Repository.Contracts\Repository.Contracts.csproj"/>
         <ProjectReference Include="..\ViewModel.Contract\ViewModel.Contract.csproj"/>
     </ItemGroup>
 

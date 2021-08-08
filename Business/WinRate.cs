@@ -1,15 +1,16 @@
 ﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Business;
+using DataModel;
 using DomainModel;
 using DomainModel.Types;
 using Microsoft.AspNetCore.Identity;
 
-namespace WebApplication.Business
+namespace Business
 {
     [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
     public class WinRate : BaseBusiness
@@ -17,7 +18,7 @@ namespace WebApplication.Business
         private readonly SeasonBusiness _seasonBusiness;
 
         public WinRate(UserManager<User> userManager, SeasonBusiness seasonBusiness,
-            ClaimsPrincipal user) : base(userManager, user)
+            ClaimsPrincipal user, IServiceProvider serviceProvider) : base(userManager, user, serviceProvider)
         {
             _seasonBusiness = seasonBusiness;
         }

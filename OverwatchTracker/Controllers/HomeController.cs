@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
+using DataModel;
 using DomainModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using WebApplication.Models;
 
 namespace WebApplication.Controllers
 {

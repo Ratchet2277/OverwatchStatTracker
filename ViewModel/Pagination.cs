@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ViewModel.Contract;
 
-namespace WebApplication.Models
+namespace DataModel
 {
-    public class Pagination<T>
+    public class Pagination<T> : IPagination<T>
     {
         private readonly int? _pageSize;
         private readonly IEnumerable<T> _query;
@@ -86,22 +87,22 @@ namespace WebApplication.Models
             return allPages;
         }
 
-        private List<T> _loadGames()
-        {
-            if (_pageSize is null) return _query.ToList();
-            return _query.Skip((int)(_pageSize * Page0)).Take((int)_pageSize).ToList();
-        }
-
-        public Pagination<T> Next(int nb = 1)
+        public IPagination<T> Next(int nb = 1)
         {
             Page0 = Math.Min(Page0 + nb, NbPages - 1);
             return this;
         }
 
-        public Pagination<T> Prev(int nb = 1)
+        public IPagination<T> Prev(int nb = 1)
         {
             Page0 = Math.Max(0, Page0 - nb);
             return this;
+        }
+
+        private List<T> _loadGames()
+        {
+            if (_pageSize is null) return _query.ToList();
+            return _query.Skip((int)(_pageSize * Page0)).Take((int)_pageSize).ToList();
         }
     }
 }
