@@ -38,7 +38,7 @@ namespace WebApplication.Controllers
             game.User = await UserManager.GetUserAsync(User);
             game.Season = _seasonBusiness.GetLastSeason();
 
-            _repository.Add(game);
+            await _repository.Add(game);
 
             return RedirectToAction("Index", "Home");
         }
@@ -69,7 +69,7 @@ namespace WebApplication.Controllers
             var currentUser = await UserManager.GetUserAsync(User);
             if (game.User != currentUser) return Forbid();
 
-            _repository.Update(newGame);
+            await _repository.Update(newGame);
 
             return RedirectToAction("History");
         }

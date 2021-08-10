@@ -50,7 +50,7 @@ namespace Repository
             return await Context.Games.FindAsync(id);
         }
 
-        public async void Add(Game game)
+        public async Task Add(Game game)
         {
             if (game.User is null)
                 throw new ArgumentException("Game.User must be set before being added to the repository");
@@ -81,7 +81,7 @@ namespace Repository
             await Context.SaveChangesAsync();
         }
 
-        public async void Update(Game newGame)
+        public async Task Update(Game newGame)
         {
             var game = await Get(newGame.Id);
 
