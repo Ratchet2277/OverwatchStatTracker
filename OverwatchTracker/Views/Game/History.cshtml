@@ -11,3 +11,5 @@
 <div class="col s12 center">
     @await Html.PartialAsync("_GamePagination", Model)
 </div>
+
+@await Component.InvokeAsync("AddGameComponent")
