@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Business;
+using Business.Contracts;
 using DataModel;
 using DomainModel;
 using DomainModel.Types;
@@ -17,12 +17,12 @@ namespace WebApplication.Controllers
     [Route("Game/")]
     public partial class GameController : BaseController
     {
-        private readonly GamesBusiness _gamesBusiness;
+        private readonly IGameBusiness _gamesBusiness;
         private readonly IGameRepository _repository;
-        private readonly SeasonBusiness _seasonBusiness;
+        private readonly ISeasonBusiness _seasonBusiness;
 
         public GameController(ILogger<GameController> logger, UserManager<User> userManager,
-            SeasonBusiness seasonBusiness, GamesBusiness gamesBusiness, IServiceProvider serviceProvider,
+            ISeasonBusiness seasonBusiness, IGameBusiness gamesBusiness, IServiceProvider serviceProvider,
             IGameRepository repository) : base(
             logger, userManager, serviceProvider)
         {

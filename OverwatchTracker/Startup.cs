@@ -34,9 +34,9 @@ namespace WebApplication
             #region Business
 
             services.AddScoped<ISrEvolution, SrEvolution>();
-            services.AddScoped<WinRate>();
-            services.AddScoped<SeasonBusiness>();
-            services.AddScoped<GamesBusiness>();
+            services.AddScoped<IWinRate, WinRate>();
+            services.AddScoped<ISeasonBusiness, SeasonBusiness>();
+            services.AddScoped<IGameBusiness, GamesBusiness>();
 
             #endregion
 

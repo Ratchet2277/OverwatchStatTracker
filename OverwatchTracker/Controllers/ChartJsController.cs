@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Business;
 using Business.Contracts;
 using DomainModel;
 using DomainModel.Types;
@@ -30,8 +29,8 @@ namespace WebApplication.Controllers
         {
             return id switch
             {
-                "wr-by-hero" => await ServiceProvider.GetService<WinRate>()?.ByHero()!,
-                "wr-by-type" => await ServiceProvider.GetService<WinRate>()?.ByType()!,
+                "wr-by-hero" => await ServiceProvider.GetService<IWinRate>()?.ByHero()!,
+                "wr-by-type" => await ServiceProvider.GetService<IWinRate>()?.ByType()!,
                 "sr-evolution-damage" => await ServiceProvider.GetService<ISrEvolution>()?.ByType(GameType.Damage)!,
                 "sr-evolution-support" => await ServiceProvider.GetService<ISrEvolution>()?.ByType(GameType.Support)!,
                 "sr-evolution-tank" => await ServiceProvider.GetService<ISrEvolution>()?.ByType(GameType.Tank)!,

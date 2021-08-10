@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Linq;
 using System.Security.Claims;
+using Business.Contracts;
 using DAL;
 using DomainModel;
 using Microsoft.AspNetCore.Identity;
 
 namespace Business
 {
-    public class SeasonBusiness : BaseBusiness
+    public class SeasonBusiness : BaseBusiness, ISeasonBusiness
     {
         private readonly TrackerContext _context;
 

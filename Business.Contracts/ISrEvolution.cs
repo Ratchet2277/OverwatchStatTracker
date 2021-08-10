@@ -12,6 +12,6 @@ namespace Business.Contracts
     {
         public Task<IChartJsOptions?> ByType(GameType? type);
         public Task<Dictionary<GameType, Tuple<float, float>>> GetAverageEvolution();
-        public int? DeltaLastGame(Game game);
+        public Task<int?> DeltaLastGame(Game game);
     }
 }

@@ -122,52 +122,73 @@ namespace Repository
         }
 
 
-        public void Find(User currentUser)
+        public IGameRepository Find(User currentUser)
         {
-            if (Query is null) throw new IncompleteInitialization();
             Query = Context.Games.Where(g => g.User == currentUser);
+            return this;
         }
 
-        public void ByHero(Hero hero)
+        public IGameRepository ByHero(Hero hero)
         {
             if (Query is null) throw new IncompleteInitialization();
             Query = Query.Where(g => g.Heroes.Contains(hero));
+            return this;
         }
 
-        public void ByType(GameType gameType)
+        public IGameRepository ByType(GameType gameType)
         {
             if (Query is null) throw new IncompleteInitialization();
             Query = Query.Where(g => g.Type == gameType);
+            return this;
         }
 
-        public void BySeason(Season season)
+        public IGameRepository BySeason(Season season)
         {
             if (Query is null) throw new IncompleteInitialization();
             Query = Query.Where(g => g.Season == season);
+            return this;
         }
 
-        public void Win(bool invert = false)
+        public IGameRepository Win(bool invert = false)
         {
             if (Query is null) throw new IncompleteInitialization();
             Query = invert
                 ? Query.Where(g => g.AllieScore ! < g.EnemyScore)
                 : Query.Where(g => g.AllieScore > g.EnemyScore);
+            return this;
         }
 
-        public void Lose(bool invert = false)
+        public IGameRepository Lose(bool invert = false)
         {
             if (Query is null) throw new IncompleteInitialization();
             Query = invert
                 ? Query.Where(g => g.AllieScore ! > g.EnemyScore)
                 : Query.Where(g => g.AllieScore < g.EnemyScore);
+            return this;
         }
 
-        public void Draw(bool invert = false)
+        public IGameRepository Draw(bool invert = false)
         {
             if (Query is null) throw new IncompleteInitialization();
             Query = invert
                 ? Query.Where(g => g.AllieScore != g.EnemyScore)
                 : Query.Where(g => g.AllieScore == g.EnemyScore);
+            return this;
+        }
+
+        public IGameRepository OrderByDate(bool isDescending = true)
+        {
+            if (Query is null) throw new IncompleteInitialization();
+            Query = isDescending
+                ? Query.OrderBy(g => g.DateTime)
+                : Query.OrderByDescending(g => g.DateTime);
+
+            return this;
+        }
+
+        public bool Any()
+        {
+            return Query is not null && Query.Any();
         }
     }
 }
