@@ -1,4 +1,7 @@
+using Business;
+using Business.Contracts;
 using DAL;
+using DataModel;
 using DomainModel;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,7 +11,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WebApplication.Business;
+using Repository;
+using Repository.Contracts;
+using ViewModel.Contract;
 
 namespace WebApplication
 {
@@ -26,12 +31,24 @@ namespace WebApplication
         {
             services.AddScoped<UserManager<User>>();
 
-            #region Buisness
+            #region Business
 
-            services.AddScoped<SrEvolution>();
+            services.AddScoped<ISrEvolution, SrEvolution>();
             services.AddScoped<WinRate>();
             services.AddScoped<SeasonBusiness>();
             services.AddScoped<GamesBusiness>();
+
+            #endregion
+
+            #region Repository
+
+            services.AddScoped<IGameRepository, GameRepository>();
+
+            #endregion
+
+            #region ViewModel
+
+            services.AddScoped<IPagination<Game>, Pagination<Game>>();
 
             #endregion
 

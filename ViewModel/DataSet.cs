@@ -2,24 +2,25 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace WebApplication.Models
+namespace DataModel
 {
     public class DataSet<T>
     {
-        [JsonPropertyName("label")]
-        public string Label { get; }
-
-        [JsonPropertyName("backgroundColor")]
-        public List<string> BackgroundColor { get; set; } = new();
-
-        [JsonPropertyName("data")] 
-        public List<T> Data { get; set; } = new();
-        
-        [JsonPropertyName("borderColor")]
-        public string? BorderColor { get; set; }
-
         private bool _isStepped;
         private string? _stepValue;
+
+        public DataSet(string label)
+        {
+            Label = label;
+        }
+
+        [JsonPropertyName("label")] public string Label { get; }
+
+        [JsonPropertyName("backgroundColor")] public List<string> BackgroundColor { get; set; } = new();
+
+        [JsonPropertyName("data")] public List<T> Data { get; set; } = new();
+
+        [JsonPropertyName("borderColor")] public string? BorderColor { get; set; }
 
         [JsonPropertyName("stepped")]
         public dynamic? Stepped
@@ -39,11 +40,6 @@ namespace WebApplication.Models
                         break;
                 }
             }
-        }
-        
-        public DataSet(string label)
-        {
-            Label = label;
         }
 
         public DataSet<T> AddData(T data)

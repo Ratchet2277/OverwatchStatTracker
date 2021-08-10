@@ -27,22 +27,26 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\DAL\DAL.csproj" />
+        <ProjectReference Include="..\Business\Business.csproj"/>
+        <ProjectReference Include="..\DAL\DAL.csproj"/>
+        <ProjectReference Include="..\Repository.Contracts\Repository.Contracts.csproj"/>
+        <ProjectReference Include="..\Repository\Repository.csproj"/>
+        <ProjectReference Include="..\ViewModel\ViewModel.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
       <UpToDateCheckInput Remove="Views\Shared\Components\WinRateComponent\Default.cshtml" />
       <UpToDateCheckInput Remove="Views\WinRate\WinRateByRole.cshtml" />
     </ItemGroup>
-    
+
     <ItemGroup>
-        <Content Include="wwwroot\node_modules\**"> 
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory> 
+        <Content Include="wwwroot\node_modules\**">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
         <Content Update="Web.config">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-          <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-        </Content> 
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+        </Content>
     </ItemGroup>
 
 

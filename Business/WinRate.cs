@@ -1,24 +1,24 @@
 ﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using DAL;
+using DataModel;
 using DomainModel;
 using DomainModel.Types;
 using Microsoft.AspNetCore.Identity;
-using WebApplication.Models;
 
-namespace WebApplication.Business
+namespace Business
 {
     [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
     public class WinRate : BaseBusiness
     {
         private readonly SeasonBusiness _seasonBusiness;
 
-        public WinRate(TrackerContext context, UserManager<User> userManager, SeasonBusiness seasonBusiness,
-            ClaimsPrincipal user) : base(context, userManager, user)
+        public WinRate(UserManager<User> userManager, SeasonBusiness seasonBusiness,
+            ClaimsPrincipal user, IServiceProvider serviceProvider) : base(userManager, user, serviceProvider)
         {
             _seasonBusiness = seasonBusiness;
         }
@@ -42,7 +42,7 @@ namespace WebApplication.Business
             var heroList = season.HeroPool
                 .Where(h => h.Games.Any(g => g.User == currentUser))
                 .OrderByDescending(h =>
-                    (double) h.Games.Count(g => g.AllieScore >= g.EnemyScore && g.User == currentUser) /
+                    (double)h.Games.Count(g => g.AllieScore >= g.EnemyScore && g.User == currentUser) /
                     h.Games.Count(g => g.User == currentUser)
                 );
 
@@ -53,13 +53,13 @@ namespace WebApplication.Business
 
             datas.DataSets[0].AddBacgroundColor("#03a9f4")
                 .AddData(heroList.Select(h =>
-                        (double) h.Games.Count(g => g.AllieScore > g.EnemyScore && g.User == currentUser) /
+                        (double)h.Games.Count(g => g.AllieScore > g.EnemyScore && g.User == currentUser) /
                         h.Games.Count(g => g.User == currentUser) * 100).ToList()
                 );
 
             datas.DataSets[1].AddBacgroundColor("#ffeb3b")
                 .AddData(heroList.Select(h =>
-                        (double) h.Games.Count(g => g.AllieScore == g.EnemyScore && g.User == currentUser) /
+                        (double)h.Games.Count(g => g.AllieScore == g.EnemyScore && g.User == currentUser) /
                         h.Games.Count(g => g.User == currentUser) * 100).ToList()
                 );
 

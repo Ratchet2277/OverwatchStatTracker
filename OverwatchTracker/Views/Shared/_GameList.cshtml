@@ -1,4 +1,4 @@
-﻿@model WebApplication.Models.GameListModel
+﻿@model DataModel.GameListModel
 
 
 <table class="highlight">
@@ -40,7 +40,7 @@
                 @delta
             </td>
             <td>
-                <a class="btn btn-flat tooltipped" data-position="bottom" data-tooltip="Edit" href="@Url.ActionLink("Edit", "Game", new {game.Id})">
+                <a class="btn btn-flat tooltipped" data-position="bottom" data-tooltip="Edit" href="@Url.ActionLink("Edit", "Game", new { game.Id })">
                     <i class="material-icons">edit</i>
                 </a>
             </td>

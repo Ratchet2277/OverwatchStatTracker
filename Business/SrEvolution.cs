@@ -4,26 +4,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Business.Contracts;
 using DAL;
+using DataModel;
 using DomainModel;
 using DomainModel.Types;
 using Microsoft.AspNetCore.Identity;
-using WebApplication.Models;
+using ViewModel.Contract;
 
-namespace WebApplication.Business
+namespace Business
 {
-    public class SrEvolution : BaseBusiness
+    public class SrEvolution : BaseBusiness, ISrEvolution
 
     {
+        private readonly TrackerContext _context;
         private readonly SeasonBusiness _seasonBusiness;
 
         public SrEvolution(TrackerContext context, UserManager<User> userManager, SeasonBusiness seasonBusiness,
-            ClaimsPrincipal user) : base(context, userManager, user)
+            ClaimsPrincipal user, IServiceProvider serviceProvider) : base(userManager, user, serviceProvider)
         {
+            _context = context;
             _seasonBusiness = seasonBusiness;
         }
 
-        public async Task<ChartJsOptions<int>?> ByType(GameType? type)
+        public async Task<IChartJsOptions?> ByType(GameType? type)
         {
             var season = _seasonBusiness.GetLastSeason();
 
@@ -50,7 +54,7 @@ namespace WebApplication.Business
                         // ReSharper disable once PossibleMultipleEnumeration
                         Data = query.Select(g => g.Sr).ToList(),
                         BorderColor = "#f44336",
-                        BackgroundColor = new List<string> {"#f44336"},
+                        BackgroundColor = new List<string> { "#f44336" },
                         Stepped = true
                     }
                 }
@@ -83,6 +87,33 @@ namespace WebApplication.Business
                     }
                 }
             };
+        }
+
+        public async Task<Dictionary<GameType, Tuple<float, float>>> GetAverageEvolution()
+        {
+            var result = new Dictionary<GameType, Tuple<float, float>>();
+
+            foreach (var gameType in (GameType[])Enum.GetValues(typeof(GameType)))
+            {
+                var evolutionByType = await GetAverageEvolutionByType(gameType);
+                if (evolutionByType is null)
+                    continue;
+                result.Add(gameType, evolutionByType);
+            }
+
+            return result;
+        }
+
+        public int? DeltaLastGame(Game game)
+        {
+            var previousGameQuery = _context.Games
+                .Where(g => g.DateTime < game.DateTime && g.User == game.User && g.Type == game.Type)
+                .OrderByDescending(g => g.DateTime);
+
+            if (previousGameQuery.Any())
+                return game.Sr - previousGameQuery.First().Sr;
+
+            return null;
         }
 
         private async Task<Tuple<float, float>?> GetAverageEvolutionByType(GameType? type)
@@ -120,34 +151,7 @@ namespace WebApplication.Business
                 nbLose++;
             }
 
-            return new Tuple<float, float>((float) totalWin / nbWin, (float) totalLose / nbLose);
-        }
-
-        public async Task<Dictionary<GameType, Tuple<float, float>>> GetAverageEvolution()
-        {
-            var result = new Dictionary<GameType, Tuple<float, float>>();
-
-            foreach (var gameType in (GameType[]) Enum.GetValues(typeof(GameType)))
-            {
-                var evolutionByType = await GetAverageEvolutionByType(gameType);
-                if (evolutionByType is null)
-                    continue;
-                result.Add(gameType, evolutionByType);
-            }
-
-            return result;
-        }
-
-        public int? DeltaLastGame(Game game)
-        {
-            var previousGameQuery = Context.Games
-                .Where(g => g.DateTime < game.DateTime && g.User == game.User && g.Type == game.Type)
-                .OrderByDescending(g => g.DateTime);
-
-            if (previousGameQuery.Any())
-                return game.Sr - previousGameQuery.First().Sr;
-
-            return null;
+            return new Tuple<float, float>((float)totalWin / nbWin, (float)totalLose / nbLose);
         }
     }
 }
