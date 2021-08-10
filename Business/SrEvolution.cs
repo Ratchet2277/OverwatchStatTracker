@@ -5,11 +5,11 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Business.Contracts;
-using DAL;
 using DataModel;
 using DomainModel;
 using DomainModel.Types;
 using Microsoft.AspNetCore.Identity;
+using Repository.Contracts;
 using ViewModel.Contract;
 
 namespace Business
@@ -17,14 +17,17 @@ namespace Business
     public class SrEvolution : BaseBusiness, ISrEvolution
 
     {
-        private readonly TrackerContext _context;
-        private readonly SeasonBusiness _seasonBusiness;
+        private readonly ISeasonBusiness _seasonBusiness;
+        private readonly IGameRepository _repository;
+        private readonly IGameBusiness _business;
 
-        public SrEvolution(TrackerContext context, UserManager<User> userManager, SeasonBusiness seasonBusiness,
-            ClaimsPrincipal user, IServiceProvider serviceProvider) : base(userManager, user, serviceProvider)
+        public SrEvolution(UserManager<User> userManager, ISeasonBusiness seasonBusiness,
+            ClaimsPrincipal user, IServiceProvider serviceProvider, IGameBusiness business, IGameRepository repository)
+            : base(userManager, user, serviceProvider)
         {
-            _context = context;
             _seasonBusiness = seasonBusiness;
+            _repository = repository;
+            _business = business;
         }
 
         public async Task<IChartJsOptions?> ByType(GameType? type)
@@ -33,26 +36,24 @@ namespace Business
 
             var currentUser = await UserManager.GetUserAsync(User);
 
-            var games = season.Games.Where(g => g.User == currentUser);
+            var games = _repository.Find(currentUser).BySeason(season);
 
-            if (type is not null) games = games.Where(g => g.Type == type);
+            if (type is not null) games.ByType((GameType)type);
 
-            var query = games.OrderBy(g => g.DateTime);
+            var list = await games.OrderByDate().ToListAsync();
 
-            if (!query.Any()) return null;
+            if (list is null || !list.Any()) return null;
 
             var data = new ChartJsData<int>
             {
-                // ReSharper disable once PossibleMultipleEnumeration
-                Labels = query.Select(g => g.DateTime.ToString()).ToList(),
+                Labels = list.Select(g => g.DateTime.ToString()).ToList(),
 
 
                 DataSets = new List<DataSet<int>>
                 {
                     new($"{(type == GameType.OpenQueue ? "Open Queue" : type.ToString())} Rank")
                     {
-                        // ReSharper disable once PossibleMultipleEnumeration
-                        Data = query.Select(g => g.Sr).ToList(),
+                        Data = list.Select(g => g.Sr).ToList(),
                         BorderColor = "#f44336",
                         BackgroundColor = new List<string> { "#f44336" },
                         Stepped = true
@@ -104,14 +105,12 @@ namespace Business
             return result;
         }
 
-        public int? DeltaLastGame(Game game)
+        public async Task<int?> DeltaLastGame(Game game)
         {
-            var previousGameQuery = _context.Games
-                .Where(g => g.DateTime < game.DateTime && g.User == game.User && g.Type == game.Type)
-                .OrderByDescending(g => g.DateTime);
+            var previousGame = await _business.GetPreviousGame(game);
 
-            if (previousGameQuery.Any())
-                return game.Sr - previousGameQuery.First().Sr;
+            if (previousGame != null)
+                return game.Sr - previousGame.Sr;
 
             return null;
         }
@@ -119,19 +118,18 @@ namespace Business
         private async Task<Tuple<float, float>?> GetAverageEvolutionByType(GameType? type)
         {
             var season = _seasonBusiness.GetLastSeason();
-
             var currentUser = await UserManager.GetUserAsync(User);
 
-            //no need to count draw since they always keep the same SR 
-            var games = season.Games.Where(g => g.User == currentUser && g.EnemyScore != g.AllieScore);
+            //get all games of this season, no need to count draw since they always keep the same SR 
+            var gameRepository = _repository.Find(currentUser).BySeason(season).Draw(true);
 
-            if (type is not null)
-                games = games.Where(g => g.Type == type);
+            if (type != null)
+                gameRepository.ByType((GameType)type);
 
-            if (!games.Any())
+            if (!gameRepository.Any())
                 return null;
 
-            var listGames = games.OrderBy(g => g.DateTime).ToList();
+            var listGames = await gameRepository.OrderByDate().ToListAsync();
 
             var totalWin = 0;
             var nbWin = 0;

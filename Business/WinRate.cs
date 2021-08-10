@@ -1,29 +1,29 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Business.Contracts;
 using DataModel;
 using DomainModel;
 using DomainModel.Types;
 using Microsoft.AspNetCore.Identity;
+using ViewModel.Contract;
 
 namespace Business
 {
-    [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
-    public class WinRate : BaseBusiness
+    public partial class WinRate : BaseBusiness, IWinRate
     {
-        private readonly SeasonBusiness _seasonBusiness;
+        private readonly ISeasonBusiness _seasonBusiness;
 
-        public WinRate(UserManager<User> userManager, SeasonBusiness seasonBusiness,
+        public WinRate(UserManager<User> userManager, ISeasonBusiness seasonBusiness,
             ClaimsPrincipal user, IServiceProvider serviceProvider) : base(userManager, user, serviceProvider)
         {
             _seasonBusiness = seasonBusiness;
         }
 
-        public async Task<ChartJsOptions<double>?> ByHero()
+        public async Task<IChartJsOptions?> ByHero()
         {
             var season = _seasonBusiness.GetLastSeason();
 
@@ -96,7 +96,7 @@ namespace Business
             };
         }
 
-        public async Task<ChartJsOptions<double>?> ByType()
+        public async Task<IChartJsOptions?> ByType()
         {
             var season = _seasonBusiness.GetLastSeason();
             var labels = new List<string>();
@@ -110,7 +110,7 @@ namespace Business
                 new DataSet<double>("% Lose").AddBacgroundColor("#f44336")
             };
 
-            var winRates = WinRateHelper.WrByRole(season.Games.Where(g => g.User == currentUser));
+            var winRates = WrByRole(season.Games.Where(g => g.User == currentUser));
 
             if (!winRates.Any())
                 return null;

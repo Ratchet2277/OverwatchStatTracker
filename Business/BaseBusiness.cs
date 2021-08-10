@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Business
 {
-    public class BaseBusiness
+    public abstract class BaseBusiness
     {
         protected ClaimsPrincipal User;
 

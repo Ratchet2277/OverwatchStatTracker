@@ -1,22 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using DomainModel;
 using DomainModel.Types;
-using Microsoft.AspNetCore.Identity;
 
 namespace Business
 {
-    public class WinRateHelper : BaseBusiness
+    public partial class WinRate
     {
-        public WinRateHelper(UserManager<User> userManager, ClaimsPrincipal user,
-            IServiceProvider serviceProvider) : base(
-            userManager, user, serviceProvider)
-        {
-        }
-
-        public static Dictionary<GameType, DomainModel.Struct.WinRate> WrByRole(IEnumerable<Game> games)
+        private static Dictionary<GameType, DomainModel.Struct.WinRate> WrByRole(IEnumerable<Game> games)
         {
             var enumerable = games.ToList();
 

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Business;
+using Business.Contracts;
 using DataModel;
 using DomainModel.Types;
 using Microsoft.AspNetCore.Mvc;
@@ -10,9 +10,9 @@ namespace WebApplication.Components
 {
     public class GameListComponent : BaseComponent
     {
-        private readonly GamesBusiness _gamesBusiness;
+        private readonly IGameBusiness _gamesBusiness;
 
-        public GameListComponent(GamesBusiness gamesBusiness,
+        public GameListComponent(IGameBusiness gamesBusiness,
             IServiceProvider serviceProvider) : base(serviceProvider)
         {
             _gamesBusiness = gamesBusiness;
