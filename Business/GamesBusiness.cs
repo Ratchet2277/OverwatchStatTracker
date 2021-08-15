@@ -1,9 +1,11 @@
 ﻿#nullable enable
 using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Business.Contracts;
+using DAL;
 using DataModel;
 using DomainModel;
 using DomainModel.Types;
@@ -16,15 +18,19 @@ namespace Business
 {
     public class GamesBusiness : BaseBusiness, IGameBusiness
     {
-        private readonly ISeasonBusiness _seasonBusiness;
+        private readonly TrackerContext _context;
         private readonly IGameRepository _repository;
+        private readonly ISeasonBusiness _seasonBusiness;
+        private readonly ISquadMemberBusiness _squadMemberBusiness;
 
-        public GamesBusiness(UserManager<User> userManager, ClaimsPrincipal user, IServiceProvider serviceProvider, 
-            ISeasonBusiness seasonBusiness, IGameRepository repository) : base(userManager, user, serviceProvider)
+        public GamesBusiness(UserManager<User> userManager, ClaimsPrincipal user, IServiceProvider serviceProvider,
+            ISeasonBusiness seasonBusiness, IGameRepository repository, TrackerContext context,
+            ISquadMemberBusiness squadMemberBusiness) : base(userManager, user, serviceProvider)
         {
             _seasonBusiness = seasonBusiness;
             _repository = repository;
-            
+            _context = context;
+            _squadMemberBusiness = squadMemberBusiness;
         }
 
         public async Task<IPagination<Game>> GetGames(int page = 1, int? pageSize = 10, GameType? type = null)
@@ -55,6 +61,53 @@ namespace Business
                 return null;
 
             return await previousGameQuery.FirstAsync();
+        }
+
+        public async Task<Game> Get(int id)
+        {
+            return await _repository.Get(id);
+        }
+
+        public async Task Add(Game game)
+        {
+            if (game.User is null)
+                throw new ArgumentException("Game.User must be set before being added to the repository");
+
+            game.DateTime = DateTime.Now;
+            game.Map = await _context.Maps.FindAsync(game.NewMap);
+            var newHeroes = game.NewHeroes;
+            game.Heroes =
+                new Collection<Hero>(await _context.Heroes.Where(h => newHeroes.Contains(h.Id)).ToListAsync());
+
+            if (game.NewSquadMembers.Length > 0)
+                _squadMemberBusiness.EditSquadMemberList(ref game, game.NewSquadMembers);
+
+            await _repository.Add(game);
+        }
+
+        public async Task Update(Game newGame)
+        {
+            var game = await _repository.Get(newGame.Id);
+
+            if (game is null)
+                throw new ArgumentException("Game not found in database");
+
+            game.AllieScore = newGame.AllieScore;
+            game.EnemyScore = newGame.EnemyScore;
+            game.Type = newGame.Type;
+            game.Sr = newGame.Sr;
+
+            if (game.Map.Id != newGame.NewMap) game.Map = await _context.Maps.FindAsync(newGame.NewMap);
+
+            foreach (var heroToDel in game.Heroes.Where(h => !newGame.NewHeroes.Contains(h.Id)).ToList())
+                game.Heroes.Remove(heroToDel);
+
+            foreach (var heroToAdd in _context.Heroes.Where(h =>
+                newGame.NewHeroes.Contains(h.Id) && !game.Heroes.Contains(h))) game.Heroes.Add(heroToAdd);
+
+            _squadMemberBusiness.EditSquadMemberList(ref game, newGame.NewSquadMembers);
+
+            await _repository.Update(game);
         }
     }
 }

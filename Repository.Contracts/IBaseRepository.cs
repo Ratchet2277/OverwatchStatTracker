@@ -10,6 +10,8 @@ namespace Repository.Contracts
         public List<T> ToList();
         public Task<List<T>> ToListAsync();
         public Task<T> Get(int id);
+        public T First();
+        public Task<T> FirstAsync();
         public Task Add(T entity);
 
         public Task Update(T entity);

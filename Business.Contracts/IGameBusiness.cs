@@ -11,5 +11,10 @@ namespace Business.Contracts
         public Task<IPagination<Game>> GetGames(int page = 1, int? pageSize = 10, GameType? type = null);
         public Task<Game?> GetPreviousGame(Game game);
 
+        public Task<Game> Get(int id);
+
+        public Task Add(Game entity);
+
+        public Task Update(Game entity);
     }
 }

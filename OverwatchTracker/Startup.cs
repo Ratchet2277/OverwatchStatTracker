@@ -37,12 +37,14 @@ namespace WebApplication
             services.AddScoped<IWinRate, WinRate>();
             services.AddScoped<ISeasonBusiness, SeasonBusiness>();
             services.AddScoped<IGameBusiness, GamesBusiness>();
+            services.AddScoped<ISquadMemberBusiness, SquadMemberBusiness>();
 
             #endregion
 
             #region Repository
 
             services.AddScoped<IGameRepository, GameRepository>();
+            services.AddScoped<ISquadMemberRepository, SquadMemberRepository>();
 
             #endregion
 
