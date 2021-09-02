@@ -16,11 +16,12 @@ namespace Business
 {
     public partial class WinRate : BaseBusiness, IWinRate
     {
-        private readonly ISeasonBusiness _seasonBusiness;
         private readonly IGameRepository _gameRepository;
+        private readonly ISeasonBusiness _seasonBusiness;
 
         public WinRate(UserManager<User> userManager, ISeasonBusiness seasonBusiness,
-            ClaimsPrincipal user, IServiceProvider serviceProvider, IGameRepository gameRepository) : base(userManager, user, serviceProvider)
+            ClaimsPrincipal user, IServiceProvider serviceProvider, IGameRepository gameRepository) : base(userManager,
+            user, serviceProvider)
         {
             _seasonBusiness = seasonBusiness;
             _gameRepository = gameRepository;
@@ -43,10 +44,12 @@ namespace Business
             };
 
             var heroList = season.HeroPool
-                .Where(h => h.Games.Any(g => g.User == currentUser) && (role == null && h.Role == role))
+                .Where(h => h.Games.Any(g => g.User == currentUser && g.Season == season) &&
+                            (role == null || h.Role == role))
                 .OrderByDescending(h =>
-                    (double)h.Games.Count(g => g.AllieScore >= g.EnemyScore && g.User == currentUser) /
-                    h.Games.Count(g => g.User == currentUser)
+                    (double)h.Games.Count(g =>
+                        g.AllieScore >= g.EnemyScore && g.User == currentUser && g.Season == season) /
+                    h.Games.Count(g => g.User == currentUser && g.Season == season)
                 );
 
             if (!heroList.Any())
@@ -56,14 +59,16 @@ namespace Business
 
             data.DataSets[0].AddBacgroundColor("#03a9f4")
                 .AddData(heroList.Select(h =>
-                        (double)h.Games.Count(g => g.AllieScore > g.EnemyScore && g.User == currentUser) /
-                        h.Games.Count(g => g.User == currentUser) * 100).ToList()
+                        (double)h.Games.Count(g =>
+                            g.AllieScore > g.EnemyScore && g.User == currentUser && g.Season == season) /
+                        h.Games.Count(g => g.User == currentUser && g.Season == season) * 100).ToList()
                 );
 
             data.DataSets[1].AddBacgroundColor("#ffeb3b")
                 .AddData(heroList.Select(h =>
-                        (double)h.Games.Count(g => g.AllieScore == g.EnemyScore && g.User == currentUser) /
-                        h.Games.Count(g => g.User == currentUser) * 100).ToList()
+                        (double)h.Games.Count(g =>
+                            g.AllieScore == g.EnemyScore && g.User == currentUser && g.Season == season) /
+                        h.Games.Count(g => g.User == currentUser && g.Season == season) * 100).ToList()
                 );
 
             return new ChartJsOptions<double>
