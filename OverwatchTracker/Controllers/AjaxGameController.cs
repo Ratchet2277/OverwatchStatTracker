@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using DomainModel;
 using DomainModel.Types;
 using Microsoft.AspNetCore.Authorization;
@@ -13,9 +14,9 @@ namespace WebApplication.Controllers
     {
         [ResponseCache(Duration = 3600)]
         [HttpGet("MapList")]
-        public List<Map> MapList()
+        public async Task<List<Map>> MapList()
         {
-            return _seasonBusiness.GetLastSeason().MapPool.OrderBy(m => m.Name).ToList();
+            return (await _seasonBusiness.GetLastSeason()).MapPool.OrderBy(m => m.Name).ToList();
         }
 
         [HttpGet("RoleList")]
@@ -27,9 +28,9 @@ namespace WebApplication.Controllers
 
         [HttpGet("HeroList/{roleId:int?}")]
         [ResponseCache(Duration = 3600, VaryByHeader = "roleId")]
-        public List<Hero> HeroList(int? roleId)
+        public async Task<List<Hero>> HeroList(int? roleId)
         {
-            var season = _seasonBusiness.GetLastSeason();
+            var season = await _seasonBusiness.GetLastSeason();
             IEnumerable<Hero> query = season.HeroPool.OrderBy(h => h.Name);
 
             if (Enum.TryParse(roleId.ToString(), out Role role) && season.HeroPool.Any(h => h.Role == role))

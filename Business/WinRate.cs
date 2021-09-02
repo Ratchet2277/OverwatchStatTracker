@@ -28,7 +28,7 @@ namespace Business
 
         public async Task<IChartJsOptions?> ByHero(Role? role = null)
         {
-            var season = _seasonBusiness.GetLastSeason();
+            var season = await _seasonBusiness.GetLastSeason();
 
             var currentUser = await UserManager.GetUserAsync(User);
 
@@ -101,7 +101,7 @@ namespace Business
 
         public async Task<IChartJsOptions?> ByType()
         {
-            var season = _seasonBusiness.GetLastSeason();
+            var season = await _seasonBusiness.GetLastSeason();
             var labels = new List<string>();
             var currentUser = await UserManager.GetUserAsync(User);
 

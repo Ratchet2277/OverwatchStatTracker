@@ -29,7 +29,7 @@ namespace Repository
 
         public async Task Update(Game game)
         {
-            Context.Games.Add(game);
+            Context.Games.Update(game);
             await Context.SaveChangesAsync();
         }
 

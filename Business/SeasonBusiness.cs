@@ -1,27 +1,32 @@
 ﻿using System;
-using System.Linq;
+using System.Data;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using Business.Contracts;
-using DAL;
 using DomainModel;
 using Microsoft.AspNetCore.Identity;
+using Repository.Contracts;
 
 namespace Business
 {
     public class SeasonBusiness : BaseBusiness, ISeasonBusiness
     {
-        private readonly TrackerContext _context;
 
-        public SeasonBusiness(TrackerContext context, UserManager<User> userManager, ClaimsPrincipal user,
+        private readonly ISeasonRepository _repository;
+
+        public SeasonBusiness(ISeasonRepository repository, UserManager<User> userManager, ClaimsPrincipal user,
             IServiceProvider serviceProvider) : base(
             userManager, user, serviceProvider)
         {
-            _context = context;
+            _repository = repository;
         }
 
-        public Season GetLastSeason()
+        public async Task<Season> GetLastSeason()
         {
-            return _context.Seasons.OrderByDescending(s => s.Number).First();
+            var season = await _repository.LastSeason();
+            if (season is null)
+                throw new DataException("No ranked season not found");
+            return season;
         }
     }
 }

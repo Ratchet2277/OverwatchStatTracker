@@ -32,7 +32,7 @@ namespace Business
 
         public async Task<IChartJsOptions?> ByType(GameType? type)
         {
-            var season = _seasonBusiness.GetLastSeason();
+            var season = await _seasonBusiness.GetLastSeason();
 
             var currentUser = await UserManager.GetUserAsync(User);
 
@@ -117,7 +117,7 @@ namespace Business
 
         private async Task<Tuple<float, float>?> GetAverageEvolutionByType(GameType? type)
         {
-            var season = _seasonBusiness.GetLastSeason();
+            var season = await _seasonBusiness.GetLastSeason();
             var currentUser = await UserManager.GetUserAsync(User);
 
             //get all games of this season, no need to count draw since they always keep the same SR 

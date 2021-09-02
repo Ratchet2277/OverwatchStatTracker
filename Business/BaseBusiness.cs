@@ -7,9 +7,9 @@ namespace Business
 {
     public abstract class BaseBusiness
     {
-        protected ClaimsPrincipal User;
+        protected readonly ClaimsPrincipal User;
 
-        public BaseBusiness(UserManager<User> userManager, ClaimsPrincipal user, IServiceProvider serviceProvider)
+        protected BaseBusiness(UserManager<User> userManager, ClaimsPrincipal user, IServiceProvider serviceProvider)
         {
             UserManager = userManager;
             User = user;

@@ -32,7 +32,7 @@ namespace WebApplication.Controllers
         public async Task<RedirectToActionResult> Create(Game game)
         {
             game.User = await UserManager.GetUserAsync(User);
-            game.Season = _seasonBusiness.GetLastSeason();
+            game.Season = await _seasonBusiness.GetLastSeason();
 
             await _business.Add(game);
 
