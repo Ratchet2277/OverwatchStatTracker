@@ -45,6 +45,7 @@ namespace WebApplication
 
             services.AddScoped<IGameRepository, GameRepository>();
             services.AddScoped<ISquadMemberRepository, SquadMemberRepository>();
+            services.AddScoped<ISeasonRepository, SeasonRepository>();
 
             #endregion
 
