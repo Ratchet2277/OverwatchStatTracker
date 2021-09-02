@@ -7,7 +7,7 @@ namespace Repository.Contracts
 {
     public interface IGameRepository : IBaseRepository<Game>
     {
-        public IGameRepository Find(User user);
+        public IGameRepository Find(User user, bool withPlacement = false);
         public IGameRepository ByHero(Hero hero);
         public IGameRepository ByType(GameType hero);
         public IGameRepository BySeason(Season season);

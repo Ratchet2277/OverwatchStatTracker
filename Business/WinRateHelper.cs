@@ -9,17 +9,16 @@ namespace Business
     {
         private static Dictionary<GameType, DomainModel.Struct.WinRate> WrByRole(IEnumerable<Game> games)
         {
-            var enumerable = games.ToList();
-
-            return enumerable.GroupBy(g => g.Type).ToDictionary(group => group.Key, GetWinRate);
+            return games.GroupBy(g => g.Type)
+                .ToDictionary(group => group.Key, GetWinRate);
         }
 
         private static DomainModel.Struct.WinRate GetWinRate(IEnumerable<Game> games)
         {
-            var enumerable = games.ToList();
-            var nbWin = enumerable.Count(g => g.AllieScore > g.EnemyScore);
-            var nbDraw = enumerable.Count(g => g.AllieScore == g.EnemyScore);
-            var nbTotal = enumerable.Count;
+            // var enumerable = games.ToList();
+            var nbWin = games.Count(g => g.AllieScore > g.EnemyScore);
+            var nbDraw = games.Count(g => g.AllieScore == g.EnemyScore);
+            var nbTotal = games.Count();
             if (nbTotal == 0) return new DomainModel.Struct.WinRate();
             return new DomainModel.Struct.WinRate
             {

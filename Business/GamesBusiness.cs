@@ -44,12 +44,12 @@ namespace Business
             return new Pagination<Game>(query, page, pageSize);
         }
 
-        public async Task<Game?> GetPreviousGame(Game game)
+        public async Task<Game?> GetPreviousGame(Game game, bool allowPlacement = false)
         {
             var currentUser = await UserManager.GetUserAsync(User);
             var season = _seasonBusiness.GetLastSeason();
 
-            var previousGameQuery = _repository.Find(currentUser)
+            var previousGameQuery = _repository.Find(currentUser, allowPlacement)
                 .ByType(game.Type)
                 .BySeason(season).Query?.Where(g => g.DateTime < game.DateTime && g.Type == game.Type)
                 .OrderByDescending(g => g.DateTime);
@@ -60,7 +60,9 @@ namespace Business
             if (!previousGameQuery.Any())
                 return null;
 
-            return await previousGameQuery.FirstAsync();
+            var previousGame = await previousGameQuery.FirstAsync();
+
+            return previousGame;
         }
 
         public async Task<Game> Get(int id)
@@ -96,6 +98,7 @@ namespace Business
             game.EnemyScore = newGame.EnemyScore;
             game.Type = newGame.Type;
             game.Sr = newGame.Sr;
+            game.IsPlacement = newGame.IsPlacement;
 
             if (game.Map.Id != newGame.NewMap) game.Map = await _context.Maps.FindAsync(newGame.NewMap);
 

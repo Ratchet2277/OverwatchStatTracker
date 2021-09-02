@@ -9,6 +9,7 @@ using DataModel;
 using DomainModel;
 using DomainModel.Types;
 using Microsoft.AspNetCore.Identity;
+using Repository.Contracts;
 using ViewModel.Contract;
 
 namespace Business
@@ -16,20 +17,22 @@ namespace Business
     public partial class WinRate : BaseBusiness, IWinRate
     {
         private readonly ISeasonBusiness _seasonBusiness;
+        private readonly IGameRepository _gameRepository;
 
         public WinRate(UserManager<User> userManager, ISeasonBusiness seasonBusiness,
-            ClaimsPrincipal user, IServiceProvider serviceProvider) : base(userManager, user, serviceProvider)
+            ClaimsPrincipal user, IServiceProvider serviceProvider, IGameRepository gameRepository) : base(userManager, user, serviceProvider)
         {
             _seasonBusiness = seasonBusiness;
+            _gameRepository = gameRepository;
         }
 
-        public async Task<IChartJsOptions?> ByHero()
+        public async Task<IChartJsOptions?> ByHero(Role? role = null)
         {
             var season = _seasonBusiness.GetLastSeason();
 
             var currentUser = await UserManager.GetUserAsync(User);
 
-            var datas = new ChartJsData<double>
+            var data = new ChartJsData<double>
             {
                 Labels = new List<string>(),
                 DataSets = new List<DataSet<double>>
@@ -40,7 +43,7 @@ namespace Business
             };
 
             var heroList = season.HeroPool
-                .Where(h => h.Games.Any(g => g.User == currentUser))
+                .Where(h => h.Games.Any(g => g.User == currentUser) && (role == null && h.Role == role))
                 .OrderByDescending(h =>
                     (double)h.Games.Count(g => g.AllieScore >= g.EnemyScore && g.User == currentUser) /
                     h.Games.Count(g => g.User == currentUser)
@@ -49,15 +52,15 @@ namespace Business
             if (!heroList.Any())
                 return null;
 
-            datas.Labels.AddRange(heroList.Select(h => h.Name).ToList());
+            data.Labels.AddRange(heroList.Select(h => h.Name).ToList());
 
-            datas.DataSets[0].AddBacgroundColor("#03a9f4")
+            data.DataSets[0].AddBacgroundColor("#03a9f4")
                 .AddData(heroList.Select(h =>
                         (double)h.Games.Count(g => g.AllieScore > g.EnemyScore && g.User == currentUser) /
                         h.Games.Count(g => g.User == currentUser) * 100).ToList()
                 );
 
-            datas.DataSets[1].AddBacgroundColor("#ffeb3b")
+            data.DataSets[1].AddBacgroundColor("#ffeb3b")
                 .AddData(heroList.Select(h =>
                         (double)h.Games.Count(g => g.AllieScore == g.EnemyScore && g.User == currentUser) /
                         h.Games.Count(g => g.User == currentUser) * 100).ToList()
@@ -65,7 +68,7 @@ namespace Business
 
             return new ChartJsOptions<double>
             {
-                Data = datas,
+                Data = data,
                 Type = "bar",
                 Options = new
                 {
@@ -110,7 +113,10 @@ namespace Business
                 new DataSet<double>("% Lose").AddBacgroundColor("#f44336")
             };
 
-            var winRates = WrByRole(season.Games.Where(g => g.User == currentUser));
+            var gameQuery = _gameRepository.Find(currentUser, true)
+                .BySeason(season);
+
+            var winRates = WrByRole(await gameQuery.ToListAsync());
 
             if (!winRates.Any())
                 return null;

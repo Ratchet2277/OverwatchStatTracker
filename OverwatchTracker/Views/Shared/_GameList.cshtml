@@ -35,10 +35,19 @@
                     <span>@squadMember.Name</span>
                 }
             </td>
-            @{ var delta = await Model.SrEvolution.DeltaLastGame(game); }
-            <td class="right-align@(delta is null ? "" : delta > 0 ? " green-text" : delta < 0 ? " red-text" : " amber-text")">
-                @delta
-            </td>
+            @if (game.IsPlacement)
+            {
+                <td class="right-align">
+                    Placement Game
+                </td>
+            }
+            else
+            {
+                var delta = await Model.SrEvolution.DeltaLastGame(game);
+                <td class="right-align@(delta is null ? "" : delta > 0 ? " green-text" : delta < 0 ? " red-text" : " amber-text")">
+                    @delta
+                </td>
+            }
             <td>
                 <a class="btn btn-flat tooltipped" data-position="bottom" data-tooltip="Edit" href="@Url.ActionLink("Edit", "Game", new { game.Id })">
                     <i class="material-icons">edit</i>

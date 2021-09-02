@@ -12,8 +12,8 @@ namespace DomainModel
         public int Id { get; set; }
 
         [Range(0, 5000)] [Required] public int Sr { get; set; }
-        
-        public bool IsPlacement { get; set; }
+
+        public bool IsPlacement { get; set; } = false;
         public DateTime DateTime { get; set; }
 
         [JsonIgnore] public virtual Collection<Hero> Heroes { get; set; }

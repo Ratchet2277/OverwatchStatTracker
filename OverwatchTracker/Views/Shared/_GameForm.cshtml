@@ -32,8 +32,19 @@
             </select>
             @Html.LabelFor(g => g.Type)
         </div>
+        
+        <div class="input-field col s12 m6">
+            <label>
+                <input type="checkbox" name="IsPlacement" value="true" v-model="isPlacement" @(Model.IsPlacement ? "selected" : "")>
+                <span>Placement Game</span>
+            </label>
+        </div>   
 
         <div class="input-field col s12 m6">
+            @Html.TextBoxFor(g => g.Sr, new { type = "number", min = 0, max = 5000 })
+            @Html.LabelFor(g => g.Sr)
+        </div>
+        <div class="input-field col s12 m12">
             <select name="NewHeroes" id="Heroes" multiple>
                 @if (Model.Id > 0)
                 {
@@ -46,11 +57,6 @@
             </select>
             @Html.LabelFor(g => g.Heroes)
         </div>
-        <div class="input-field col s12 m6">
-            @Html.TextBoxFor(g => g.Sr, new { type = "number", min = 0, max = 5000 })
-            @Html.LabelFor(g => g.Sr)
-        </div>
-
         <div class="input-field col s12">
             @Html.LabelFor(g => g.SquadMembers)
             <select name="NewSquadMembers" id="SquadMembers"

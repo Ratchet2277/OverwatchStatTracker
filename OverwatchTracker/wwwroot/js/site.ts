@@ -25,7 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
             heroes: [],
             roles: [],
             selectedRole: null,
-            lastSr: 0
+            lastSr: 0,
+            isPlacement: false
         },
         async created() {
             fetch('/Game/MapList').then((response) => {

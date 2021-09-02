@@ -34,9 +34,13 @@ namespace Repository
         }
 
 
-        public IGameRepository Find(User currentUser)
+        public IGameRepository Find(User currentUser, bool withPlacement = false)
         {
             Query = Context.Games.Where(g => g.User == currentUser);
+            
+            if (!withPlacement)
+                Query = Query.Where(g => g.IsPlacement == false);
+            
             return this;
         }
 
