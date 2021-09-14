@@ -26,7 +26,7 @@ namespace Business
 
             foreach (var name in names)
             {
-                if (game.SquadMembers.Any(s => names.Contains(s.Name)))
+                if (game.SquadMembers.Any(s => name == s.Name))
                     continue;
 
                 var query = _repository.Find(game.User).ByName(name);
