@@ -3,7 +3,7 @@ using System.Linq;
 using DomainModel;
 using DomainModel.Types;
 
-namespace Business
+namespace Business.WinRate
 {
     public partial class WinRateBusiness
     {

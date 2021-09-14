@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Repository.Contracts;
 using ViewModel.Contract;
 
-namespace Business
+namespace Business.WinRate
 {
     public partial class WinRateBusiness : BaseBusiness, IWinRateBusiness
     {

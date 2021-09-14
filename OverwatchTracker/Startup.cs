@@ -1,5 +1,6 @@
 using Business;
 using Business.Contracts;
+using Business.WinRate;
 using DAL;
 using DataModel;
 using DomainModel;
