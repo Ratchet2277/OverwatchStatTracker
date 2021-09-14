@@ -5,14 +5,14 @@ namespace DataModel
 {
     public class GameListModel
     {
-        public GameListModel(Pagination<Game> games, ISrEvolution srEvolution)
+        public GameListModel(Pagination<Game> games, ISrEvolutionBusiness srEvolutionBusiness)
         {
             Games = games;
-            SrEvolution = srEvolution;
+            SrEvolutionBusiness = srEvolutionBusiness;
         }
 
         public Pagination<Game> Games { get; private set; }
 
-        public ISrEvolution SrEvolution { get; }
+        public ISrEvolutionBusiness SrEvolutionBusiness { get; }
     }
 }

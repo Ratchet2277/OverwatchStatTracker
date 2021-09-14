@@ -14,12 +14,12 @@ using ViewModel.Contract;
 
 namespace Business
 {
-    public partial class WinRate : BaseBusiness, IWinRate
+    public partial class WinRateBusiness : BaseBusiness, IWinRateBusiness
     {
         private readonly IGameRepository _gameRepository;
         private readonly ISeasonBusiness _seasonBusiness;
 
-        public WinRate(UserManager<User> userManager, ISeasonBusiness seasonBusiness,
+        public WinRateBusiness(UserManager<User> userManager, ISeasonBusiness seasonBusiness,
             ClaimsPrincipal user, IServiceProvider serviceProvider, IGameRepository gameRepository) : base(userManager,
             user, serviceProvider)
         {

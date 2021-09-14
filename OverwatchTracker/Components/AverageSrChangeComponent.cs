@@ -14,7 +14,7 @@ namespace WebApplication.Components
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            return View(await ServiceProvider.GetService<ISrEvolution>()?.GetAverageEvolution()!);
+            return View(await ServiceProvider.GetService<ISrEvolutionBusiness>()?.GetAverageEvolution()!);
         }
     }
 }

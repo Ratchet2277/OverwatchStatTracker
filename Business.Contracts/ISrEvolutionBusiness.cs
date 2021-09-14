@@ -8,7 +8,7 @@ using ViewModel.Contract;
 
 namespace Business.Contracts
 {
-    public interface ISrEvolution
+    public interface ISrEvolutionBusiness
     {
         public Task<IChartJsOptions?> ByType(GameType? type);
         public Task<Dictionary<GameType, Tuple<float, float>>> GetAverageEvolution();

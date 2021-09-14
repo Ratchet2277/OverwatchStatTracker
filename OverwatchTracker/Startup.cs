@@ -33,8 +33,8 @@ namespace WebApplication
 
             #region Business
 
-            services.AddScoped<ISrEvolution, SrEvolution>();
-            services.AddScoped<IWinRate, WinRate>();
+            services.AddScoped<ISrEvolutionBusiness, SrEvolutionBusiness>();
+            services.AddScoped<IWinRateBusiness, WinRateBusiness>();
             services.AddScoped<ISeasonBusiness, SeasonBusiness>();
             services.AddScoped<IGameBusiness, GamesBusiness>();
             services.AddScoped<ISquadMemberBusiness, SquadMemberBusiness>();

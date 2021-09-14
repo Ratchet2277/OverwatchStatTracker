@@ -29,12 +29,12 @@ namespace WebApplication.Controllers
         {
             return id switch
             {
-                "wr-by-hero" => await ServiceProvider.GetService<IWinRate>()?.ByHero()!,
-                "wr-by-type" => await ServiceProvider.GetService<IWinRate>()?.ByType()!,
-                "sr-evolution-damage" => await ServiceProvider.GetService<ISrEvolution>()?.ByType(GameType.Damage)!,
-                "sr-evolution-support" => await ServiceProvider.GetService<ISrEvolution>()?.ByType(GameType.Support)!,
-                "sr-evolution-tank" => await ServiceProvider.GetService<ISrEvolution>()?.ByType(GameType.Tank)!,
-                "sr-evolution-open-queue" => await ServiceProvider.GetService<ISrEvolution>()
+                "wr-by-hero" => await ServiceProvider.GetService<IWinRateBusiness>()?.ByHero()!,
+                "wr-by-type" => await ServiceProvider.GetService<IWinRateBusiness>()?.ByType()!,
+                "sr-evolution-damage" => await ServiceProvider.GetService<ISrEvolutionBusiness>()?.ByType(GameType.Damage)!,
+                "sr-evolution-support" => await ServiceProvider.GetService<ISrEvolutionBusiness>()?.ByType(GameType.Support)!,
+                "sr-evolution-tank" => await ServiceProvider.GetService<ISrEvolutionBusiness>()?.ByType(GameType.Tank)!,
+                "sr-evolution-open-queue" => await ServiceProvider.GetService<ISrEvolutionBusiness>()
                     ?.ByType(GameType.OpenQueue)!,
                 _ => throw new KeyNotFoundException()
             };

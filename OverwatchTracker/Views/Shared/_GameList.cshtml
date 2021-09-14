@@ -43,7 +43,7 @@
             }
             else
             {
-                var delta = await Model.SrEvolution.DeltaLastGame(game);
+                var delta = await Model.SrEvolutionBusiness.DeltaLastGame(game);
                 <td class="right-align@(delta is null ? "" : delta > 0 ? " green-text" : delta < 0 ? " red-text" : " amber-text")">
                     @delta
                 </td>

@@ -14,14 +14,14 @@ using ViewModel.Contract;
 
 namespace Business
 {
-    public class SrEvolution : BaseBusiness, ISrEvolution
+    public class SrEvolutionBusiness : BaseBusiness, ISrEvolutionBusiness
 
     {
         private readonly ISeasonBusiness _seasonBusiness;
         private readonly IGameRepository _repository;
         private readonly IGameBusiness _business;
 
-        public SrEvolution(UserManager<User> userManager, ISeasonBusiness seasonBusiness,
+        public SrEvolutionBusiness(UserManager<User> userManager, ISeasonBusiness seasonBusiness,
             ClaimsPrincipal user, IServiceProvider serviceProvider, IGameBusiness business, IGameRepository repository)
             : base(userManager, user, serviceProvider)
         {

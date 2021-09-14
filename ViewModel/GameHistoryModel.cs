@@ -8,7 +8,7 @@ namespace DataModel
 {
     public class GameHistoryModel : GameListModel
     {
-        public GameHistoryModel(Pagination<Game> games, ISrEvolution srEvolution) : base(games, srEvolution)
+        public GameHistoryModel(Pagination<Game> games, ISrEvolutionBusiness srEvolutionBusiness) : base(games, srEvolutionBusiness)
         {
         }
 

@@ -5,7 +5,7 @@ using ViewModel.Contract;
 
 namespace Business.Contracts
 {
-    public interface IWinRate
+    public interface IWinRateBusiness
     {
         public Task<IChartJsOptions?> ByHero(Role? role = null);
         public Task<IChartJsOptions?> ByType();

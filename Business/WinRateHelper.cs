@@ -5,7 +5,7 @@ using DomainModel.Types;
 
 namespace Business
 {
-    public partial class WinRate
+    public partial class WinRateBusiness
     {
         private static Dictionary<GameType, DomainModel.Struct.WinRate> WrByRole(IEnumerable<Game> games)
         {
