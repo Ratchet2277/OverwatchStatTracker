@@ -38,38 +38,40 @@ namespace Business.WinRate
                 Labels = new List<string>(),
                 DataSets = new List<DataSet<double>>
                 {
-                    new("% Win"),
+                    new("% Win")
+                    {
+                        BackgroundColor = new List<string>{"#03a9f4"}
+                    },
                     new("% Draw")
+                    {
+                        BackgroundColor = new List<string>{"#ffeb3b"}
+                    }
                 }
             };
 
+            bool GameFilter(Game g) => g.User == currentUser && g.Season == season;
+
+            //listing of heroes to show, with ordering
             var heroList = season.HeroPool
-                .Where(h => h.Games.Any(g => g.User == currentUser && g.Season == season) &&
-                            (role == null || h.Role == role))
+                .Where(h => h.Games.Any(GameFilter)
+                            && (role == null || h.Role == role)
+                )
                 .OrderByDescending(h =>
-                    (double)h.Games.Count(g =>
-                        g.AllieScore >= g.EnemyScore && g.User == currentUser && g.Season == season) /
-                    h.Games.Count(g => g.User == currentUser && g.Season == season)
-                );
+                {
+                    var winRate = GetWinRate(h.Games.Where(GameFilter));
+                    return winRate.Rate + winRate.DrawRate;
+                });
 
             if (!heroList.Any())
                 return null;
 
             data.Labels.AddRange(heroList.Select(h => h.Name).ToList());
 
-            data.DataSets[0].AddBacgroundColor("#03a9f4")
-                .AddData(heroList.Select(h =>
-                        (double)h.Games.Count(g =>
-                            g.AllieScore > g.EnemyScore && g.User == currentUser && g.Season == season) /
-                        h.Games.Count(g => g.User == currentUser && g.Season == season) * 100).ToList()
-                );
-
-            data.DataSets[1].AddBacgroundColor("#ffeb3b")
-                .AddData(heroList.Select(h =>
-                        (double)h.Games.Count(g =>
-                            g.AllieScore == g.EnemyScore && g.User == currentUser && g.Season == season) /
-                        h.Games.Count(g => g.User == currentUser && g.Season == season) * 100).ToList()
-                );
+            foreach (var winRate in heroList.Select(hero => GetWinRate(hero.Games.Where(GameFilter))))
+            {
+                data.DataSets[0].AddData(winRate.Rate * 100);
+                data.DataSets[1].AddData(winRate.DrawRate * 100);
+            }
 
             return new ChartJsOptions<double>
             {
@@ -113,9 +115,9 @@ namespace Business.WinRate
 
             List<DataSet<double>> dataSets = new()
             {
-                new DataSet<double>("% Win").AddBacgroundColor("#03a9f4"),
-                new DataSet<double>("% Draw").AddBacgroundColor("#ffeb3b"),
-                new DataSet<double>("% Lose").AddBacgroundColor("#f44336")
+                new DataSet<double>("% Win").AddBackgroundsColor("#03a9f4"),
+                new DataSet<double>("% Draw").AddBackgroundsColor("#ffeb3b"),
+                new DataSet<double>("% Lose").AddBackgroundsColor("#f44336")
             };
 
             var gameQuery = _gameRepository.Find(currentUser, true)

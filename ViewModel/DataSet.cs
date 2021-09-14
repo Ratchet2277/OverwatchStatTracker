@@ -54,13 +54,13 @@ namespace DataModel
             return this;
         }
 
-        public DataSet<T> AddBacgroundColor(string data)
+        public DataSet<T> AddBackgroundsColor(string data)
         {
             BackgroundColor.Add(data);
             return this;
         }
 
-        public DataSet<T> AddBacgroundColor(IEnumerable<string> data)
+        public DataSet<T> AddBackgroundsColor(IEnumerable<string> data)
         {
             BackgroundColor.AddRange(data);
             return this;
