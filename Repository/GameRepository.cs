@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using DAL;
@@ -89,6 +90,13 @@ namespace Repository
             Query = invert
                 ? Query.Where(g => g.AllieScore != g.EnemyScore)
                 : Query.Where(g => g.AllieScore == g.EnemyScore);
+            return this;
+        }
+
+        public IGameRepository ByDayOfWeek(DayOfWeek dayOfWeek)
+        {
+            if (Query is null) throw new IncompleteInitialization();
+            Query = Query.Where(g => g.DateTime.DayOfWeek == dayOfWeek);
             return this;
         }
 

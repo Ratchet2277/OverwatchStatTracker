@@ -19,6 +19,10 @@ namespace Business.WinRate
         private readonly IGameRepository _gameRepository;
         private readonly ISeasonBusiness _seasonBusiness;
 
+        private const string WinColor = "#03a9f4";
+        private const string DrawColor = "#ffeb3b";
+        private const string LoseColor = "#f44336";
+
         public WinRateBusiness(UserManager<User> userManager, ISeasonBusiness seasonBusiness,
             ClaimsPrincipal user, IServiceProvider serviceProvider, IGameRepository gameRepository) : base(userManager,
             user, serviceProvider)
@@ -38,14 +42,8 @@ namespace Business.WinRate
                 Labels = new List<string>(),
                 DataSets = new List<DataSet<double>>
                 {
-                    new("% Win")
-                    {
-                        BackgroundColor = new List<string>{"#03a9f4"}
-                    },
-                    new("% Draw")
-                    {
-                        BackgroundColor = new List<string>{"#ffeb3b"}
-                    }
+                    new("% Win") { BackgroundColor = new List<string> { WinColor } },
+                    new("% Draw") { BackgroundColor = new List<string> { DrawColor } }
                 }
             };
 
@@ -115,9 +113,9 @@ namespace Business.WinRate
 
             List<DataSet<double>> dataSets = new()
             {
-                new DataSet<double>("% Win").AddBackgroundsColor("#03a9f4"),
-                new DataSet<double>("% Draw").AddBackgroundsColor("#ffeb3b"),
-                new DataSet<double>("% Lose").AddBackgroundsColor("#f44336")
+                new DataSet<double>("% Win").AddBackgroundsColor(WinColor),
+                new DataSet<double>("% Draw").AddBackgroundsColor(DrawColor),
+                new DataSet<double>("% Lose").AddBackgroundsColor(LoseColor)
             };
 
             var gameQuery = _gameRepository.Find(currentUser, true)

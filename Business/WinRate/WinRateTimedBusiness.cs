@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DataModel;
-using Microsoft.EntityFrameworkCore;
 using ViewModel.Contract;
 
 namespace Business.WinRate
@@ -16,32 +15,30 @@ namespace Business.WinRate
             var season = await _seasonBusiness.GetLastSeason();
 
             var currentUser = await UserManager.GetUserAsync(User);
-            
+
             var data = new ChartJsData<double>
             {
                 Labels = new List<string>(),
                 DataSets = new List<DataSet<double>>
                 {
-                    new("% Win"),
-                    new("% Draw")
+                    new("% Win") { BackgroundColor = new List<string> { WinColor } },
+                    new("% Draw") { BackgroundColor = new List<string> { DrawColor } }
                 }
             };
 
-            var winRatePerWeekDay = _gameRepository.Find(currentUser, true)
-                .BySeason(season)
-                .Query
-                ?.GroupBy(g => g.DateTime.DayOfWeek)
+            var winRatePerWeekDay = (await _gameRepository.Find(currentUser, true)
+                    .BySeason(season)
+                    .ToListAsync())
+                .GroupBy(g => g.DateTime.DayOfWeek)
                 .OrderBy(g => g.Key)
                 .ToDictionary(group => group.Key, GetWinRate);
 
-            if (winRatePerWeekDay is null)
-                return null;
-
+            
             foreach (var (dayOfWeek, winRate) in winRatePerWeekDay)
             {
                 data.Labels.Add(dayOfWeek.ToString());
-                data.DataSets[0].AddData(winRate.Rate);
-                data.DataSets[1].AddData(winRate.DrawRate);
+                data.DataSets[0].AddData(winRate.Rate * 100);
+                data.DataSets[1].AddData(winRate.DrawRate * 100);
             }
 
             return new ChartJsOptions<double>
@@ -68,5 +65,82 @@ namespace Business.WinRate
             };
         }
 
+        public async Task<IChartJsOptions?> ByHours(DayOfWeek? dayOfWeek = null)
+        {
+            var season = await _seasonBusiness.GetLastSeason();
+
+            var currentUser = await UserManager.GetUserAsync(User);
+
+            var data = new ChartJsData<double>
+            {
+                Labels = new List<string>(),
+                DataSets = new List<DataSet<double>>
+                {
+                    new("# Win") { BackgroundColor = new List<string> { WinColor } },
+                    new("# Draw") { BackgroundColor = new List<string> { DrawColor } },
+                    new("# Lose") { BackgroundColor = new List<string> { LoseColor } }
+                }
+            };
+
+            var gameRepository = _gameRepository.Find(currentUser, true)
+                .BySeason(season);
+
+            if (dayOfWeek is not null)
+            {
+                gameRepository = gameRepository.ByDayOfWeek((DayOfWeek) dayOfWeek);
+            }
+
+            var gameQuery = gameRepository.Query;
+
+            if (gameQuery is null)
+                return null;
+
+
+            for (var i = 0; i <= 23; i++)
+            {
+                var i1 = i;
+                var hourQuery = gameQuery.Where(g => g.DateTime.Hour == i1);
+                var totalCount = hourQuery.Count();
+                if (totalCount > 0)
+                {
+                   
+                    data.DataSets[0]
+                        .AddData(hourQuery.Count(g => g.AllieScore > g.EnemyScore));
+                    data.DataSets[1]
+                        .AddData(hourQuery.Count(g => g.AllieScore == g.EnemyScore));
+                    data.DataSets[2]
+                        .AddData(hourQuery.Count(g => g.AllieScore < g.EnemyScore));
+
+                }
+                else
+                {
+                    data.DataSets[0].AddData(0);
+                    data.DataSets[1].AddData(0);
+                    data.DataSets[2].AddData(0);
+                }
+                data.Labels.Add($"{i1}H");
+            }
+
+            return new ChartJsOptions<double>
+            {
+                Type = "bar",
+                Data = data,
+                Options = new
+                {
+                    responsive = true,
+                    scales = new
+                    {
+                        x = new
+                        {
+                            stacked = true
+                        },
+                        y = new
+                        {
+                            stacked = true
+                        }
+                    }
+                }
+            };
+        }
     }
 }

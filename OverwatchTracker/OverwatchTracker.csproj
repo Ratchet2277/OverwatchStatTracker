@@ -27,11 +27,11 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Business\Business.csproj"/>
-        <ProjectReference Include="..\DAL\DAL.csproj"/>
-        <ProjectReference Include="..\Repository.Contracts\Repository.Contracts.csproj"/>
-        <ProjectReference Include="..\Repository\Repository.csproj"/>
-        <ProjectReference Include="..\ViewModel\ViewModel.csproj"/>
+        <ProjectReference Include="..\Business\Business.csproj" />
+        <ProjectReference Include="..\DAL\DAL.csproj" />
+        <ProjectReference Include="..\Repository.Contracts\Repository.Contracts.csproj" />
+        <ProjectReference Include="..\Repository\Repository.csproj" />
+        <ProjectReference Include="..\ViewModel\ViewModel.csproj" />
     </ItemGroup>
 
     <ItemGroup>

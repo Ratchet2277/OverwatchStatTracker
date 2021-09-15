@@ -31,6 +31,8 @@ namespace WebApplication.Controllers
             {
                 "wr-by-hero" => await ServiceProvider.GetService<IWinRateBusiness>()?.ByHero()!,
                 "wr-by-type" => await ServiceProvider.GetService<IWinRateBusiness>()?.ByType()!,
+                "wr-by-day-of-week" => await ServiceProvider.GetService<IWinRateBusiness>()?.ByWeekDays()!,
+                "wr-by-hours" => await ServiceProvider.GetService<IWinRateBusiness>()?.ByHours()!,
                 "sr-evolution-damage" => await ServiceProvider.GetService<ISrEvolutionBusiness>()?.ByType(GameType.Damage)!,
                 "sr-evolution-support" => await ServiceProvider.GetService<ISrEvolutionBusiness>()?.ByType(GameType.Support)!,
                 "sr-evolution-tank" => await ServiceProvider.GetService<ISrEvolutionBusiness>()?.ByType(GameType.Tank)!,

@@ -11,5 +11,6 @@ namespace Business.Contracts
         public Task<IChartJsOptions?> ByHero(Role? role = null);
         public Task<IChartJsOptions?> ByType();
         public Task<IChartJsOptions?> ByWeekDays();
+        public Task<IChartJsOptions?> ByHours(DayOfWeek? dayOfWeek = null);
     }
 }

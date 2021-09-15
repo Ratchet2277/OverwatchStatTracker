@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System;
 using System.Linq;
 using DomainModel;
 using DomainModel.Types;
@@ -14,7 +15,7 @@ namespace Repository.Contracts
         public IGameRepository Win(bool invert = false);
         public IGameRepository Lose(bool invert = false);
         public IGameRepository Draw(bool invert = false);
-
+        public IGameRepository ByDayOfWeek(DayOfWeek dayOfWeek);
         public IQueryable<Game>? Query { get; }
 
         public IGameRepository OrderByDate(bool isDescending = true);
