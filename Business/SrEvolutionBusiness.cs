@@ -17,28 +17,24 @@ namespace Business
     public class SrEvolutionBusiness : BaseBusiness, ISrEvolutionBusiness
 
     {
-        private readonly ISeasonBusiness _seasonBusiness;
         private readonly IGameRepository _repository;
         private readonly IGameBusiness _business;
+        private readonly Task<Season> _currentSeason;
 
         public SrEvolutionBusiness(UserManager<User> userManager, ISeasonBusiness seasonBusiness,
             ClaimsPrincipal user, IServiceProvider serviceProvider, IGameBusiness business, IGameRepository repository)
             : base(userManager, user, serviceProvider)
         {
-            _seasonBusiness = seasonBusiness;
             _repository = repository;
             _business = business;
+            _currentSeason = seasonBusiness.GetLastSeason();
         }
 
         public async Task<IChartJsOptions?> ByType(GameType? type)
         {
-            var season = await _seasonBusiness.GetLastSeason();
+            var games = _repository.Find(await CurrentUser).BySeason(await _currentSeason);
 
-            var currentUser = await UserManager.GetUserAsync(User);
-
-            var games = _repository.Find(currentUser).BySeason(season);
-
-            if (type is not null) games.ByType((GameType)type);
+            if (type is not null) games.ByType((GameType) type);
 
             var list = await games.OrderByDate().ToListAsync();
 
@@ -117,11 +113,8 @@ namespace Business
 
         private async Task<Tuple<float, float>?> GetAverageEvolutionByType(GameType? type)
         {
-            var season = await _seasonBusiness.GetLastSeason();
-            var currentUser = await UserManager.GetUserAsync(User);
-
             //get all games of this season, no need to count draw since they always keep the same SR 
-            var gameRepository = _repository.Find(currentUser).BySeason(season).Draw(true);
+            var gameRepository = _repository.Find(await CurrentUser).BySeason(await _currentSeason).Draw(true);
 
             if (type != null)
                 gameRepository.ByType((GameType)type);

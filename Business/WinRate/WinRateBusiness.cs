@@ -17,7 +17,7 @@ namespace Business.WinRate
     public partial class WinRateBusiness : BaseBusiness, IWinRateBusiness
     {
         private readonly IGameRepository _gameRepository;
-        private readonly ISeasonBusiness _seasonBusiness;
+        private readonly Task<Season> _currentSeason;
 
         private const string WinColor = "#03a9f4";
         private const string DrawColor = "#ffeb3b";
@@ -27,15 +27,14 @@ namespace Business.WinRate
             ClaimsPrincipal user, IServiceProvider serviceProvider, IGameRepository gameRepository) : base(userManager,
             user, serviceProvider)
         {
-            _seasonBusiness = seasonBusiness;
             _gameRepository = gameRepository;
+            _currentSeason = seasonBusiness.GetLastSeason();
         }
 
         public async Task<IChartJsOptions?> ByHero(Role? role = null)
         {
-            var season = await _seasonBusiness.GetLastSeason();
-
-            var currentUser = await UserManager.GetUserAsync(User);
+            var season = await _currentSeason;
+            var user = await CurrentUser;
 
             var data = new ChartJsData<double>
             {
@@ -47,7 +46,7 @@ namespace Business.WinRate
                 }
             };
 
-            bool GameFilter(Game g) => g.User == currentUser && g.Season == season;
+            bool GameFilter(Game g) => g.User == user && g.Season == season;
 
             //listing of heroes to show, with ordering
             var heroList = season.HeroPool
@@ -106,10 +105,7 @@ namespace Business.WinRate
 
         public async Task<IChartJsOptions?> ByType()
         {
-            var season = await _seasonBusiness.GetLastSeason();
             var labels = new List<string>();
-            var currentUser = await UserManager.GetUserAsync(User);
-
 
             List<DataSet<double>> dataSets = new()
             {
@@ -118,8 +114,8 @@ namespace Business.WinRate
                 new DataSet<double>("% Lose").AddBackgroundsColor(LoseColor)
             };
 
-            var gameQuery = _gameRepository.Find(currentUser, true)
-                .BySeason(season);
+            var gameQuery = _gameRepository.Find(await CurrentUser, true)
+                .BySeason(await _currentSeason);
 
             var winRates = WrByRole(await gameQuery.ToListAsync());
 

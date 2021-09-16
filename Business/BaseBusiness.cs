@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using DomainModel;
 using Microsoft.AspNetCore.Identity;
 
@@ -7,16 +8,15 @@ namespace Business
 {
     public abstract class BaseBusiness
     {
-        protected readonly ClaimsPrincipal User;
+        protected readonly Task<User> CurrentUser;
 
         protected BaseBusiness(UserManager<User> userManager, ClaimsPrincipal user, IServiceProvider serviceProvider)
         {
-            UserManager = userManager;
-            User = user;
-            ServiceProvider = serviceProvider;
+            _serviceProvider = serviceProvider;
+            CurrentUser = userManager.GetUserAsync(user);
         }
 
         protected UserManager<User> UserManager { get; set; }
-        protected IServiceProvider ServiceProvider { get; }
+        private IServiceProvider _serviceProvider;
     }
 }

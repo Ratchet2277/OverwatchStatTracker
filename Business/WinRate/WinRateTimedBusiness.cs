@@ -12,10 +12,6 @@ namespace Business.WinRate
     {
         public async Task<IChartJsOptions?> ByWeekDays()
         {
-            var season = await _seasonBusiness.GetLastSeason();
-
-            var currentUser = await UserManager.GetUserAsync(User);
-
             var data = new ChartJsData<double>
             {
                 Labels = new List<string>(),
@@ -26,8 +22,8 @@ namespace Business.WinRate
                 }
             };
 
-            var winRatePerWeekDay = (await _gameRepository.Find(currentUser, true)
-                    .BySeason(season)
+            var winRatePerWeekDay = (await _gameRepository.Find(await CurrentUser, true)
+                    .BySeason(await _currentSeason)
                     .ToListAsync())
                 .GroupBy(g => g.DateTime.DayOfWeek)
                 .OrderBy(g => g.Key)
@@ -67,10 +63,6 @@ namespace Business.WinRate
 
         public async Task<IChartJsOptions?> ByHours(DayOfWeek? dayOfWeek = null)
         {
-            var season = await _seasonBusiness.GetLastSeason();
-
-            var currentUser = await UserManager.GetUserAsync(User);
-
             var data = new ChartJsData<double>
             {
                 Labels = new List<string>(),
@@ -82,8 +74,8 @@ namespace Business.WinRate
                 }
             };
 
-            var gameRepository = _gameRepository.Find(currentUser, true)
-                .BySeason(season);
+            var gameRepository = _gameRepository.Find(await CurrentUser, true)
+                .BySeason(await _currentSeason);
 
             if (dayOfWeek is not null)
             {
