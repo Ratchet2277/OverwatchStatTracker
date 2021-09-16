@@ -10,7 +10,7 @@ namespace Repository
 {
     public abstract class BaseRepository<T>
     {
-        public BaseRepository(TrackerContext context)
+        protected BaseRepository(TrackerContext context)
         {
             Context = context;
         }

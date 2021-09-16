@@ -24,8 +24,8 @@ namespace Business.WinRate
         private const string LoseColor = "#f44336";
 
         public WinRateBusiness(UserManager<User> userManager, ISeasonBusiness seasonBusiness,
-            ClaimsPrincipal user, IServiceProvider serviceProvider, IGameRepository gameRepository) : base(userManager,
-            user, serviceProvider)
+            ClaimsPrincipal user, IGameRepository gameRepository) : base(userManager,
+            user)
         {
             _gameRepository = gameRepository;
             _currentSeason = seasonBusiness.GetLastSeason();

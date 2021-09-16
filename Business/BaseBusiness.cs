@@ -10,13 +10,10 @@ namespace Business
     {
         protected readonly Task<User> CurrentUser;
 
-        protected BaseBusiness(UserManager<User> userManager, ClaimsPrincipal user, IServiceProvider serviceProvider)
+        protected BaseBusiness(UserManager<User> userManager, ClaimsPrincipal user)
         {
-            _serviceProvider = serviceProvider;
             CurrentUser = userManager.GetUserAsync(user);
         }
 
-        protected UserManager<User> UserManager { get; set; }
-        private IServiceProvider _serviceProvider;
     }
 }

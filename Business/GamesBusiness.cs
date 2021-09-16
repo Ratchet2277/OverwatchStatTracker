@@ -22,9 +22,9 @@ namespace Business
         private readonly IGameRepository _repository;
         private readonly ISquadMemberBusiness _squadMemberBusiness;
         private readonly Task<Season> _currentSeason;
-        public GamesBusiness(UserManager<User> userManager, ClaimsPrincipal user, IServiceProvider serviceProvider,
+        public GamesBusiness(UserManager<User> userManager, ClaimsPrincipal user,
             ISeasonBusiness seasonBusiness, IGameRepository repository, TrackerContext context,
-            ISquadMemberBusiness squadMemberBusiness) : base(userManager, user, serviceProvider)
+            ISquadMemberBusiness squadMemberBusiness) : base(userManager, user)
         {
             _currentSeason = seasonBusiness.GetLastSeason();
             _repository = repository;

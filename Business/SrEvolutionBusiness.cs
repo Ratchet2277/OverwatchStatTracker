@@ -22,8 +22,8 @@ namespace Business
         private readonly Task<Season> _currentSeason;
 
         public SrEvolutionBusiness(UserManager<User> userManager, ISeasonBusiness seasonBusiness,
-            ClaimsPrincipal user, IServiceProvider serviceProvider, IGameBusiness business, IGameRepository repository)
-            : base(userManager, user, serviceProvider)
+            ClaimsPrincipal user, IGameBusiness business, IGameRepository repository)
+            : base(userManager, user)
         {
             _repository = repository;
             _business = business;

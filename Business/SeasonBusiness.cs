@@ -14,9 +14,8 @@ namespace Business
 
         private readonly ISeasonRepository _repository;
 
-        public SeasonBusiness(ISeasonRepository repository, UserManager<User> userManager, ClaimsPrincipal user,
-            IServiceProvider serviceProvider) : base(
-            userManager, user, serviceProvider)
+        public SeasonBusiness(ISeasonRepository repository, UserManager<User> userManager, ClaimsPrincipal user) : base(
+            userManager, user)
         {
             _repository = repository;
         }

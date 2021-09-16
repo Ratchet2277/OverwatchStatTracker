@@ -13,9 +13,7 @@ namespace Business
     {
         private readonly ISquadMemberRepository _repository;
 
-        public SquadMemberBusiness(UserManager<User> userManager, ClaimsPrincipal user,
-            IServiceProvider serviceProvider, ISquadMemberRepository repository) : base(userManager, user,
-            serviceProvider)
+        public SquadMemberBusiness(UserManager<User> userManager, ClaimsPrincipal user, ISquadMemberRepository repository) : base(userManager, user)
         {
             _repository = repository;
         }
