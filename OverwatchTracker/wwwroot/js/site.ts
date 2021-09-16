@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     response.json().then((data) => {
                         Vue.set(AddGame, "heroes", data);
                         this.$nextTick(() => {
-                            let select:HTMLSelectElement = <HTMLSelectElement>document.getElementById("Heroes");
+                            let select: HTMLSelectElement = <HTMLSelectElement>document.getElementById("Heroes");
                             M.FormSelect.getInstance(select)?.destroy();
                             M.FormSelect.init(select, SELECT_FORMS_OPTIONS);
                         })
@@ -83,20 +83,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const COLLAPSIBLE_OPTIONS: Partial<M.CollapsibleOptions> = {}
     let collapsibleElems: NodeListOf<Element> = document.querySelectorAll('.collapsible');
     M.Collapsible.init(collapsibleElems, COLLAPSIBLE_OPTIONS);
-    
+
     $('.select2').select2();
 
     const TOOLTIP_OPTIONS: Partial<M.TooltipOptions> = {}
     let tooltipElems: NodeListOf<Element> = document.querySelectorAll('.tooltipped');
     M.Tooltip.init(tooltipElems, TOOLTIP_OPTIONS);
-    
+
     let canvas = <NodeListOf<HTMLCanvasElement>>document.querySelectorAll(".auto-chart-js");
-    
+
     canvas.forEach((canva) => {
         const context = canva.getContext("2d");
         if (!context)
             return;
-        
+
         fetch(`/ChartJs/Get/${canva.id}`, {
             headers: {
                 "Accept": "application/json"
@@ -107,13 +107,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 // @ts-ignore
                 new Chart(context, data);
             })
-            .catch(() =>  {
+            .catch(() => {
                 if (!context.canvas.parentElement)
                     return;
                 context.canvas.parentElement.innerText = "Not enough Data"
             })
     })
-    
+
     //prevent disabled pagination link to redirect
     $('.pagination .disabled a, .pagination .active a').on('click', event => {
         event.preventDefault();

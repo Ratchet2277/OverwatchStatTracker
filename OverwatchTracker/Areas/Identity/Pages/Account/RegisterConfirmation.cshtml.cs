@@ -44,7 +44,7 @@ namespace WebApplication.Areas.Identity.Pages.Account
                 EmailConfirmationUrl = Url.Page(
                     "/Account/ConfirmEmail",
                     null,
-                    new {area = "Identity", userId, code, returnUrl},
+                    new { area = "Identity", userId, code, returnUrl },
                     Request.Scheme);
             }
 

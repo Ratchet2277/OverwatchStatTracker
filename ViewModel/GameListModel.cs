@@ -11,7 +11,7 @@ namespace DataModel
             SrEvolutionBusiness = srEvolutionBusiness;
         }
 
-        public Pagination<Game> Games { get; private set; }
+        public Pagination<Game> Games { get; }
 
         public ISrEvolutionBusiness SrEvolutionBusiness { get; }
     }

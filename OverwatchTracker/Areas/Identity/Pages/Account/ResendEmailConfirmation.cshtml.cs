@@ -47,7 +47,7 @@ namespace WebApplication.Areas.Identity.Pages.Account
             var callbackUrl = Url.Page(
                 "/Account/ConfirmEmail",
                 null,
-                new {userId, code},
+                new { userId, code },
                 Request.Scheme);
             await _emailSender.SendEmailAsync(
                 Input.Email,

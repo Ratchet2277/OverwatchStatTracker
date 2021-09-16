@@ -19,9 +19,10 @@ namespace Business
     public class GamesBusiness : BaseBusiness, IGameBusiness
     {
         private readonly TrackerContext _context;
+        private readonly Task<Season> _currentSeason;
         private readonly IGameRepository _repository;
         private readonly ISquadMemberBusiness _squadMemberBusiness;
-        private readonly Task<Season> _currentSeason;
+
         public GamesBusiness(UserManager<User> userManager, ClaimsPrincipal user,
             ISeasonBusiness seasonBusiness, IGameRepository repository, TrackerContext context,
             ISquadMemberBusiness squadMemberBusiness) : base(userManager, user)

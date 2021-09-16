@@ -1,5 +1,4 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Business.Contracts;
@@ -11,7 +10,6 @@ namespace Business
 {
     public class SeasonBusiness : BaseBusiness, ISeasonBusiness
     {
-
         private readonly ISeasonRepository _repository;
 
         public SeasonBusiness(ISeasonRepository repository, UserManager<User> userManager, ClaimsPrincipal user) : base(

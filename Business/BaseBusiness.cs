@@ -1,5 +1,4 @@
-﻿using System;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Threading.Tasks;
 using DomainModel;
 using Microsoft.AspNetCore.Identity;
@@ -14,6 +13,5 @@ namespace Business
         {
             CurrentUser = userManager.GetUserAsync(user);
         }
-
     }
 }

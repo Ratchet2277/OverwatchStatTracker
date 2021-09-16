@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Security.Claims;
 using Business.Contracts;
@@ -13,7 +12,8 @@ namespace Business
     {
         private readonly ISquadMemberRepository _repository;
 
-        public SquadMemberBusiness(UserManager<User> userManager, ClaimsPrincipal user, ISquadMemberRepository repository) : base(userManager, user)
+        public SquadMemberBusiness(UserManager<User> userManager, ClaimsPrincipal user,
+            ISquadMemberRepository repository) : base(userManager, user)
         {
             _repository = repository;
         }

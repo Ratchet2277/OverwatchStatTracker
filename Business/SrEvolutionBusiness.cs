@@ -17,9 +17,9 @@ namespace Business
     public class SrEvolutionBusiness : BaseBusiness, ISrEvolutionBusiness
 
     {
-        private readonly IGameRepository _repository;
         private readonly IGameBusiness _business;
         private readonly Task<Season> _currentSeason;
+        private readonly IGameRepository _repository;
 
         public SrEvolutionBusiness(UserManager<User> userManager, ISeasonBusiness seasonBusiness,
             ClaimsPrincipal user, IGameBusiness business, IGameRepository repository)
@@ -34,7 +34,7 @@ namespace Business
         {
             var games = _repository.Find(await CurrentUser).BySeason(await _currentSeason);
 
-            if (type is not null) games.ByType((GameType) type);
+            if (type is not null) games.ByType((GameType)type);
 
             var list = await games.OrderByDate().ToListAsync();
 

@@ -29,7 +29,7 @@ namespace Business.WinRate
                 .OrderBy(g => g.Key)
                 .ToDictionary(group => group.Key, GetWinRate);
 
-            
+
             foreach (var (dayOfWeek, winRate) in winRatePerWeekDay)
             {
                 data.Labels.Add(dayOfWeek.ToString());
@@ -77,10 +77,7 @@ namespace Business.WinRate
             var gameRepository = _gameRepository.Find(await CurrentUser, true)
                 .BySeason(await _currentSeason);
 
-            if (dayOfWeek is not null)
-            {
-                gameRepository = gameRepository.ByDayOfWeek((DayOfWeek) dayOfWeek);
-            }
+            if (dayOfWeek is not null) gameRepository = gameRepository.ByDayOfWeek((DayOfWeek)dayOfWeek);
 
             var gameQuery = gameRepository.Query;
 
@@ -95,14 +92,12 @@ namespace Business.WinRate
                 var totalCount = hourQuery.Count();
                 if (totalCount > 0)
                 {
-                   
                     data.DataSets[0]
                         .AddData(hourQuery.Count(g => g.AllieScore > g.EnemyScore));
                     data.DataSets[1]
                         .AddData(hourQuery.Count(g => g.AllieScore == g.EnemyScore));
                     data.DataSets[2]
                         .AddData(hourQuery.Count(g => g.AllieScore < g.EnemyScore));
-
                 }
                 else
                 {
@@ -110,6 +105,7 @@ namespace Business.WinRate
                     data.DataSets[1].AddData(0);
                     data.DataSets[2].AddData(0);
                 }
+
                 data.Labels.Add($"{i1}H");
             }
 

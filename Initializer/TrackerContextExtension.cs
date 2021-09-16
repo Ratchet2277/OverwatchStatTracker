@@ -10,12 +10,13 @@ namespace Initializer
 {
     public class TrackerContextExtension : TrackerContext
     {
-        private IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
 
         public TrackerContextExtension(IConfiguration configuration)
         {
             _configuration = configuration;
         }
+
         public void Initialize(bool dropAlways = false)
         {
             if (dropAlways)

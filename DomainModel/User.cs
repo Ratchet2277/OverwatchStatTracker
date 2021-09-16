@@ -8,7 +8,7 @@ namespace DomainModel
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        
+
         [JsonIgnore] public virtual Collection<Game> Games { get; set; }
     }
 }

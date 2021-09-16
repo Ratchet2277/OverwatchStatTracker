@@ -1,5 +1,4 @@
 ﻿#nullable enable
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -16,12 +15,11 @@ namespace Business.WinRate
 {
     public partial class WinRateBusiness : BaseBusiness, IWinRateBusiness
     {
-        private readonly IGameRepository _gameRepository;
-        private readonly Task<Season> _currentSeason;
-
         private const string WinColor = "#03a9f4";
         private const string DrawColor = "#ffeb3b";
         private const string LoseColor = "#f44336";
+        private readonly Task<Season> _currentSeason;
+        private readonly IGameRepository _gameRepository;
 
         public WinRateBusiness(UserManager<User> userManager, ISeasonBusiness seasonBusiness,
             ClaimsPrincipal user, IGameRepository gameRepository) : base(userManager,
@@ -46,7 +44,10 @@ namespace Business.WinRate
                 }
             };
 
-            bool GameFilter(Game g) => g.User == user && g.Season == season;
+            bool GameFilter(Game g)
+            {
+                return g.User == user && g.Season == season;
+            }
 
             //listing of heroes to show, with ordering
             var heroList = season.HeroPool

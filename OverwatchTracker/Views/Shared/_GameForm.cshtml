@@ -32,13 +32,13 @@
             </select>
             @Html.LabelFor(g => g.Type)
         </div>
-        
+
         <div class="input-field col s12 m6">
             <label>
                 <input type="checkbox" name="IsPlacement" value="true" v-model="isPlacement" @(Model.IsPlacement ? "selected" : "")>
                 <span>Placement Game</span>
             </label>
-        </div>   
+        </div>
 
         <div class="input-field col s12 m6">
             @Html.TextBoxFor(g => g.Sr, new { type = "number", min = 0, max = 5000 })
