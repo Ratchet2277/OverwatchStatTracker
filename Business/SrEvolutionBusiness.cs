@@ -18,7 +18,7 @@ namespace Business
 
     {
         private readonly IGameBusiness _business;
-        private readonly Task<Season> _currentSeason;
+        private readonly ISeasonBusiness _seasonBusiness;
         private readonly IGameRepository _repository;
 
         public SrEvolutionBusiness(UserManager<User> userManager, ISeasonBusiness seasonBusiness,
@@ -27,12 +27,12 @@ namespace Business
         {
             _repository = repository;
             _business = business;
-            _currentSeason = seasonBusiness.GetLastSeason();
+            _seasonBusiness = seasonBusiness;
         }
 
         public async Task<IChartJsOptions?> ByType(GameType? type)
         {
-            var games = _repository.Find(await CurrentUser).BySeason(await _currentSeason);
+            var games = _repository.Find(await UserManager.GetUserAsync(uClaimsPrincipal)).BySeason(await _seasonBusiness.GetLastSeason());
 
             if (type is not null) games.ByType((GameType)type);
 
@@ -114,7 +114,7 @@ namespace Business
         private async Task<Tuple<float, float>?> GetAverageEvolutionByType(GameType? type)
         {
             //get all games of this season, no need to count draw since they always keep the same SR 
-            var gameRepository = _repository.Find(await CurrentUser).BySeason(await _currentSeason).Draw(true);
+            var gameRepository = _repository.Find(await UserManager.GetUserAsync(uClaimsPrincipal)).BySeason(await _seasonBusiness.GetLastSeason()).Draw(true);
 
             if (type != null)
                 gameRepository.ByType((GameType)type);

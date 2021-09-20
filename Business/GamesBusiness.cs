@@ -19,7 +19,7 @@ namespace Business
     public class GamesBusiness : BaseBusiness, IGameBusiness
     {
         private readonly TrackerContext _context;
-        private readonly Task<Season> _currentSeason;
+        private readonly ISeasonBusiness _seasonBusiness;
         private readonly IGameRepository _repository;
         private readonly ISquadMemberBusiness _squadMemberBusiness;
 
@@ -27,7 +27,7 @@ namespace Business
             ISeasonBusiness seasonBusiness, IGameRepository repository, TrackerContext context,
             ISquadMemberBusiness squadMemberBusiness) : base(userManager, user)
         {
-            _currentSeason = seasonBusiness.GetLastSeason();
+            _seasonBusiness = seasonBusiness;
             _repository = repository;
             _context = context;
             _squadMemberBusiness = squadMemberBusiness;
@@ -35,8 +35,8 @@ namespace Business
 
         public async Task<IPagination<Game>> GetGames(int page = 1, int? pageSize = 10, GameType? type = null)
         {
-            var season = await _currentSeason;
-            var currentUser = await CurrentUser;
+            var season = await _seasonBusiness.GetLastSeason();
+            var currentUser = await UserManager.GetUserAsync(uClaimsPrincipal);
 
             var query = season.Games.Where(g => g.User == currentUser && (type is null || g.Type == type))
                 .OrderByDescending(g => g.DateTime);
@@ -46,8 +46,8 @@ namespace Business
 
         public async Task<Game?> GetPreviousGame(Game game, bool allowPlacement = false)
         {
-            var currentUser = await CurrentUser;
-            var season = await _currentSeason;
+            var currentUser = await UserManager.GetUserAsync(uClaimsPrincipal);
+            var season = await _seasonBusiness.GetLastSeason();
 
             var previousGameQuery = _repository.Find(currentUser, allowPlacement)
                 .ByType(game.Type)

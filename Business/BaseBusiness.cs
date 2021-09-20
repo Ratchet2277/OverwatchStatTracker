@@ -7,11 +7,13 @@ namespace Business
 {
     public abstract class BaseBusiness
     {
-        protected readonly Task<User> CurrentUser;
 
+        protected readonly UserManager<User> UserManager;
+        protected readonly ClaimsPrincipal uClaimsPrincipal;
         protected BaseBusiness(UserManager<User> userManager, ClaimsPrincipal user)
         {
-            CurrentUser = userManager.GetUserAsync(user);
+            UserManager = userManager;
+            uClaimsPrincipal = user;
         }
     }
 }
