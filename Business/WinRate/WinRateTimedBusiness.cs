@@ -115,6 +115,7 @@ namespace Business.WinRate
                 Data = data,
                 Options = new
                 {
+                    maintainAspectRatio = false,
                     responsive = true,
                     scales = new
                     {
