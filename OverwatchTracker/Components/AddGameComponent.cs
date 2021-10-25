@@ -2,18 +2,17 @@
 using DomainModel;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Tracker.Components
-{
-    public class AddGameComponent : BaseComponent
-    {
-        public AddGameComponent(IServiceProvider serviceProvider)
-            : base(serviceProvider)
-        {
-        }
+namespace Tracker.Components;
 
-        public IViewComponentResult Invoke()
-        {
-            return View(new Game());
-        }
+public class AddGameComponent : BaseComponent
+{
+    public AddGameComponent(IServiceProvider serviceProvider)
+        : base(serviceProvider)
+    {
+    }
+
+    public IViewComponentResult Invoke()
+    {
+        return View(new Game());
     }
 }

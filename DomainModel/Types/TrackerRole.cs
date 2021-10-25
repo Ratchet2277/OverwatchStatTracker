@@ -1,7 +1,6 @@
-﻿namespace DomainModel.Types
+﻿namespace DomainModel.Types;
+
+public enum TrackerRole
 {
-    public enum TrackerRole
-    {
-        Admin
-    }
+    Admin
 }

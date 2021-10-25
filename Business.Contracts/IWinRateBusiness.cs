@@ -4,13 +4,12 @@ using System.Threading.Tasks;
 using DomainModel.Types;
 using ViewModel.Contract;
 
-namespace Business.Contracts
+namespace Business.Contracts;
+
+public interface IWinRateBusiness
 {
-    public interface IWinRateBusiness
-    {
-        public Task<IChartJsOptions?> ByHero(GameRole? role = null);
-        public Task<IChartJsOptions?> ByType();
-        public Task<IChartJsOptions?> ByWeekDays();
-        public Task<IChartJsOptions?> ByHours(DayOfWeek? dayOfWeek = null);
-    }
+    public Task<IChartJsOptions?> ByHero(GameRole? role = null);
+    public Task<IChartJsOptions?> ByType();
+    public Task<IChartJsOptions?> ByWeekDays();
+    public Task<IChartJsOptions?> ByHours(DayOfWeek? dayOfWeek = null);
 }

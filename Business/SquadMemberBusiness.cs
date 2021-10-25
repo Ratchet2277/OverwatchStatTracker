@@ -6,43 +6,42 @@ using DomainModel;
 using Microsoft.AspNetCore.Identity;
 using Repository.Contracts;
 
-namespace Business
+namespace Business;
+
+public class SquadMemberBusiness : BaseBusiness, ISquadMemberBusiness
 {
-    public class SquadMemberBusiness : BaseBusiness, ISquadMemberBusiness
+    private readonly ISquadMemberRepository _repository;
+
+    public SquadMemberBusiness(UserManager<User> userManager, ClaimsPrincipal user,
+        ISquadMemberRepository repository) : base(userManager, user)
     {
-        private readonly ISquadMemberRepository _repository;
+        _repository = repository;
+    }
 
-        public SquadMemberBusiness(UserManager<User> userManager, ClaimsPrincipal user,
-            ISquadMemberRepository repository) : base(userManager, user)
+    public Game EditSquadMemberList(ref Game game, string[] names)
+    {
+        game.SquadMembers ??= new Collection<SquadMember>();
+
+        foreach (var name in names)
         {
-            _repository = repository;
-        }
+            if (game.SquadMembers.Any(s => name == s.Name))
+                continue;
 
-        public Game EditSquadMemberList(ref Game game, string[] names)
-        {
-            game.SquadMembers ??= new Collection<SquadMember>();
+            var query = _repository.Find(game.User).ByName(name);
 
-            foreach (var name in names)
+            if (query.Any())
             {
-                if (game.SquadMembers.Any(s => name == s.Name))
-                    continue;
-
-                var query = _repository.Find(game.User).ByName(name);
-
-                if (query.Any())
-                {
-                    game.SquadMembers.Add(query.First());
-                    continue;
-                }
-
-                game.SquadMembers.Add(new SquadMember { Name = name, MainUser = game.User });
+                game.SquadMembers.Add(query.First());
+                continue;
             }
 
-            foreach (var squadMemberToDel in game.SquadMembers.Where(s => !names.Contains(s.Name))
-                .ToList())
-                game.SquadMembers.Remove(squadMemberToDel);
-
-            return game;
+            game.SquadMembers.Add(new SquadMember { Name = name, MainUser = game.User });
         }
+
+        foreach (var squadMemberToDel in game.SquadMembers.Where(s => !names.Contains(s.Name))
+                     .ToList())
+            game.SquadMembers.Remove(squadMemberToDel);
+
+        return game;
     }
 }

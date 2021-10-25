@@ -1,9 +1,8 @@
-﻿namespace DomainModel.Types
+﻿namespace DomainModel.Types;
+
+public enum GameRole
 {
-    public enum GameRole
-    {
-        Damage,
-        Support,
-        Tank
-    }
+    Damage,
+    Support,
+    Tank
 }

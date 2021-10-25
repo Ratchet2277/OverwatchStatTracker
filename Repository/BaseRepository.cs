@@ -6,53 +6,52 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic.CompilerServices;
 
-namespace Repository
+namespace Repository;
+
+public abstract class BaseRepository<T>
 {
-    public abstract class BaseRepository<T>
+    protected BaseRepository(TrackerContext context)
     {
-        protected BaseRepository(TrackerContext context)
-        {
-            Context = context;
-        }
+        Context = context;
+    }
 
-        protected TrackerContext Context { get; set; }
+    protected TrackerContext Context { get; set; }
 
-        public IQueryable<T>? Query { get; protected set; }
+    public IQueryable<T>? Query { get; protected set; }
 
-        public T[] ToArray()
-        {
-            if (Query is null) throw new IncompleteInitialization();
-            return Query.ToArray();
-        }
+    public T[] ToArray()
+    {
+        if (Query is null) throw new IncompleteInitialization();
+        return Query.ToArray();
+    }
 
-        public async Task<T[]> ToArrayAsync()
-        {
-            if (Query is null) throw new IncompleteInitialization();
-            return await Query.ToArrayAsync();
-        }
+    public async Task<T[]> ToArrayAsync()
+    {
+        if (Query is null) throw new IncompleteInitialization();
+        return await Query.ToArrayAsync();
+    }
 
-        public List<T> ToList()
-        {
-            if (Query is null) throw new IncompleteInitialization();
-            return Query.ToList();
-        }
+    public List<T> ToList()
+    {
+        if (Query is null) throw new IncompleteInitialization();
+        return Query.ToList();
+    }
 
-        public async Task<List<T>> ToListAsync()
-        {
-            if (Query is null) throw new IncompleteInitialization();
-            return await Query.ToListAsync();
-        }
+    public async Task<List<T>> ToListAsync()
+    {
+        if (Query is null) throw new IncompleteInitialization();
+        return await Query.ToListAsync();
+    }
 
-        public T First()
-        {
-            if (Query is null) throw new IncompleteInitialization();
-            return Query.First();
-        }
+    public T First()
+    {
+        if (Query is null) throw new IncompleteInitialization();
+        return Query.First();
+    }
 
-        public async Task<T> FirstAsync()
-        {
-            if (Query is null) throw new IncompleteInitialization();
-            return await Query.FirstAsync();
-        }
+    public async Task<T> FirstAsync()
+    {
+        if (Query is null) throw new IncompleteInitialization();
+        return await Query.FirstAsync();
     }
 }
