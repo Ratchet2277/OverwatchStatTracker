@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace WebApplication.Controllers
+namespace Tracker.Controllers
 {
     public abstract class BaseController : Controller
     {

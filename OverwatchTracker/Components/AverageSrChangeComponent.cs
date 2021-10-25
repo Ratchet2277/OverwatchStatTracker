@@ -4,7 +4,7 @@ using Business.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace WebApplication.Components
+namespace Tracker.Components
 {
     public class AverageSrChangeComponent : BaseComponent
     {

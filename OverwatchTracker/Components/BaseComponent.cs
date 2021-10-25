@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApplication.Components
+namespace Tracker.Components
 {
     public abstract class BaseComponent : ViewComponent
     {

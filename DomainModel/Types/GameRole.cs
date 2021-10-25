@@ -1,6 +1,6 @@
 ﻿namespace DomainModel.Types
 {
-    public enum Role
+    public enum GameRole
     {
         Damage,
         Support,

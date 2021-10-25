@@ -2,7 +2,7 @@
 using System.IO;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace WebApplication.Areas.Identity.Pages.Account.Manage
+namespace Tracker.Areas.Identity.Pages.Account.Manage
 {
     public static class ManageNavPages
     {

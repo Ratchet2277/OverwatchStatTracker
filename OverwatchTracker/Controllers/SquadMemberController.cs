@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace WebApplication.Controllers
+namespace Tracker.Controllers
 {
     public class SquadMemberController : BaseController
     {

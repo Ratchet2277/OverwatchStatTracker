@@ -7,7 +7,7 @@ using DomainModel.Types;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApplication.Controllers
+namespace Tracker.Controllers
 {
     [Authorize]
     public partial class GameController
@@ -33,7 +33,7 @@ namespace WebApplication.Controllers
             var season = await _seasonBusiness.GetLastSeason();
             IEnumerable<Hero> query = season.HeroPool.OrderBy(h => h.Name);
 
-            if (Enum.TryParse(roleId.ToString(), out Role role) && season.HeroPool.Any(h => h.Role == role))
+            if (Enum.TryParse(roleId.ToString(), out GameRole role) && season.HeroPool.Any(h => h.Role == role))
                 query = query.Where(h => h.Role == role);
 
             return query.ToList();

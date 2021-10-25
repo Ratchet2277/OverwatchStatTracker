@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace WebApplication.Areas.Identity.Pages.Account
+namespace Tracker.Areas.Identity.Pages.Account
 {
     public class AccessDeniedModel : PageModel
     {
