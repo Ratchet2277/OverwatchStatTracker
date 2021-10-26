@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using DAL;
 using DataModel;
@@ -15,8 +14,7 @@ public class SquadMemberController : BaseController
     private readonly TrackerContext _context;
 
     public SquadMemberController(TrackerContext context, ILogger<SquadMemberController> logger,
-        UserManager<User> userManager, IServiceProvider serviceProvider) : base(logger, userManager,
-        serviceProvider)
+        UserManager<User> userManager) : base(logger, userManager)
     {
         _context = context;
     }
