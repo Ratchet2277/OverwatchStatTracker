@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using DataModel;
 using DomainModel;
 using Microsoft.AspNetCore.Authorization;
@@ -11,8 +10,7 @@ namespace WebApplication.Controllers
 {
     public class HomeController : BaseController
     {
-        public HomeController(ILogger<HomeController> logger, UserManager<User> userManager,
-            IServiceProvider serviceProvider) : base(logger, userManager, serviceProvider)
+        public HomeController(ILogger<HomeController> logger, UserManager<User> userManager) : base(logger, userManager)
         {
         }
 
