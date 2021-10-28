@@ -51,16 +51,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Remove="Dockerfile"/>
-        <None Remove=".dockerignore"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Folder Include="Areas\Admin\Views"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <AdditionalFiles Include="Areas\Admin\Views\Dashboard\Index.cshtml"/>
+      <None Remove="Dockerfile" />
+      <None Remove=".dockerignore" />
     </ItemGroup>
 
 

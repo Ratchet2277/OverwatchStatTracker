@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using DataModel;
 using DomainModel;
 using Microsoft.AspNetCore.Authorization;
@@ -10,7 +11,8 @@ namespace Tracker.Controllers;
 
 public class HomeController : BaseController
 {
-    public HomeController(ILogger<HomeController> logger, UserManager<User> userManager) : base(logger, userManager)
+    public HomeController(ILogger<HomeController> logger, UserManager<User> userManager,
+        IServiceProvider serviceProvider) : base(logger, userManager, serviceProvider)
     {
     }
 

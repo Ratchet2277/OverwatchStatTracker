@@ -18,15 +18,13 @@ public partial class GameController : BaseController
 {
     private readonly IGameBusiness _business;
     private readonly ISeasonBusiness _seasonBusiness;
-    private readonly IServiceProvider _serviceProvider;
 
     public GameController(ILogger<GameController> logger, UserManager<User> userManager,
         ISeasonBusiness seasonBusiness, IGameBusiness business, IServiceProvider serviceProvider) : base(
-        logger, userManager)
+        logger, userManager, serviceProvider)
     {
         _seasonBusiness = seasonBusiness;
         _business = business;
-        _serviceProvider = serviceProvider;
     }
 
     [HttpPost]
@@ -46,7 +44,7 @@ public partial class GameController : BaseController
     [HttpGet("History/Page/{page:int?}")]
     public async Task<IActionResult> History(int page = 1, GameType? type = null)
     {
-        return View(ActivatorUtilities.CreateInstance<GameHistoryModel>(_serviceProvider,
+        return View(ActivatorUtilities.CreateInstance<GameHistoryModel>(ServiceProvider,
             await _business.GetGames(page, 10, type)));
     }
 
