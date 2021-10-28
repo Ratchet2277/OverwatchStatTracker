@@ -7,29 +7,30 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Tracker.Controllers;
-
-public class HomeController : BaseController
+namespace Tracker.Controllers
 {
-    public HomeController(ILogger<HomeController> logger, UserManager<User> userManager,
-        IServiceProvider serviceProvider) : base(logger, userManager, serviceProvider)
+    public class HomeController : BaseController
     {
-    }
+        public HomeController(ILogger<HomeController> logger, UserManager<User> userManager,
+            IServiceProvider serviceProvider) : base(logger, userManager, serviceProvider)
+        {
+        }
 
-    [Authorize]
-    public IActionResult Index()
-    {
-        return View();
-    }
+        [Authorize]
+        public IActionResult Index()
+        {
+            return View();
+        }
 
-    public IActionResult Privacy()
-    {
-        return View();
-    }
+        public IActionResult Privacy()
+        {
+            return View();
+        }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
     }
 }

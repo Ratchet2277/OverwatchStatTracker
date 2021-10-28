@@ -1,5 +1,6 @@
-﻿namespace ViewModel.Contract;
-
-public interface IChartJsOptions
+﻿namespace ViewModel.Contract
 {
+    public interface IChartJsOptions
+    {
+    }
 }

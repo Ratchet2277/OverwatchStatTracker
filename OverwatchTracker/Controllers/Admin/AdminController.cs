@@ -5,23 +5,24 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Tracker.Controllers.Admin;
-
-[Route("Admin/")]
-[Authorize(Roles = "Admin")]
-public class AdminController : BaseController
+namespace Tracker.Controllers.Admin
 {
-    private readonly RoleManager<IdentityRole> _roleManager;
-
-    public AdminController(ILogger<AdminController> logger, UserManager<User> userManager,
-        IServiceProvider serviceProvider, RoleManager<IdentityRole> roleManager) : base(logger, userManager,
-        serviceProvider)
+    [Route("Admin/")]
+    [Authorize(Roles = "Admin")]
+    public class AdminController : BaseController
     {
-        _roleManager = roleManager;
-    }
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-    public IActionResult Index()
-    {
-        return View();
+        public AdminController(ILogger<AdminController> logger, UserManager<User> userManager,
+            IServiceProvider serviceProvider, RoleManager<IdentityRole> roleManager) : base(logger, userManager,
+            serviceProvider)
+        {
+            _roleManager = roleManager;
+        }
+
+        public IActionResult Index()
+        {
+            return View();
+        }
     }
 }

@@ -6,21 +6,22 @@ using DomainModel.Types;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Tracker.Components;
-
-public class GameListComponent : BaseComponent
+namespace Tracker.Components
 {
-    private readonly IGameBusiness _gamesBusiness;
-
-    public GameListComponent(IGameBusiness gamesBusiness,
-        IServiceProvider serviceProvider) : base(serviceProvider)
+    public class GameListComponent : BaseComponent
     {
-        _gamesBusiness = gamesBusiness;
-    }
+        private readonly IGameBusiness _gamesBusiness;
 
-    public async Task<IViewComponentResult> InvokeAsync(int page = 1, int size = 10, GameType? type = null)
-    {
-        return View(ActivatorUtilities.CreateInstance<GameListModel>(ServiceProvider,
-            await _gamesBusiness.GetGames(page, size, type)));
+        public GameListComponent(IGameBusiness gamesBusiness,
+            IServiceProvider serviceProvider) : base(serviceProvider)
+        {
+            _gamesBusiness = gamesBusiness;
+        }
+
+        public async Task<IViewComponentResult> InvokeAsync(int page = 1, int size = 10, GameType? type = null)
+        {
+            return View(ActivatorUtilities.CreateInstance<GameListModel>(ServiceProvider,
+                await _gamesBusiness.GetGames(page, size, type)));
+        }
     }
 }

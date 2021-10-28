@@ -1,9 +1,10 @@
-﻿namespace DomainModel.Types;
-
-public enum GameType
+﻿namespace DomainModel.Types
 {
-    Damage,
-    Support,
-    Tank,
-    OpenQueue
+    public enum GameType
+    {
+        Damage,
+        Support,
+        Tank,
+        OpenQueue
+    }
 }

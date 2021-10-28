@@ -2,9 +2,10 @@
 using System.Threading.Tasks;
 using DomainModel;
 
-namespace Repository.Contracts;
-
-public interface ISeasonRepository : IBaseRepository<Season>
+namespace Repository.Contracts
 {
-    public Task<Season?> LastSeason();
+    public interface ISeasonRepository : IBaseRepository<Season>
+    {
+        public Task<Season?> LastSeason();
+    }
 }

@@ -1,7 +1,8 @@
-﻿namespace DomainModel.Struct;
-
-public struct WinRate
+﻿namespace DomainModel.Struct
 {
-    public double Rate { get; set; }
-    public double DrawRate { get; set; }
+    public struct WinRate
+    {
+        public double Rate { get; set; }
+        public double DrawRate { get; set; }
+    }
 }

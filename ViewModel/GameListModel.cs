@@ -1,17 +1,18 @@
 ﻿using Business.Contracts;
 using DomainModel;
 
-namespace DataModel;
-
-public class GameListModel
+namespace DataModel
 {
-    public GameListModel(Pagination<Game> games, ISrEvolutionBusiness srEvolutionBusiness)
+    public class GameListModel
     {
-        Games = games;
-        SrEvolutionBusiness = srEvolutionBusiness;
+        public GameListModel(Pagination<Game> games, ISrEvolutionBusiness srEvolutionBusiness)
+        {
+            Games = games;
+            SrEvolutionBusiness = srEvolutionBusiness;
+        }
+
+        public Pagination<Game> Games { get; }
+
+        public ISrEvolutionBusiness SrEvolutionBusiness { get; }
     }
-
-    public Pagination<Game> Games { get; }
-
-    public ISrEvolutionBusiness SrEvolutionBusiness { get; }
 }

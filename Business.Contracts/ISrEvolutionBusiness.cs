@@ -6,11 +6,12 @@ using DomainModel;
 using DomainModel.Types;
 using ViewModel.Contract;
 
-namespace Business.Contracts;
-
-public interface ISrEvolutionBusiness
+namespace Business.Contracts
 {
-    public Task<IChartJsOptions?> ByType(GameType? type);
-    public Task<Dictionary<GameType, Tuple<float, float>>> GetAverageEvolution();
-    public Task<int?> DeltaLastGame(Game game);
+    public interface ISrEvolutionBusiness
+    {
+        public Task<IChartJsOptions?> ByType(GameType? type);
+        public Task<Dictionary<GameType, Tuple<float, float>>> GetAverageEvolution();
+        public Task<int?> DeltaLastGame(Game game);
+    }
 }

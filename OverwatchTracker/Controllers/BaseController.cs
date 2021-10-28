@@ -4,20 +4,21 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Tracker.Controllers;
-
-public abstract class BaseController : Controller
+namespace Tracker.Controllers
 {
-    protected readonly ILogger<BaseController> Logger;
-
-    protected readonly IServiceProvider ServiceProvider;
-    protected readonly UserManager<User> UserManager;
-
-    protected BaseController(ILogger<BaseController> logger, UserManager<User> userManager,
-        IServiceProvider serviceProvider)
+    public abstract class BaseController : Controller
     {
-        Logger = logger;
-        UserManager = userManager;
-        ServiceProvider = serviceProvider;
+        protected readonly ILogger<BaseController> Logger;
+
+        protected readonly IServiceProvider ServiceProvider;
+        protected readonly UserManager<User> UserManager;
+
+        protected BaseController(ILogger<BaseController> logger, UserManager<User> userManager,
+            IServiceProvider serviceProvider)
+        {
+            Logger = logger;
+            UserManager = userManager;
+            ServiceProvider = serviceProvider;
+        }
     }
 }

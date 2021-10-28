@@ -1,14 +1,15 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Tracker.Components;
-
-public abstract class BaseComponent : ViewComponent
+namespace Tracker.Components
 {
-    protected readonly IServiceProvider ServiceProvider;
-
-    public BaseComponent(IServiceProvider serviceProvider)
+    public abstract class BaseComponent : ViewComponent
     {
-        ServiceProvider = serviceProvider;
+        protected readonly IServiceProvider ServiceProvider;
+
+        public BaseComponent(IServiceProvider serviceProvider)
+        {
+            ServiceProvider = serviceProvider;
+        }
     }
 }

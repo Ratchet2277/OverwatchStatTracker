@@ -1,18 +1,19 @@
 ﻿using System.IO;
 using Microsoft.Extensions.Configuration;
 
-namespace Initializer;
-
-internal class Program
+namespace Initializer
 {
-    private static IConfiguration _configuration;
-
-    private static void Main()
+    internal class Program
     {
-        var builder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", false);
+        private static IConfiguration _configuration;
 
-        _configuration = builder.Build();
+        private static void Main()
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", false);
+
+            _configuration = builder.Build();
+        }
     }
 }

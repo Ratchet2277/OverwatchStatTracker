@@ -16,90 +16,91 @@ using Repository;
 using Repository.Contracts;
 using ViewModel.Contract;
 
-namespace Tracker;
-
-public class Startup
+namespace Tracker
 {
-    public Startup(IConfiguration configuration)
+    public class Startup
     {
-        Configuration = configuration;
-    }
-
-    public IConfiguration Configuration { get; }
-
-    // This method gets called by the runtime. Use this method to add services to the container.
-    public void ConfigureServices(IServiceCollection services)
-    {
-        #region Business
-
-        services.AddScoped<ISrEvolutionBusiness, SrEvolutionBusiness>();
-        services.AddScoped<IWinRateBusiness, WinRateBusiness>();
-        services.AddScoped<ISeasonBusiness, SeasonBusiness>();
-        services.AddScoped<IGameBusiness, GamesBusiness>();
-        services.AddScoped<ISquadMemberBusiness, SquadMemberBusiness>();
-
-        #endregion
-
-        #region Repository
-
-        services.AddScoped<IGameRepository, GameRepository>();
-        services.AddScoped<ISquadMemberRepository, SquadMemberRepository>();
-        services.AddScoped<ISeasonRepository, SeasonRepository>();
-
-        #endregion
-
-        #region ViewModel
-
-        services.AddScoped<IPagination<Game>, Pagination<Game>>();
-
-        #endregion
-
-        services.AddHttpContextAccessor();
-        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-        services.AddTransient(p => p.GetRequiredService<IHttpContextAccessor>().HttpContext?.User);
-
-        services.AddDbContext<TrackerContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("TrackerDB"))
-        );
-
-        services.AddIdentity<User, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
-            .AddEntityFrameworkStores<TrackerContext>();
-
-        services.AddRazorPages();
-        services.AddControllersWithViews();
-    }
-
-    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-    {
-        if (env.IsDevelopment())
+        public Startup(IConfiguration configuration)
         {
-            app.UseDeveloperExceptionPage();
-        }
-        else
-        {
-            app.UseExceptionHandler("/Home/Error");
-            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-            app.UseHsts();
+            Configuration = configuration;
         }
 
-        app.UseHttpsRedirection();
-        app.UseStaticFiles();
+        public IConfiguration Configuration { get; }
 
-        app.UseRouting();
-
-        app.UseAuthentication();
-        app.UseAuthorization();
-
-        app.UseEndpoints(endpoints =>
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
         {
-            endpoints.MapControllerRoute(
-                "Identity",
-                "{area:exists}/{controller}/{action}/{id?}");
-            endpoints.MapControllerRoute(
-                "default",
-                "{controller=Home}/{action=Index}/{id?}");
-            endpoints.MapRazorPages();
-        });
+            #region Business
+
+            services.AddScoped<ISrEvolutionBusiness, SrEvolutionBusiness>();
+            services.AddScoped<IWinRateBusiness, WinRateBusiness>();
+            services.AddScoped<ISeasonBusiness, SeasonBusiness>();
+            services.AddScoped<IGameBusiness, GamesBusiness>();
+            services.AddScoped<ISquadMemberBusiness, SquadMemberBusiness>();
+
+            #endregion
+
+            #region Repository
+
+            services.AddScoped<IGameRepository, GameRepository>();
+            services.AddScoped<ISquadMemberRepository, SquadMemberRepository>();
+            services.AddScoped<ISeasonRepository, SeasonRepository>();
+
+            #endregion
+
+            #region ViewModel
+
+            services.AddScoped<IPagination<Game>, Pagination<Game>>();
+
+            #endregion
+
+            services.AddHttpContextAccessor();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient(p => p.GetRequiredService<IHttpContextAccessor>().HttpContext?.User);
+
+            services.AddDbContext<TrackerContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("TrackerDB"))
+            );
+
+            services.AddIdentity<User, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<TrackerContext>();
+
+            services.AddRazorPages();
+            services.AddControllersWithViews();
+        }
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
+
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+
+            app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    "Identity",
+                    "{area:exists}/{controller}/{action}/{id?}");
+                endpoints.MapControllerRoute(
+                    "default",
+                    "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
+            });
+        }
     }
 }

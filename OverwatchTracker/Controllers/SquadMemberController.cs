@@ -8,26 +8,27 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace Tracker.Controllers;
-
-public class SquadMemberController : BaseController
+namespace Tracker.Controllers
 {
-    private readonly TrackerContext _context;
-
-    public SquadMemberController(TrackerContext context, ILogger<SquadMemberController> logger,
-        UserManager<User> userManager, IServiceProvider serviceProvider) : base(logger, userManager,
-        serviceProvider)
+    public class SquadMemberController : BaseController
     {
-        _context = context;
-    }
+        private readonly TrackerContext _context;
 
-    public async Task<Select2Result> Search(string term)
-    {
-        var currentUser = await UserManager.GetUserAsync(User);
-        Select2Result result = new(await _context.SquadMembers
-            .Where(s => s.Name.Contains(term) && s.MainUser == currentUser)
-            .Select(s => s.Name)
-            .ToListAsync());
-        return result;
+        public SquadMemberController(TrackerContext context, ILogger<SquadMemberController> logger,
+            UserManager<User> userManager, IServiceProvider serviceProvider) : base(logger, userManager,
+            serviceProvider)
+        {
+            _context = context;
+        }
+
+        public async Task<Select2Result> Search(string term)
+        {
+            var currentUser = await UserManager.GetUserAsync(User);
+            Select2Result result = new(await _context.SquadMembers
+                .Where(s => s.Name.Contains(term) && s.MainUser == currentUser)
+                .Select(s => s.Name)
+                .ToListAsync());
+            return result;
+        }
     }
 }

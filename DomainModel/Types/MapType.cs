@@ -1,10 +1,11 @@
-﻿namespace DomainModel.Types;
-
-public enum MapType
+﻿namespace DomainModel.Types
 {
-    Assault,
-    Payload,
-    Hybrid,
-    Control,
-    Push
+    public enum MapType
+    {
+        Assault,
+        Payload,
+        Hybrid,
+        Control,
+        Push
+    }
 }
