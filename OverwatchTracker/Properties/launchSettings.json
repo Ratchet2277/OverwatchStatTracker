@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Tracker": {
+    "WebApplication": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,

@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Tracker.Controllers
+namespace WebApplication.Controllers
 {
     [Authorize]
     [Route("Game/")]

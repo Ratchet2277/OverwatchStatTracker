@@ -10,7 +10,7 @@ namespace DomainModel
         [Required] public int Id { get; set; }
 
         [Required] public string Name { get; set; }
-        public GameRole Role { get; set; }
+        public Role Role { get; set; }
 
         [Required] public virtual User MainUser { get; set; }
 

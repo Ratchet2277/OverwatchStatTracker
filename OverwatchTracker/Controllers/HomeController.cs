@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Tracker.Controllers
+namespace WebApplication.Controllers
 {
     public class HomeController : BaseController
     {

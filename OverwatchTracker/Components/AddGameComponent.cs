@@ -2,7 +2,7 @@
 using DomainModel;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Tracker.Components
+namespace WebApplication.Components
 {
     public class AddGameComponent : BaseComponent
     {

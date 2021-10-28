@@ -18,8 +18,8 @@ namespace Business.WinRate
         private const string WinColor = "#03a9f4";
         private const string DrawColor = "#ffeb3b";
         private const string LoseColor = "#f44336";
-        private readonly IGameRepository _gameRepository;
         private readonly ISeasonBusiness _seasonBusiness;
+        private readonly IGameRepository _gameRepository;
 
         public WinRateBusiness(UserManager<User> userManager, ISeasonBusiness seasonBusiness,
             ClaimsPrincipal user, IGameRepository gameRepository) : base(userManager,
@@ -29,10 +29,10 @@ namespace Business.WinRate
             _seasonBusiness = seasonBusiness;
         }
 
-        public async Task<IChartJsOptions?> ByHero(GameRole? role = null)
+        public async Task<IChartJsOptions?> ByHero(Role? role = null)
         {
             var season = await _seasonBusiness.GetLastSeason();
-            var user = await UserManager.GetUserAsync(UClaimsPrincipal);
+            var user = await UserManager.GetUserAsync(uClaimsPrincipal);
 
             var data = new ChartJsData<double>
             {
@@ -115,7 +115,7 @@ namespace Business.WinRate
                 new DataSet<double>("% Lose").AddBackgroundsColor(LoseColor)
             };
 
-            var gameQuery = _gameRepository.Find(await UserManager.GetUserAsync(UClaimsPrincipal), true)
+            var gameQuery = _gameRepository.Find(await UserManager.GetUserAsync(uClaimsPrincipal), true)
                 .BySeason(await _seasonBusiness.GetLastSeason());
 
             var winRates = WrByRole(await gameQuery.ToListAsync());

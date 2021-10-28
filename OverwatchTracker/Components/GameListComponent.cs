@@ -6,7 +6,7 @@ using DomainModel.Types;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Tracker.Components
+namespace WebApplication.Components
 {
     public class GameListComponent : BaseComponent
     {

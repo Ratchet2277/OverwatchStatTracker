@@ -16,7 +16,7 @@ using Repository;
 using Repository.Contracts;
 using ViewModel.Contract;
 
-namespace Tracker
+namespace WebApplication
 {
     public class Startup
     {
@@ -30,6 +30,8 @@ namespace Tracker
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<UserManager<User>>();
+
             #region Business
 
             services.AddScoped<ISrEvolutionBusiness, SrEvolutionBusiness>();
@@ -62,10 +64,6 @@ namespace Tracker
                 options.UseSqlServer(Configuration.GetConnectionString("TrackerDB"))
             );
 
-            services.AddIdentity<User, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<TrackerContext>();
-
-            services.AddRazorPages();
             services.AddControllersWithViews();
         }
 

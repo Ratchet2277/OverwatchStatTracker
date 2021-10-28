@@ -12,7 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using ViewModel.Contract;
 
-namespace Tracker.Controllers
+namespace WebApplication.Controllers
 {
     [Authorize]
     public class ChartJsController : BaseController

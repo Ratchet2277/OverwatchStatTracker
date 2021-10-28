@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Tracker.Areas.Identity.Pages.Account.Manage
+namespace WebApplication.Areas.Identity.Pages.Account.Manage
 {
     public class ShowRecoveryCodesModel : PageModel
     {

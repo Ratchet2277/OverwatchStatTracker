@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Tracker.Areas.Identity.Pages.Account
+namespace WebApplication.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class ForgotPasswordConfirmation : PageModel

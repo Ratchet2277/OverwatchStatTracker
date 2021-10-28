@@ -19,8 +19,8 @@ namespace Business
     public class GamesBusiness : BaseBusiness, IGameBusiness
     {
         private readonly TrackerContext _context;
-        private readonly IGameRepository _repository;
         private readonly ISeasonBusiness _seasonBusiness;
+        private readonly IGameRepository _repository;
         private readonly ISquadMemberBusiness _squadMemberBusiness;
 
         public GamesBusiness(UserManager<User> userManager, ClaimsPrincipal user,
@@ -36,7 +36,7 @@ namespace Business
         public async Task<IPagination<Game>> GetGames(int page = 1, int? pageSize = 10, GameType? type = null)
         {
             var season = await _seasonBusiness.GetLastSeason();
-            var currentUser = await UserManager.GetUserAsync(UClaimsPrincipal);
+            var currentUser = await UserManager.GetUserAsync(uClaimsPrincipal);
 
             var query = season.Games.Where(g => g.User == currentUser && (type is null || g.Type == type))
                 .OrderByDescending(g => g.DateTime);
@@ -46,7 +46,7 @@ namespace Business
 
         public async Task<Game?> GetPreviousGame(Game game, bool allowPlacement = false)
         {
-            var currentUser = await UserManager.GetUserAsync(UClaimsPrincipal);
+            var currentUser = await UserManager.GetUserAsync(uClaimsPrincipal);
             var season = await _seasonBusiness.GetLastSeason();
 
             var previousGameQuery = _repository.Find(currentUser, allowPlacement)
