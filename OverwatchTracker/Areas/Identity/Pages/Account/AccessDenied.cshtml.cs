@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace WebApplication.Areas.Identity.Pages.Account
+namespace WebApplication.Areas.Identity.Pages.Account;
+
+public class AccessDeniedModel : PageModel
 {
-    public class AccessDeniedModel : PageModel
+    public void OnGet()
     {
-        public void OnGet()
-        {
-        }
     }
 }

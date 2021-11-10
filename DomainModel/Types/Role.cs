@@ -1,9 +1,8 @@
-﻿namespace DomainModel.Types
+﻿namespace DomainModel.Types;
+
+public enum Role
 {
-    public enum Role
-    {
-        Damage,
-        Support,
-        Tank
-    }
+    Damage,
+    Support,
+    Tank
 }

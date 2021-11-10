@@ -1,10 +1,9 @@
 ﻿using System.Threading.Tasks;
 using DomainModel;
 
-namespace Business.Contracts
+namespace Business.Contracts;
+
+public interface ISeasonBusiness
 {
-    public interface ISeasonBusiness
-    {
-        public Task<Season> GetLastSeason();
-    }
+    public Task<Season> GetLastSeason();
 }

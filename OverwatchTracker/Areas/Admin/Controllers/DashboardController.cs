@@ -3,18 +3,17 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace WebApplication.Areas.Admin.Controllers
-{
-    public class DashboardController : BaseAdminController
-    {
-        public DashboardController(ILogger<DashboardController> logger, UserManager<User> userManager) : base(logger,
-            userManager)
-        {
-        }
+namespace WebApplication.Areas.Admin.Controllers;
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+public class DashboardController : BaseAdminController
+{
+    public DashboardController(ILogger<DashboardController> logger, UserManager<User> userManager) : base(logger,
+        userManager)
+    {
+    }
+
+    public IActionResult Index()
+    {
+        return View();
     }
 }

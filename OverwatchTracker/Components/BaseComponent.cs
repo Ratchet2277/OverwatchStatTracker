@@ -1,15 +1,14 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApplication.Components
-{
-    public abstract class BaseComponent : ViewComponent
-    {
-        protected readonly IServiceProvider ServiceProvider;
+namespace WebApplication.Components;
 
-        public BaseComponent(IServiceProvider serviceProvider)
-        {
-            ServiceProvider = serviceProvider;
-        }
+public abstract class BaseComponent : ViewComponent
+{
+    protected readonly IServiceProvider ServiceProvider;
+
+    public BaseComponent(IServiceProvider serviceProvider)
+    {
+        ServiceProvider = serviceProvider;
     }
 }

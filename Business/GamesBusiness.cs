@@ -14,103 +14,102 @@ using Microsoft.EntityFrameworkCore;
 using Repository.Contracts;
 using ViewModel.Contract;
 
-namespace Business
+namespace Business;
+
+public class GamesBusiness : BaseBusiness, IGameBusiness
 {
-    public class GamesBusiness : BaseBusiness, IGameBusiness
+    private readonly TrackerContext _context;
+    private readonly IGameRepository _repository;
+    private readonly ISeasonBusiness _seasonBusiness;
+    private readonly ISquadMemberBusiness _squadMemberBusiness;
+
+    public GamesBusiness(UserManager<User> userManager, ClaimsPrincipal user,
+        ISeasonBusiness seasonBusiness, IGameRepository repository, TrackerContext context,
+        ISquadMemberBusiness squadMemberBusiness) : base(userManager, user)
     {
-        private readonly TrackerContext _context;
-        private readonly IGameRepository _repository;
-        private readonly ISeasonBusiness _seasonBusiness;
-        private readonly ISquadMemberBusiness _squadMemberBusiness;
+        _seasonBusiness = seasonBusiness;
+        _repository = repository;
+        _context = context;
+        _squadMemberBusiness = squadMemberBusiness;
+    }
 
-        public GamesBusiness(UserManager<User> userManager, ClaimsPrincipal user,
-            ISeasonBusiness seasonBusiness, IGameRepository repository, TrackerContext context,
-            ISquadMemberBusiness squadMemberBusiness) : base(userManager, user)
-        {
-            _seasonBusiness = seasonBusiness;
-            _repository = repository;
-            _context = context;
-            _squadMemberBusiness = squadMemberBusiness;
-        }
+    public async Task<IPagination<Game>> GetGames(int page = 1, int? pageSize = 10, GameType? type = null)
+    {
+        var season = await _seasonBusiness.GetLastSeason();
+        var currentUser = await UserManager.GetUserAsync(UClaimsPrincipal);
 
-        public async Task<IPagination<Game>> GetGames(int page = 1, int? pageSize = 10, GameType? type = null)
-        {
-            var season = await _seasonBusiness.GetLastSeason();
-            var currentUser = await UserManager.GetUserAsync(UClaimsPrincipal);
+        var query = season.Games.Where(g => g.User == currentUser && (type is null || g.Type == type))
+            .OrderByDescending(g => g.DateTime);
 
-            var query = season.Games.Where(g => g.User == currentUser && (type is null || g.Type == type))
-                .OrderByDescending(g => g.DateTime);
+        return new Pagination<Game>(query, page, pageSize);
+    }
 
-            return new Pagination<Game>(query, page, pageSize);
-        }
+    public async Task<Game?> GetPreviousGame(Game game, bool allowPlacement = false)
+    {
+        var currentUser = await UserManager.GetUserAsync(UClaimsPrincipal);
+        var season = await _seasonBusiness.GetLastSeason();
 
-        public async Task<Game?> GetPreviousGame(Game game, bool allowPlacement = false)
-        {
-            var currentUser = await UserManager.GetUserAsync(UClaimsPrincipal);
-            var season = await _seasonBusiness.GetLastSeason();
+        var previousGameQuery = _repository.Find(currentUser, allowPlacement)
+            .ByType(game.Type)
+            .BySeason(season).Query?.Where(g => g.DateTime < game.DateTime && g.Type == game.Type)
+            .OrderByDescending(g => g.DateTime);
 
-            var previousGameQuery = _repository.Find(currentUser, allowPlacement)
-                .ByType(game.Type)
-                .BySeason(season).Query?.Where(g => g.DateTime < game.DateTime && g.Type == game.Type)
-                .OrderByDescending(g => g.DateTime);
+        if (previousGameQuery is null)
+            return null;
 
-            if (previousGameQuery is null)
-                return null;
+        if (!previousGameQuery.Any())
+            return null;
 
-            if (!previousGameQuery.Any())
-                return null;
+        var previousGame = await previousGameQuery.FirstAsync();
 
-            var previousGame = await previousGameQuery.FirstAsync();
+        return previousGame;
+    }
 
-            return previousGame;
-        }
+    public async Task<Game?> Get(int id)
+    {
+        return await _repository.Get(id);
+    }
 
-        public async Task<Game> Get(int id)
-        {
-            return await _repository.Get(id);
-        }
+    public async Task Add(Game game)
+    {
+        if (game.User is null)
+            throw new ArgumentException("Game.User must be set before being added to the repository");
 
-        public async Task Add(Game game)
-        {
-            if (game.User is null)
-                throw new ArgumentException("Game.User must be set before being added to the repository");
+        game.DateTime = DateTime.Now;
+        game.Map = await _context.Maps.FindAsync(game.NewMap);
+        var newHeroes = game.NewHeroes;
+        game.Heroes =
+            new Collection<Hero>(await _context.Heroes.Where(h => newHeroes.Contains(h.Id)).ToListAsync());
 
-            game.DateTime = DateTime.Now;
-            game.Map = await _context.Maps.FindAsync(game.NewMap);
-            var newHeroes = game.NewHeroes;
-            game.Heroes =
-                new Collection<Hero>(await _context.Heroes.Where(h => newHeroes.Contains(h.Id)).ToListAsync());
+        if (game.NewSquadMembers.Length > 0)
+            _squadMemberBusiness.EditSquadMemberList(ref game, game.NewSquadMembers);
 
-            if (game.NewSquadMembers.Length > 0)
-                _squadMemberBusiness.EditSquadMemberList(ref game, game.NewSquadMembers);
+        await _repository.Add(game);
+    }
 
-            await _repository.Add(game);
-        }
+    public async Task Update(Game newGame)
+    {
+        var game = await _repository.Get(newGame.Id);
 
-        public async Task Update(Game newGame)
-        {
-            var game = await _repository.Get(newGame.Id);
+        if (game is null)
+            throw new ArgumentException("Game not found in database");
 
-            if (game is null)
-                throw new ArgumentException("Game not found in database");
+        game.AllieScore = newGame.AllieScore;
+        game.EnemyScore = newGame.EnemyScore;
+        game.Type = newGame.Type;
+        game.Sr = newGame.Sr;
+        game.IsPlacement = newGame.IsPlacement;
 
-            game.AllieScore = newGame.AllieScore;
-            game.EnemyScore = newGame.EnemyScore;
-            game.Type = newGame.Type;
-            game.Sr = newGame.Sr;
-            game.IsPlacement = newGame.IsPlacement;
+        if (game.Map.Id != newGame.NewMap) game.Map = await _context.Maps.FindAsync(newGame.NewMap);
 
-            if (game.Map.Id != newGame.NewMap) game.Map = await _context.Maps.FindAsync(newGame.NewMap);
+        foreach (var heroToDel in game.Heroes.Where(h => !newGame.NewHeroes.Contains(h.Id)).ToList())
+            game.Heroes.Remove(heroToDel);
 
-            foreach (var heroToDel in game.Heroes.Where(h => !newGame.NewHeroes.Contains(h.Id)).ToList())
-                game.Heroes.Remove(heroToDel);
+        foreach (var heroToAdd in _context.Heroes.Where(h =>
+                     newGame.NewHeroes.Contains(h.Id) && !game.Heroes.Contains(h))) game.Heroes.Add(heroToAdd);
 
-            foreach (var heroToAdd in _context.Heroes.Where(h =>
-                newGame.NewHeroes.Contains(h.Id) && !game.Heroes.Contains(h))) game.Heroes.Add(heroToAdd);
+        _squadMemberBusiness.EditSquadMemberList(ref game, newGame.NewSquadMembers);
 
-            _squadMemberBusiness.EditSquadMemberList(ref game, newGame.NewSquadMembers);
-
-            await _repository.Update(game);
-        }
+        await _repository.Update(game);
     }
 }

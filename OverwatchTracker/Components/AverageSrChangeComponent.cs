@@ -4,17 +4,16 @@ using Business.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace WebApplication.Components
-{
-    public class AverageSrChangeComponent : BaseComponent
-    {
-        public AverageSrChangeComponent(IServiceProvider serviceProvider) : base(serviceProvider)
-        {
-        }
+namespace WebApplication.Components;
 
-        public async Task<IViewComponentResult> InvokeAsync()
-        {
-            return View(await ServiceProvider.GetService<ISrEvolutionBusiness>()?.GetAverageEvolution()!);
-        }
+public class AverageSrChangeComponent : BaseComponent
+{
+    public AverageSrChangeComponent(IServiceProvider serviceProvider) : base(serviceProvider)
+    {
+    }
+
+    public async Task<IViewComponentResult> InvokeAsync()
+    {
+        return View(await ServiceProvider.GetService<ISrEvolutionBusiness>()?.GetAverageEvolution()!);
     }
 }

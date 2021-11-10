@@ -12,139 +12,138 @@ using Microsoft.AspNetCore.Identity;
 using Repository.Contracts;
 using ViewModel.Contract;
 
-namespace Business
+namespace Business;
+
+public class SrEvolutionBusiness : BaseBusiness, ISrEvolutionBusiness
+
 {
-    public class SrEvolutionBusiness : BaseBusiness, ISrEvolutionBusiness
+    private readonly IGameBusiness _business;
+    private readonly IGameRepository _repository;
+    private readonly ISeasonBusiness _seasonBusiness;
 
+    public SrEvolutionBusiness(UserManager<User> userManager, ISeasonBusiness seasonBusiness,
+        ClaimsPrincipal user, IGameBusiness business, IGameRepository repository)
+        : base(userManager, user)
     {
-        private readonly IGameBusiness _business;
-        private readonly IGameRepository _repository;
-        private readonly ISeasonBusiness _seasonBusiness;
+        _repository = repository;
+        _business = business;
+        _seasonBusiness = seasonBusiness;
+    }
 
-        public SrEvolutionBusiness(UserManager<User> userManager, ISeasonBusiness seasonBusiness,
-            ClaimsPrincipal user, IGameBusiness business, IGameRepository repository)
-            : base(userManager, user)
+    public async Task<IChartJsOptions?> ByType(GameType? type)
+    {
+        var games = _repository.Find(await UserManager.GetUserAsync(UClaimsPrincipal))
+            .BySeason(await _seasonBusiness.GetLastSeason());
+
+        if (type is not null) games.ByType((GameType)type);
+
+        var list = await games.OrderByDate().ToListAsync();
+
+        if (!list.Any()) return null;
+
+        var data = new ChartJsData<int>
         {
-            _repository = repository;
-            _business = business;
-            _seasonBusiness = seasonBusiness;
-        }
+            Labels = list.Select(g => g.DateTime.ToString()).ToList(),
 
-        public async Task<IChartJsOptions?> ByType(GameType? type)
-        {
-            var games = _repository.Find(await UserManager.GetUserAsync(UClaimsPrincipal))
-                .BySeason(await _seasonBusiness.GetLastSeason());
 
-            if (type is not null) games.ByType((GameType)type);
-
-            var list = await games.OrderByDate().ToListAsync();
-
-            if (list is null || !list.Any()) return null;
-
-            var data = new ChartJsData<int>
+            DataSets = new List<DataSet<int>>
             {
-                Labels = list.Select(g => g.DateTime.ToString()).ToList(),
-
-
-                DataSets = new List<DataSet<int>>
+                new($"{(type == GameType.OpenQueue ? "Open Queue" : type.ToString())} Rank")
                 {
-                    new($"{(type == GameType.OpenQueue ? "Open Queue" : type.ToString())} Rank")
-                    {
-                        Data = list.Select(g => g.Sr).ToList(),
-                        BorderColor = "#f44336",
-                        BackgroundColor = new List<string> { "#f44336" },
-                        Stepped = true
-                    }
+                    Data = list.Select(g => g.Sr).ToList(),
+                    BorderColor = "#f44336",
+                    BackgroundColor = new List<string> { "#f44336" },
+                    Stepped = true
                 }
-            };
-            return new ChartJsOptions<int>
-            {
-                Data = data,
-                Type = "line",
-                Options = new
-                {
-                    responsive = true,
-                    elements = new
-                    {
-                        point = new
-                        {
-                            radius = 0
-                        }
-                    },
-                    interaction = new
-                    {
-                        intersect = false,
-                        mode = "index"
-                    },
-                    plugins = new
-                    {
-                        tooltip = new
-                        {
-                            position = "nearest"
-                        }
-                    }
-                }
-            };
-        }
-
-        public async Task<Dictionary<GameType, Tuple<float, float>>> GetAverageEvolution()
-        {
-            var result = new Dictionary<GameType, Tuple<float, float>>();
-
-            foreach (var gameType in (GameType[])Enum.GetValues(typeof(GameType)))
-            {
-                var evolutionByType = await GetAverageEvolutionByType(gameType);
-                if (evolutionByType is null)
-                    continue;
-                result.Add(gameType, evolutionByType);
             }
+        };
+        return new ChartJsOptions<int>
+        {
+            Data = data,
+            Type = "line",
+            Options = new
+            {
+                responsive = true,
+                elements = new
+                {
+                    point = new
+                    {
+                        radius = 0
+                    }
+                },
+                interaction = new
+                {
+                    intersect = false,
+                    mode = "index"
+                },
+                plugins = new
+                {
+                    tooltip = new
+                    {
+                        position = "nearest"
+                    }
+                }
+            }
+        };
+    }
 
-            return result;
+    public async Task<Dictionary<GameType, Tuple<float, float>>> GetAverageEvolution()
+    {
+        var result = new Dictionary<GameType, Tuple<float, float>>();
+
+        foreach (var gameType in (GameType[])Enum.GetValues(typeof(GameType)))
+        {
+            var evolutionByType = await GetAverageEvolutionByType(gameType);
+            if (evolutionByType is null)
+                continue;
+            result.Add(gameType, evolutionByType);
         }
 
-        public async Task<int?> DeltaLastGame(Game game)
-        {
-            var previousGame = await _business.GetPreviousGame(game);
+        return result;
+    }
 
-            if (previousGame != null)
-                return game.Sr - previousGame.Sr;
+    public async Task<int?> DeltaLastGame(Game game)
+    {
+        var previousGame = await _business.GetPreviousGame(game);
 
+        if (previousGame != null)
+            return game.Sr - previousGame.Sr;
+
+        return null;
+    }
+
+    private async Task<Tuple<float, float>?> GetAverageEvolutionByType(GameType? type)
+    {
+        //get all games of this season, no need to count draw since they always keep the same SR 
+        var gameRepository = _repository.Find(await UserManager.GetUserAsync(UClaimsPrincipal))
+            .BySeason(await _seasonBusiness.GetLastSeason()).Draw(true);
+
+        if (type != null)
+            gameRepository.ByType((GameType)type);
+
+        if (!gameRepository.Any())
             return null;
-        }
 
-        private async Task<Tuple<float, float>?> GetAverageEvolutionByType(GameType? type)
+        var listGames = await gameRepository.OrderByDate().ToListAsync();
+
+        var totalWin = 0;
+        var nbWin = 0;
+        var totalLose = 0;
+        var nbLose = 0;
+
+        for (var i = 1; i < listGames.Count; i++)
         {
-            //get all games of this season, no need to count draw since they always keep the same SR 
-            var gameRepository = _repository.Find(await UserManager.GetUserAsync(UClaimsPrincipal))
-                .BySeason(await _seasonBusiness.GetLastSeason()).Draw(true);
-
-            if (type != null)
-                gameRepository.ByType((GameType)type);
-
-            if (!gameRepository.Any())
-                return null;
-
-            var listGames = await gameRepository.OrderByDate().ToListAsync();
-
-            var totalWin = 0;
-            var nbWin = 0;
-            var totalLose = 0;
-            var nbLose = 0;
-
-            for (var i = 1; i < listGames.Count; i++)
+            if (listGames[i].AllieScore > listGames[i].EnemyScore)
             {
-                if (listGames[i].AllieScore > listGames[i].EnemyScore)
-                {
-                    totalWin += listGames[i].Sr - listGames[i - 1].Sr;
-                    nbWin++;
-                    continue;
-                }
-
-                totalLose += listGames[i].Sr - listGames[i - 1].Sr;
-                nbLose++;
+                totalWin += listGames[i].Sr - listGames[i - 1].Sr;
+                nbWin++;
+                continue;
             }
 
-            return new Tuple<float, float>((float)totalWin / nbWin, (float)totalLose / nbLose);
+            totalLose += listGames[i].Sr - listGames[i - 1].Sr;
+            nbLose++;
         }
+
+        return new Tuple<float, float>((float)totalWin / nbWin, (float)totalLose / nbLose);
     }
 }

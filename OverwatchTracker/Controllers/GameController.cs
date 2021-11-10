@@ -10,66 +10,65 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace WebApplication.Controllers
+namespace WebApplication.Controllers;
+
+[Authorize]
+[Route("Game/")]
+public partial class GameController : BaseController
 {
-    [Authorize]
-    [Route("Game/")]
-    public partial class GameController : BaseController
+    private readonly IGameBusiness _business;
+    private readonly ISeasonBusiness _seasonBusiness;
+    private readonly IServiceProvider _serviceProvider;
+
+    public GameController(ILogger<GameController> logger, UserManager<User> userManager,
+        ISeasonBusiness seasonBusiness, IGameBusiness business, IServiceProvider serviceProvider) : base(
+        logger, userManager)
     {
-        private readonly IGameBusiness _business;
-        private readonly ISeasonBusiness _seasonBusiness;
-        private readonly IServiceProvider _serviceProvider;
+        _seasonBusiness = seasonBusiness;
+        _business = business;
+        _serviceProvider = serviceProvider;
+    }
 
-        public GameController(ILogger<GameController> logger, UserManager<User> userManager,
-            ISeasonBusiness seasonBusiness, IGameBusiness business, IServiceProvider serviceProvider) : base(
-            logger, userManager)
-        {
-            _seasonBusiness = seasonBusiness;
-            _business = business;
-            _serviceProvider = serviceProvider;
-        }
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<RedirectToActionResult> Create(Game game)
+    {
+        game.User = await UserManager.GetUserAsync(User);
+        game.Season = await _seasonBusiness.GetLastSeason();
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<RedirectToActionResult> Create(Game game)
-        {
-            game.User = await UserManager.GetUserAsync(User);
-            game.Season = await _seasonBusiness.GetLastSeason();
+        await _business.Add(game);
 
-            await _business.Add(game);
+        return RedirectToAction("Index", "Home");
+    }
 
-            return RedirectToAction("Index", "Home");
-        }
+    [HttpGet("History/{type?}")]
+    [HttpGet("History/{type?}/Page/{page:int?}")]
+    [HttpGet("History/Page/{page:int?}")]
+    public async Task<IActionResult> History(int page = 1, GameType? type = null)
+    {
+        return View(ActivatorUtilities.CreateInstance<GameHistoryModel>(_serviceProvider,
+            await _business.GetGames(page, 10, type)));
+    }
 
-        [HttpGet("History/{type?}")]
-        [HttpGet("History/{type?}/Page/{page:int?}")]
-        [HttpGet("History/Page/{page:int?}")]
-        public async Task<IActionResult> History(int page = 1, GameType? type = null)
-        {
-            return View(ActivatorUtilities.CreateInstance<GameHistoryModel>(_serviceProvider,
-                await _business.GetGames(page, 10, type)));
-        }
+    [HttpGet("Edit/{id:int}")]
+    public async Task<IActionResult> Edit(int id)
+    {
+        var game = await _business.Get(id);
+        var currentUser = await UserManager.GetUserAsync(User);
+        if (game?.User != currentUser) return Forbid();
+        return View(game);
+    }
 
-        [HttpGet("Edit/{id:int}")]
-        public async Task<IActionResult> Edit(int id)
-        {
-            var game = await _business.Get(id);
-            var currentUser = await UserManager.GetUserAsync(User);
-            if (game.User != currentUser) return Forbid();
-            return View(game);
-        }
+    [HttpPost("Edit")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> SaveEdit(Game newGame)
+    {
+        var game = await _business.Get(newGame.Id);
+        var currentUser = await UserManager.GetUserAsync(User);
+        if (game.User != currentUser) return Forbid();
 
-        [HttpPost("Edit")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SaveEdit(Game newGame)
-        {
-            var game = await _business.Get(newGame.Id);
-            var currentUser = await UserManager.GetUserAsync(User);
-            if (game.User != currentUser) return Forbid();
+        await _business.Update(newGame);
 
-            await _business.Update(newGame);
-
-            return RedirectToAction("History");
-        }
+        return RedirectToAction("History");
     }
 }
