@@ -55,8 +55,4 @@
         <None Remove=".dockerignore"/>
     </ItemGroup>
 
-    <ItemGroup>
-        <Folder Include="Areas\Admin\Views"/>
-    </ItemGroup>
-
 </Project>

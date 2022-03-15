@@ -1,35 +1,13 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"] - Overwatch Performance Tracker</title>
-    <link rel="stylesheet" href="~/node_modules/select2/dist/css/select2.min.css"/>
-    <link rel="stylesheet" href="~/css/site.css"/>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-
-    <script src="~/node_modules/materialize-css/dist/js/materialize.min.js"></script>
-    <script src="~/node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="~/node_modules/vue/dist/vue.min.js"></script>
-    <script src="~/node_modules/select2/dist/js/select2.min.js"></script>
-    <script src="~/node_modules/chart.js/dist/chart.js"></script>
-
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await Html.PartialAsync("_Head")
     @await RenderSectionAsync("Scripts", false)
 </head>
 <body>
 <header>
-    <nav>
-        <div class="nav-wrapper">
-            @Html.ActionLink("Overwatch Performance Tracker", "Index", "Home", null, new { @class = "brand-logo" })
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                <li>@Html.ActionLink("Game History", "History", "Game")</li>
-                @await Html.PartialAsync("_LoginPartial")
-            </ul>
-        </div>
-    </nav>
+    @await Html.PartialAsync("_Nav")
 </header>
 <main class="container">
     @RenderBody()
@@ -38,7 +16,9 @@
 <footer class="page-footer">
     <div class="container">
         <div class="row">
-            &copy; 2021 - Overwatch Performance Tracker
+            &copy; 2021 -
+            @DateTime.Now.Year
+            - Overwatch Performance Tracker
             @* <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> *@
         </div>
     </div>

@@ -13,7 +13,7 @@ public class Game
 
     [Range(0, 5000)] [Required] public int Sr { get; set; }
 
-    public bool IsPlacement { get; set; } = false;
+    public bool IsPlacement { get; set; }
     public DateTime DateTime { get; set; }
 
     [JsonIgnore] public virtual Collection<Hero> Heroes { get; set; }

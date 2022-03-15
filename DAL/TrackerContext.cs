@@ -1,10 +1,11 @@
 ﻿using DomainModel;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL;
 
-public class TrackerContext : IdentityDbContext<User>
+public class TrackerContext : IdentityDbContext<User, IdentityRole, string>
 {
     //*
     public TrackerContext(DbContextOptions options) : base(options)
