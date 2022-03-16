@@ -71,7 +71,7 @@ public class GameRepository : BaseRepository<Game>, IGameRepository
         if (Query is null) throw new IncompleteInitialization();
         Query = invert
             ? Query.Where(g => g.AllieScore < g.EnemyScore)
-            : Query.Where(g => g.AllieScore > g.EnemyScore);
+            : Query.Where(g => g.AllieScore >= g.EnemyScore);
         return this;
     }
 
@@ -80,7 +80,7 @@ public class GameRepository : BaseRepository<Game>, IGameRepository
         if (Query is null) throw new IncompleteInitialization();
         Query = invert
             ? Query.Where(g => g.AllieScore > g.EnemyScore)
-            : Query.Where(g => g.AllieScore < g.EnemyScore);
+            : Query.Where(g => g.AllieScore <= g.EnemyScore);
         return this;
     }
 
