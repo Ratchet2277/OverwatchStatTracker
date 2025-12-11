@@ -70,7 +70,7 @@ public partial class GameController(
     public async Task<IActionResult> SaveEdit(Game newGame)
     {
         if (!ModelState.IsValid)
-            RedirectToAction("Index", "Home");
+            RedirectToAction(RedirectOnError, "Home");
         
         var game = await business.Get(newGame.Id);
         var currentUser = await UserManager.GetUserAsync(User);
