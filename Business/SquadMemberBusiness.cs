@@ -8,16 +8,12 @@ using Repository.Contracts;
 
 namespace Business;
 
-public class SquadMemberBusiness : BaseBusiness, ISquadMemberBusiness
+public class SquadMemberBusiness(
+    UserManager<User> userManager,
+    ClaimsPrincipal user,
+    ISquadMemberRepository repository)
+    : BaseBusiness(userManager, user), ISquadMemberBusiness
 {
-    private readonly ISquadMemberRepository _repository;
-
-    public SquadMemberBusiness(UserManager<User> userManager, ClaimsPrincipal user,
-        ISquadMemberRepository repository) : base(userManager, user)
-    {
-        _repository = repository;
-    }
-
     public Game EditSquadMemberList(ref Game game, string[] names)
     {
         game.SquadMembers ??= new Collection<SquadMember>();
@@ -27,7 +23,7 @@ public class SquadMemberBusiness : BaseBusiness, ISquadMemberBusiness
             if (game.SquadMembers.Any(s => name == s.Name))
                 continue;
 
-            var query = _repository.Find(game.User).ByName(name);
+            var query = repository.Find(game.User).ByName(name);
 
             if (query.Any())
             {

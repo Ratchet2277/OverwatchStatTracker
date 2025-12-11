@@ -11,7 +11,7 @@ public interface IGameRepository : IBaseRepository<Game>
     public IQueryable<Game>? Query { get; }
     public IGameRepository Find(User user, bool withPlacement = false);
     public IGameRepository ByHero(Hero hero);
-    public IGameRepository ByType(GameType hero);
+    public IGameRepository ByType(GameType gameType);
     public IGameRepository BySeason(Season season);
     public IGameRepository Win(bool invert = false);
     public IGameRepository Lose(bool invert = false);

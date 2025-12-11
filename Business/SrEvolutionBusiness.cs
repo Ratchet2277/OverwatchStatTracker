@@ -14,26 +14,19 @@ using ViewModel.Contract;
 
 namespace Business;
 
-public class SrEvolutionBusiness : BaseBusiness, ISrEvolutionBusiness
+public class SrEvolutionBusiness(
+    UserManager<User> userManager,
+    ISeasonBusiness seasonBusiness,
+    ClaimsPrincipal user,
+    IGameBusiness business,
+    IGameRepository repository)
+    : BaseBusiness(userManager, user), ISrEvolutionBusiness
 
 {
-    private readonly IGameBusiness _business;
-    private readonly IGameRepository _repository;
-    private readonly ISeasonBusiness _seasonBusiness;
-
-    public SrEvolutionBusiness(UserManager<User> userManager, ISeasonBusiness seasonBusiness,
-        ClaimsPrincipal user, IGameBusiness business, IGameRepository repository)
-        : base(userManager, user)
-    {
-        _repository = repository;
-        _business = business;
-        _seasonBusiness = seasonBusiness;
-    }
-
     public async Task<IChartJsOptions?> ByType(GameType? type)
     {
-        var games = _repository.Find(await UserManager.GetUserAsync(UClaimsPrincipal))
-            .BySeason(await _seasonBusiness.GetLastSeason());
+        var games = repository.Find(await UserManager.GetUserAsync(UClaimsPrincipal))
+            .BySeason(await seasonBusiness.GetLastSeason());
 
         if (type is not null) games.ByType((GameType)type);
 
@@ -104,7 +97,7 @@ public class SrEvolutionBusiness : BaseBusiness, ISrEvolutionBusiness
 
     public async Task<int?> DeltaLastGame(Game game)
     {
-        var previousGame = await _business.GetPreviousGame(game);
+        var previousGame = await business.GetPreviousGame(game);
 
         if (previousGame != null)
             return game.Sr - previousGame.Sr;
@@ -115,8 +108,8 @@ public class SrEvolutionBusiness : BaseBusiness, ISrEvolutionBusiness
     private async Task<Tuple<float, float>?> GetAverageEvolutionByType(GameType? type)
     {
         //get all games of this season, no need to count draw since they always keep the same SR 
-        var gameRepository = _repository.Find(await UserManager.GetUserAsync(UClaimsPrincipal))
-            .BySeason(await _seasonBusiness.GetLastSeason()).Draw(true);
+        var gameRepository = repository.Find(await UserManager.GetUserAsync(UClaimsPrincipal))
+            .BySeason(await seasonBusiness.GetLastSeason()).Draw(true);
 
         if (type != null)
             gameRepository.ByType((GameType)type);

@@ -6,13 +6,10 @@ using DomainModel.Types;
 
 namespace DataModel;
 
-public class GameHistoryModel : GameListModel
-{
-    public GameHistoryModel(Pagination<Game> games, ISrEvolutionBusiness srEvolutionBusiness) : base(games,
+public class GameHistoryModel(Pagination<Game> games, ISrEvolutionBusiness srEvolutionBusiness)
+    : GameListModel(games,
         srEvolutionBusiness)
-    {
-    }
-
+{
     public GameType? Type { get; set; }
     public MapType? MapType { get; set; }
     public string[]? SquadMembers { get; set; }

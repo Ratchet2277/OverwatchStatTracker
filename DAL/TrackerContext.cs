@@ -16,8 +16,6 @@ public class TrackerContext : IdentityDbContext<User, IdentityRole, string>
     public TrackerContext()
     {
     }
-
-    // public override DbSet<User> Users { get; set; }
     public DbSet<Hero> Heroes { get; set; }
     public DbSet<Map> Maps { get; set; }
     public DbSet<Season> Seasons { get; set; }
@@ -26,18 +24,6 @@ public class TrackerContext : IdentityDbContext<User, IdentityRole, string>
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        // only for dotnet-ef tool
-        /*
-        optionsBuilder.UseSqlServer(
-            @"Data Source=(localdb)\mssqllocaldb;Initial Catalog=TrackerDB;Integrated Security=true",
-            b => b.MigrationsAssembly("Initializer"));
-        //*/
-        /*
-        optionsBuilder.UseSqlServer(
-            @"Server=localhost\SQLEXPRESS;Database=TrackerDB;Trusted_Connection=True;",
-            b => b.MigrationsAssembly("Initializer"));
-        //*/
-
         base.OnConfiguring(optionsBuilder);
         optionsBuilder.UseLazyLoadingProxies();
     }

@@ -8,14 +8,9 @@ using Microsoft.VisualBasic.CompilerServices;
 
 namespace Repository;
 
-public abstract class BaseRepository<T>
+public abstract class BaseRepository<T>(TrackerContext context)
 {
-    protected BaseRepository(TrackerContext context)
-    {
-        Context = context;
-    }
-
-    protected TrackerContext Context { get; set; }
+    protected TrackerContext Context { get; set; } = context;
 
     public IQueryable<T>? Query { get; protected set; }
 

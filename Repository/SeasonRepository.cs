@@ -8,12 +8,8 @@ using Repository.Contracts;
 
 namespace Repository;
 
-public class SeasonRepository : BaseRepository<Season>, ISeasonRepository
+public class SeasonRepository(TrackerContext context) : BaseRepository<Season>(context), ISeasonRepository
 {
-    public SeasonRepository(TrackerContext context) : base(context)
-    {
-    }
-
     public async Task<Season?> Get(int id)
     {
         return await Context.Seasons.FirstOrDefaultAsync(s => s.Id == id);

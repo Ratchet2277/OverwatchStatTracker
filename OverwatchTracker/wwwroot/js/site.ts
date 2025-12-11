@@ -29,26 +29,22 @@ document.addEventListener('DOMContentLoaded', () => {
             isPlacement: false
         },
         async created() {
-            fetch('/Game/MapList').then((response) => {
-                response.json().then((data) => {
-                    Vue.set(AddGame, "maps", data);
-                    this.$nextTick(() => {
-                        let select: HTMLSelectElement = <HTMLSelectElement>document.getElementById("Map");
-                        M.FormSelect.getInstance(select)?.destroy();
-                        M.FormSelect.init(select, SELECT_FORMS_OPTIONS);
-                    });
-                })
+            let response = await fetch('/Game/MapList')
+            let data = await response.json()
+            Vue.set(AddGame, "maps", data);
+            this.$nextTick(() => {
+                let select: HTMLSelectElement = <HTMLSelectElement>document.getElementById("Map");
+                M.FormSelect.getInstance(select)?.destroy();
+                M.FormSelect.init(select, SELECT_FORMS_OPTIONS);
             })
 
-            fetch('/Game/RoleList').then((response) => {
-                response.json().then((data) => {
-                    Vue.set(AddGame, "roles", data);
-                    this.$nextTick(() => {
-                        let select: HTMLSelectElement = <HTMLSelectElement>document.getElementById("Type");
-                        M.FormSelect.getInstance(select)?.destroy();
-                        M.FormSelect.init(select, SELECT_FORMS_OPTIONS);
-                    });
-                })
+            response = await fetch('/Game/RoleList')
+            data = await response.json();
+            Vue.set(AddGame, "roles", data);
+            this.$nextTick(() => {
+                let select: HTMLSelectElement = <HTMLSelectElement>document.getElementById("Type");
+                M.FormSelect.getInstance(select)?.destroy();
+                M.FormSelect.init(select, SELECT_FORMS_OPTIONS);
             })
             this.$nextTick(() => {
                 if (this.$data.selectedRole !== null) {
@@ -58,15 +54,14 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         methods: {
             async updateHeroList() {
-                fetch(`/Game/HeroList?roleId=${AddGame.$data.selectedRole}`).then((response) => {
-                    response.json().then((data) => {
-                        Vue.set(AddGame, "heroes", data);
-                        this.$nextTick(() => {
-                            let select: HTMLSelectElement = <HTMLSelectElement>document.getElementById("Heroes");
-                            M.FormSelect.getInstance(select)?.destroy();
-                            M.FormSelect.init(select, SELECT_FORMS_OPTIONS);
-                        })
-                    })
+                const response = await fetch(`/Game/HeroList?roleId=${AddGame.$data.selectedRole}`)
+                const data = await response.json();
+
+                Vue.set(AddGame, "heroes", data);
+                this.$nextTick(() => {
+                    let select: HTMLSelectElement = <HTMLSelectElement>document.getElementById("Heroes");
+                    M.FormSelect.getInstance(select)?.destroy();
+                    M.FormSelect.init(select, SELECT_FORMS_OPTIONS);
                 })
             }
         }
@@ -90,10 +85,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let tooltipElems: NodeListOf<Element> = document.querySelectorAll('.tooltipped');
     M.Tooltip.init(tooltipElems, TOOLTIP_OPTIONS);
 
-    let canvas = <NodeListOf<HTMLCanvasElement>>document.querySelectorAll(".auto-chart-js");
+    let canvas = document.querySelectorAll(".auto-chart-js");
 
     canvas.forEach((canva) => {
-        const context = canva.getContext("2d");
+        const context = (canva as HTMLCanvasElement).getContext("2d");
         if (!context)
             return;
 
@@ -105,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => response.json())
             .then((data) => {
                 // @ts-ignore
-                new Chart(context, data);
+                Chart(context, data);
             })
             .catch(() => {
                 if (!context.canvas.parentElement)

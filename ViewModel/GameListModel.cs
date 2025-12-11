@@ -3,15 +3,9 @@ using DomainModel;
 
 namespace DataModel;
 
-public class GameListModel
+public class GameListModel(Pagination<Game> games, ISrEvolutionBusiness srEvolutionBusiness)
 {
-    public GameListModel(Pagination<Game> games, ISrEvolutionBusiness srEvolutionBusiness)
-    {
-        Games = games;
-        SrEvolutionBusiness = srEvolutionBusiness;
-    }
+    public Pagination<Game> Games { get; } = games;
 
-    public Pagination<Game> Games { get; }
-
-    public ISrEvolutionBusiness SrEvolutionBusiness { get; }
+    public ISrEvolutionBusiness SrEvolutionBusiness { get; } = srEvolutionBusiness;
 }

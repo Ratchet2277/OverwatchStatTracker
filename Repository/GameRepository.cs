@@ -10,13 +10,8 @@ using Repository.Contracts;
 
 namespace Repository;
 
-public class GameRepository : BaseRepository<Game>, IGameRepository
+public class GameRepository(TrackerContext context) : BaseRepository<Game>(context), IGameRepository
 {
-    public GameRepository(TrackerContext context) : base(context)
-    {
-    }
-
-
     public async Task<Game?> Get(int id)
     {
         return await Context.Games.FindAsync(id);
@@ -35,12 +30,12 @@ public class GameRepository : BaseRepository<Game>, IGameRepository
     }
 
 
-    public IGameRepository Find(User currentUser, bool withPlacement = false)
+    public IGameRepository Find(User user, bool withPlacement = false)
     {
-        Query = Context.Games.Where(g => g.User == currentUser);
+        Query = Context.Games.Where(g => g.User == user);
 
         if (!withPlacement)
-            Query = Query.Where(g => g.IsPlacement == false);
+            Query = Query.Where(g => g.IsPlacement);
 
         return this;
     }

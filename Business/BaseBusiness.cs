@@ -4,15 +4,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Business;
 
-public abstract class BaseBusiness
+public abstract class BaseBusiness(UserManager<User> userManager, ClaimsPrincipal user)
 {
-    protected readonly ClaimsPrincipal UClaimsPrincipal;
+    protected readonly ClaimsPrincipal UClaimsPrincipal = user;
 
-    protected readonly UserManager<User> UserManager;
-
-    protected BaseBusiness(UserManager<User> userManager, ClaimsPrincipal user)
-    {
-        UserManager = userManager;
-        UClaimsPrincipal = user;
-    }
+    protected readonly UserManager<User> UserManager = userManager;
 }

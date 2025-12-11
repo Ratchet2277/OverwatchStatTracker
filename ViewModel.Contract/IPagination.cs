@@ -17,6 +17,6 @@ public interface IPagination<T>
     public int? PrevPage { get; }
     public Dictionary<int, string> PageToShow();
 
-    public IPagination<T> Next(int nb);
-    public IPagination<T> Prev(int nb);
+    public IPagination<T> Next(int nb = 1);
+    public IPagination<T> Prev(int nb = 1);
 }

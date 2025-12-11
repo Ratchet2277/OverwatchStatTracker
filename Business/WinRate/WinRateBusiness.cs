@@ -13,40 +13,36 @@ using ViewModel.Contract;
 
 namespace Business.WinRate;
 
-public partial class WinRateBusiness : BaseBusiness, IWinRateBusiness
+public partial class WinRateBusiness(
+    UserManager<User> userManager,
+    ISeasonBusiness seasonBusiness,
+    ClaimsPrincipal user,
+    IGameRepository repository)
+    : BaseBusiness(userManager,
+        user), IWinRateBusiness
 {
     private const string WinColor = "#03a9f4";
     private const string DrawColor = "#ffeb3b";
     private const string LoseColor = "#f44336";
-    private readonly IGameRepository _gameRepository;
-    private readonly ISeasonBusiness _seasonBusiness;
-
-    public WinRateBusiness(UserManager<User> userManager, ISeasonBusiness seasonBusiness,
-        ClaimsPrincipal user, IGameRepository gameRepository) : base(userManager,
-        user)
-    {
-        _gameRepository = gameRepository;
-        _seasonBusiness = seasonBusiness;
-    }
 
     public async Task<IChartJsOptions?> ByHero(Role? role = null)
     {
-        var season = await _seasonBusiness.GetLastSeason();
-        var user = await UserManager.GetUserAsync(UClaimsPrincipal);
+        var season = await seasonBusiness.GetLastSeason();
+        var currentUser = await UserManager.GetUserAsync(UClaimsPrincipal);
 
         var data = new ChartJsData<double>
         {
-            Labels = new List<string>(),
-            DataSets = new List<DataSet<double>>
-            {
-                new("% Win") { BackgroundColor = new List<string> { WinColor } },
-                new("% Draw") { BackgroundColor = new List<string> { DrawColor } }
-            }
+            Labels = [],
+            DataSets =
+            [
+                new DataSet<double>("% Win") { BackgroundColor = [WinColor] },
+                new DataSet<double>("% Draw") { BackgroundColor = [DrawColor] }
+            ]
         };
 
         bool GameFilter(Game g)
         {
-            return g.User == user && g.Season == season;
+            return g.User == currentUser && g.Season == season;
         }
 
         //listing of heroes to show, with ordering
@@ -115,8 +111,8 @@ public partial class WinRateBusiness : BaseBusiness, IWinRateBusiness
             new DataSet<double>("% Lose").AddBackgroundsColor(LoseColor)
         };
 
-        var gameQuery = _gameRepository.Find(await UserManager.GetUserAsync(UClaimsPrincipal), true)
-            .BySeason(await _seasonBusiness.GetLastSeason());
+        var gameQuery = repository.Find(await UserManager.GetUserAsync(UClaimsPrincipal), true)
+            .BySeason(await seasonBusiness.GetLastSeason());
 
         var winRates = WrByRole(await gameQuery.ToListAsync());
 

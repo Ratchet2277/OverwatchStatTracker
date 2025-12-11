@@ -8,15 +8,8 @@ using Microsoft.Extensions.Configuration;
 
 namespace Initializer;
 
-public class TrackerContextExtension : TrackerContext
+public class TrackerContextExtension(IConfiguration configuration) : TrackerContext
 {
-    private readonly IConfiguration _configuration;
-
-    public TrackerContextExtension(IConfiguration configuration)
-    {
-        _configuration = configuration;
-    }
-
     public void Initialize(bool dropAlways = false)
     {
         if (dropAlways)
@@ -362,7 +355,7 @@ public class TrackerContextExtension : TrackerContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlServer(
-            _configuration.GetConnectionString("TrackerDB"));
+            configuration.GetConnectionString("TrackerDB"));
         base.OnConfiguring(optionsBuilder);
     }
 }

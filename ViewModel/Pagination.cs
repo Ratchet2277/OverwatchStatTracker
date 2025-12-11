@@ -27,7 +27,7 @@ public class Pagination<T> : IPagination<T>
         _loadGames();
     }
 
-    //User friendly, start at 1
+    //User-friendly, start at 1
     public int Page
     {
         get => Page0 + 1;

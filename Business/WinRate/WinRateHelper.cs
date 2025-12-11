@@ -15,10 +15,10 @@ public partial class WinRateBusiness
 
     private static DomainModel.Struct.WinRate GetWinRate(IEnumerable<Game> games)
     {
-        // var enumerable = games.ToList();
-        var nbWin = games.Count(g => g.AllieScore > g.EnemyScore);
-        var nbDraw = games.Count(g => g.AllieScore == g.EnemyScore);
-        var nbTotal = games.Count();
+        IEnumerable<Game> enumerable = games as Game[] ?? games.ToArray();
+        var nbWin = enumerable.Count(g => g.AllieScore > g.EnemyScore);
+        var nbDraw = enumerable.Count(g => g.AllieScore == g.EnemyScore);
+        var nbTotal = enumerable.Count();
         if (nbTotal == 0) return new DomainModel.Struct.WinRate();
         return new DomainModel.Struct.WinRate
         {

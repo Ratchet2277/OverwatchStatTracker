@@ -7,12 +7,9 @@ using Repository.Contracts;
 
 namespace Repository;
 
-public class SquadMemberRepository : BaseRepository<SquadMember>, ISquadMemberRepository
+public class SquadMemberRepository(TrackerContext context)
+    : BaseRepository<SquadMember>(context), ISquadMemberRepository
 {
-    public SquadMemberRepository(TrackerContext context) : base(context)
-    {
-    }
-
     public async Task<SquadMember> Get(int id)
     {
         return await Context.SquadMembers.FindAsync(id);

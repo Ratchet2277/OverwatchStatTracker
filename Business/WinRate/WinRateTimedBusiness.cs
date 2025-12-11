@@ -22,8 +22,8 @@ public partial class WinRateBusiness
             }
         };
 
-        var winRatePerWeekDay = (await _gameRepository.Find(await UserManager.GetUserAsync(UClaimsPrincipal), true)
-                .BySeason(await _seasonBusiness.GetLastSeason())
+        var winRatePerWeekDay = (await repository.Find(await UserManager.GetUserAsync(UClaimsPrincipal), true)
+                .BySeason(await seasonBusiness.GetLastSeason())
                 .ToListAsync())
             .GroupBy(g => g.DateTime.DayOfWeek)
             .OrderBy(g => g.Key)
@@ -74,8 +74,8 @@ public partial class WinRateBusiness
             }
         };
 
-        var gameRepository = _gameRepository.Find(await UserManager.GetUserAsync(UClaimsPrincipal), true)
-            .BySeason(await _seasonBusiness.GetLastSeason());
+        var gameRepository = repository.Find(await UserManager.GetUserAsync(UClaimsPrincipal), true)
+            .BySeason(await seasonBusiness.GetLastSeason());
 
         if (dayOfWeek is not null) gameRepository = gameRepository.ByDayOfWeek((DayOfWeek)dayOfWeek);
 

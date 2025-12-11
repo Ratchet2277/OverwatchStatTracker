@@ -8,21 +8,12 @@ using Repository.Contracts;
 
 namespace Business;
 
-public class SeasonBusiness : BaseBusiness, ISeasonBusiness
+public class SeasonBusiness(ISeasonRepository repository, UserManager<User> userManager, ClaimsPrincipal user)
+    : BaseBusiness(userManager, user), ISeasonBusiness
 {
-    private readonly ISeasonRepository _repository;
-
-    public SeasonBusiness(ISeasonRepository repository, UserManager<User> userManager, ClaimsPrincipal user) : base(
-        userManager, user)
-    {
-        _repository = repository;
-    }
-
     public async Task<Season> GetLastSeason()
     {
-        var season = await _repository.LastSeason();
-        if (season is null)
-            throw new DataException("No ranked season not found");
-        return season;
+        var season = await repository.LastSeason();
+        return season ?? throw new DataException("No ranked season not found");
     }
 }

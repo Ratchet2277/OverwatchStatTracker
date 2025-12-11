@@ -9,7 +9,7 @@ public class SquadMember
 {
     [Required] public int Id { get; set; }
 
-    [Required] public string Name { get; set; }
+    [Required, StringLength(50)] public string Name { get; set; }
     public Role Role { get; set; }
 
     [Required] public virtual User MainUser { get; set; }
