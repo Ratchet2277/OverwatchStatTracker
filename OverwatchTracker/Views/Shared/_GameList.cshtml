@@ -6,10 +6,10 @@
     @foreach (var game in Model.Games.List)
     {
         <tr>
-            <td>
+            <th>
                 @(game.DateTime.Date != DateTime.Today ? game.DateTime.ToShortDateString() : "")
                 @game.DateTime.ToShortTimeString()
-            </td>
+            </th>
             <td>@game.Map.Name</td>
             <td>@game.Type.ToString()</td>
             <td class="hero-list valign-wrapper">

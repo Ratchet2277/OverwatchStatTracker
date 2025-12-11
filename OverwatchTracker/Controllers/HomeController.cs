@@ -8,12 +8,9 @@ using Microsoft.Extensions.Logging;
 
 namespace WebApplication.Controllers;
 
-public class HomeController : BaseController
+public class HomeController(ILogger<HomeController> logger, UserManager<User> userManager)
+    : BaseController(logger, userManager)
 {
-    public HomeController(ILogger<HomeController> logger, UserManager<User> userManager) : base(logger, userManager)
-    {
-    }
-
     [Authorize]
     public IActionResult Index()
     {

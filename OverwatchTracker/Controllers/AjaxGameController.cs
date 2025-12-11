@@ -16,7 +16,7 @@ public partial class GameController
     [HttpGet("MapList")]
     public async Task<List<Map>> MapList()
     {
-        return (await _seasonBusiness.GetLastSeason()).MapPool.OrderBy(m => m.Name).ToList();
+        return (await seasonBusiness.GetLastSeason()).MapPool.OrderBy(m => m.Name).ToList();
     }
 
     [HttpGet("RoleList")]
@@ -30,7 +30,12 @@ public partial class GameController
     [ResponseCache(Duration = 3600, VaryByHeader = "roleId")]
     public async Task<List<Hero>> HeroList(int? roleId)
     {
-        var season = await _seasonBusiness.GetLastSeason();
+        if (!ModelState.IsValid)
+        {
+            return [];
+        }
+        
+        var season = await seasonBusiness.GetLastSeason();
         IEnumerable<Hero> query = season.HeroPool.OrderBy(h => h.Name);
 
         if (Enum.TryParse(roleId.ToString(), out Role role) && season.HeroPool.Any(h => h.Role == role))

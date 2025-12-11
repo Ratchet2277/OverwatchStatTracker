@@ -5,7 +5,7 @@
     <tr>
         @foreach (var (gameType, _) in Model)
         {
-            <th colspan="2">
+            <th colspan="2" scope="colgroup">
                 @gameType
             </th>
         }
@@ -13,10 +13,10 @@
     <tr>
         @foreach (var _ in Model)
         {
-            <th>
+            <th scope="col">
                 By win
             </th>
-            <th>
+            <th scope="col">
                 By lose
             </th>
         }

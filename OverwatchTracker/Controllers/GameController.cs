@@ -14,31 +14,31 @@ namespace WebApplication.Controllers;
 
 [Authorize]
 [Route("Game/")]
-public partial class GameController : BaseController
+public partial class GameController(
+    ILogger<GameController> logger,
+    UserManager<User> userManager,
+    ISeasonBusiness seasonBusiness,
+    IGameBusiness business,
+    IServiceProvider serviceProvider)
+    : BaseController(logger, userManager)
 {
-    private readonly IGameBusiness _business;
-    private readonly ISeasonBusiness _seasonBusiness;
-    private readonly IServiceProvider _serviceProvider;
-
-    public GameController(ILogger<GameController> logger, UserManager<User> userManager,
-        ISeasonBusiness seasonBusiness, IGameBusiness business, IServiceProvider serviceProvider) : base(
-        logger, userManager)
-    {
-        _seasonBusiness = seasonBusiness;
-        _business = business;
-        _serviceProvider = serviceProvider;
-    }
-
+    private const string RedirectOnError = "Index";
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<RedirectToActionResult> Create(Game game)
     {
+        if (!ModelState.IsValid)
+        {
+            return RedirectToAction(RedirectOnError, "Home");
+        }
+
+
         game.User = await UserManager.GetUserAsync(User);
-        game.Season = await _seasonBusiness.GetLastSeason();
+        game.Season = await seasonBusiness.GetLastSeason();
 
-        await _business.Add(game);
+        await business.Add(game);
 
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction(RedirectOnError, "Home");
     }
 
     [HttpGet("History/{type?}")]
@@ -46,14 +46,20 @@ public partial class GameController : BaseController
     [HttpGet("History/Page/{page:int?}")]
     public async Task<IActionResult> History(int page = 1, GameType? type = null)
     {
-        return View(ActivatorUtilities.CreateInstance<GameHistoryModel>(_serviceProvider,
-            await _business.GetGames(page, 10, type)));
+        if (!ModelState.IsValid)
+            RedirectToAction(RedirectOnError, "Home");
+        
+        return View(ActivatorUtilities.CreateInstance<GameHistoryModel>(serviceProvider,
+            await business.GetGames(page, 10, type)));
     }
 
     [HttpGet("Edit/{id:int}")]
     public async Task<IActionResult> Edit(int id)
     {
-        var game = await _business.Get(id);
+        if (!ModelState.IsValid)
+            RedirectToAction(RedirectOnError, "Home");
+        
+        var game = await business.Get(id);
         var currentUser = await UserManager.GetUserAsync(User);
         if (game?.User != currentUser) return Forbid();
         return View(game);
@@ -63,11 +69,14 @@ public partial class GameController : BaseController
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> SaveEdit(Game newGame)
     {
-        var game = await _business.Get(newGame.Id);
+        if (!ModelState.IsValid)
+            RedirectToAction("Index", "Home");
+        
+        var game = await business.Get(newGame.Id);
         var currentUser = await UserManager.GetUserAsync(User);
-        if (game.User != currentUser) return Forbid();
+        if (game != null && game.User != currentUser) return Forbid();
 
-        await _business.Update(newGame);
+        await business.Update(newGame);
 
         return RedirectToAction("History");
     }

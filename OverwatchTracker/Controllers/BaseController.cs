@@ -5,14 +5,9 @@ using Microsoft.Extensions.Logging;
 
 namespace WebApplication.Controllers;
 
-public abstract class BaseController : Controller
+public abstract class BaseController(ILogger<BaseController> logger, UserManager<User> userManager)
+    : Controller
 {
-    protected readonly ILogger<BaseController> Logger;
-    protected readonly UserManager<User> UserManager;
-
-    protected BaseController(ILogger<BaseController> logger, UserManager<User> userManager)
-    {
-        Logger = logger;
-        UserManager = userManager;
-    }
+    protected readonly ILogger<BaseController> Logger = logger;
+    protected readonly UserManager<User> UserManager = userManager;
 }
